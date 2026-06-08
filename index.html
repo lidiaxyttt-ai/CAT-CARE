@@ -5,471 +5,559 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="theme-color" content="#fef7f9">
+    <meta name="theme-color" content="#fdf8f5">
     <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <title>Cat Care</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
         :root{
-            --pink-50:#fef7f9;--pink-100:#fdeef3;--pink-200:#fbd5e3;--pink-300:#f8a4c4;--pink-400:#f472a8;--pink-500:#e84a8a;
-            --purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-400:#a855f7;--purple-500:#9333ea;
-            --blue-50:#eff6ff;--blue-100:#dbeafe;--blue-400:#60a5fa;--blue-500:#3b82f6;--blue-600:#2563eb;
-            --green-50:#f0fdf4;--green-100:#dcfce7;--green-400:#4ade80;--green-500:#22c55e;--green-600:#16a34a;
-            --orange-50:#fff7ed;--orange-100:#ffedd5;--orange-400:#fb923c;--orange-500:#f97316;--orange-600:#ea580c;
-            --red-50:#fef2f2;--red-100:#fee2e2;--red-400:#f87171;--red-500:#ef4444;--red-600:#dc2626;
-            --yellow-50:#fefce8;--yellow-100:#fef9c3;--yellow-400:#facc15;
-            --white:#ffffff;
-            --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-300:#d1d5db;--gray-400:#9ca3af;--gray-500:#6b7280;--gray-600:#4b5563;--gray-700:#374151;--gray-800:#1f2937;--gray-900:#111827;
-            --shadow-xs:0 1px 2px rgba(0,0,0,0.03);
-            --shadow-sm:0 1px 3px rgba(0,0,0,0.05),0 1px 2px rgba(0,0,0,0.03);
-            --shadow:0 2px 8px rgba(0,0,0,0.06),0 1px 3px rgba(0,0,0,0.04);
-            --shadow-md:0 4px 16px rgba(0,0,0,0.08),0 2px 6px rgba(0,0,0,0.04);
-            --shadow-lg:0 10px 30px rgba(0,0,0,0.1);
-            --shadow-pink:0 4px 14px rgba(244,114,168,0.15);
-            --radius:14px;--radius-sm:10px;--radius-xs:7px;
-            --bottom-h:62px;--safe-b:env(safe-area-inset-bottom,0px);
+            --bg:#fdf8f5;
+            --card:#ffffff;
+            --pink-light:#fff0f3;
+            --pink:#ffc2d1;
+            --pink-mid:#ffb3c6;
+            --pink-deep:#ff8fab;
+            --pink-text:#d1477a;
+            --warm-50:#fefcfa;
+            --warm-100:#fdf6f0;
+            --warm-200:#faeee5;
+            --warm-300:#f5e1d0;
+            --brown-light:#f5ebe0;
+            --brown:#ddb892;
+            --brown-deep:#a47148;
+            --green-light:#e8f5e9;
+            --green:#66bb6a;
+            --blue-light:#e3f2fd;
+            --blue:#42a5f5;
+            --orange-light:#fff3e0;
+            --orange:#ffa726;
+            --red-light:#ffebee;
+            --red:#ef5350;
+            --purple-light:#f3e5f5;
+            --purple:#ab47bc;
+            --text-primary:#2d2017;
+            --text-secondary:#7a6b5d;
+            --text-muted:#b8a99a;
+            --border:#f2ebe4;
+            --shadow-card:0 2px 16px rgba(180,140,110,0.08);
+            --shadow-card-hover:0 4px 24px rgba(180,140,110,0.14);
+            --radius-xl:24px;
+            --radius-lg:20px;
+            --radius-md:16px;
+            --radius-sm:12px;
+            --radius-xs:8px;
+            --bottom-h:64px;
+            --safe-b:env(safe-area-inset-bottom,0px);
         }
         body{
-            font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
-            background:linear-gradient(160deg,var(--pink-50) 0%,#fff 40%,var(--purple-50) 100%);
+            font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+            background:var(--bg);
+            color:var(--text-primary);
+            font-size:14px;line-height:1.6;
             min-height:100vh;min-height:100dvh;
-            color:var(--gray-700);font-size:14px;line-height:1.5;
             overflow-x:hidden;
         }
+        .app{padding-bottom:calc(var(--bottom-h) + var(--safe-b) + 12px)}
 
-        /* === App Shell === */
-        .app{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;padding-bottom:calc(var(--bottom-h) + var(--safe-b))}
-
-        /* === Bottom Tab === */
+        /* Tab Bar */
         .tab-bar{
             position:fixed;bottom:0;left:0;right:0;
-            height:calc(var(--bottom-h) + var(--safe-b));padding-bottom:var(--safe-b);
-            background:rgba(255,255,255,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
-            border-top:1px solid rgba(0,0,0,0.06);
+            height:calc(var(--bottom-h) + var(--safe-b));
+            padding-bottom:var(--safe-b);
+            background:rgba(255,255,255,0.92);
+            backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+            border-top:1px solid var(--border);
             display:flex;align-items:center;justify-content:space-around;
             z-index:200;
         }
         .tab-item{
-            display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
-            padding:4px 0;border:none;background:none;cursor:pointer;
-            color:var(--gray-400);font-size:10px;font-family:inherit;
-            min-width:52px;transition:color 0.2s;position:relative;
+            display:flex;flex-direction:column;align-items:center;gap:3px;
+            padding:6px 0;border:none;background:none;cursor:pointer;
+            color:var(--text-muted);font-size:10px;font-weight:500;
+            font-family:inherit;min-width:56px;transition:all 0.2s;
         }
-        .tab-item.active{color:var(--pink-500)}
-        .tab-item.active::after{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:20px;height:2px;background:var(--pink-400);border-radius:1px}
-        .tab-item svg{width:22px;height:22px;stroke-width:1.8}
+        .tab-item.active{color:var(--pink-text)}
+        .tab-item svg{width:24px;height:24px;stroke-width:1.6;transition:transform 0.2s}
+        .tab-item.active svg{transform:scale(1.08)}
 
-        /* === Main === */
-        .main{padding:16px 16px 8px;max-width:600px;margin:0 auto;width:100%}
-        .module{display:none;animation:fadeIn 0.25s ease}
+        /* Main */
+        .main{padding:20px 20px 8px;max-width:500px;margin:0 auto}
+        .module{display:none;animation:fadeUp 0.3s ease}
         .module.active{display:block}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-        /* === Page Header === */
-        .page-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-        .page-hd h2{font-size:20px;font-weight:700;color:var(--gray-900);letter-spacing:-0.3px}
+        /* Typography */
+        .heading-xl{font-size:28px;font-weight:800;letter-spacing:-0.5px;color:var(--text-primary)}
+        .heading-lg{font-size:22px;font-weight:700;letter-spacing:-0.3px;color:var(--text-primary)}
+        .heading-md{font-size:17px;font-weight:700;color:var(--text-primary)}
+        .heading-sm{font-size:13px;font-weight:600;color:var(--text-secondary)}
+        .text-body{font-size:14px;color:var(--text-secondary)}
+        .text-sm{font-size:12px;color:var(--text-muted)}
+        .text-xs{font-size:11px;color:var(--text-muted)}
+        .text-jumbo{font-size:32px;font-weight:800;letter-spacing:-1px}
 
-        /* === Cards === */
+        /* Cards */
         .card{
-            background:var(--white);border-radius:var(--radius);
-            border:1px solid rgba(0,0,0,0.05);
-            padding:16px;margin-bottom:12px;
-            box-shadow:var(--shadow-sm);
-            position:relative;overflow:hidden;
+            background:var(--card);
+            border-radius:var(--radius-xl);
+            padding:20px;
+            margin-bottom:16px;
+            box-shadow:var(--shadow-card);
+            border:1px solid rgba(0,0,0,0.02);
         }
-        .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:transparent;border-radius:var(--radius) var(--radius) 0 0}
-        .card.accent-pink::before{background:linear-gradient(90deg,var(--pink-300),var(--pink-400))}
-        .card.accent-blue::before{background:linear-gradient(90deg,var(--blue-400),var(--blue-500))}
-        .card.accent-green::before{background:linear-gradient(90deg,var(--green-400),var(--green-500))}
-        .card.accent-purple::before{background:linear-gradient(90deg,var(--purple-400),var(--purple-500))}
-        .card.accent-orange::before{background:linear-gradient(90deg,var(--orange-400),var(--orange-500))}
+        .card-sm{padding:16px;border-radius:var(--radius-lg)}
+        .card-flush{padding:0;overflow:hidden}
 
-        .card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-        .card-title{font-size:12px;font-weight:600;color:var(--gray-500);letter-spacing:0.2px}
-        .card-badge{font-size:11px;padding:3px 8px;border-radius:20px;font-weight:500}
-
-        /* === Buttons === */
+        /* Buttons */
         .btn{
-            padding:8px 14px;border-radius:var(--radius-xs);border:none;cursor:pointer;
-            font-size:13px;font-weight:500;transition:all 0.15s;
-            display:inline-flex;align-items:center;gap:5px;font-family:inherit;
+            padding:10px 18px;border-radius:var(--radius-sm);border:none;
+            cursor:pointer;font-size:13px;font-weight:600;
+            font-family:inherit;transition:all 0.2s;
+            display:inline-flex;align-items:center;gap:6px;
         }
-        .btn-primary{background:linear-gradient(135deg,var(--pink-400),var(--pink-500));color:#fff;box-shadow:var(--shadow-pink)}
-        .btn-primary:active{transform:scale(0.96)}
-        .btn-outline{background:var(--white);color:var(--gray-600);border:1px solid var(--gray-200);box-shadow:var(--shadow-xs)}
-        .btn-outline:active{background:var(--gray-50)}
-        .btn-ghost{background:none;color:var(--gray-500);padding:5px 8px}
-        .btn-ghost:active{background:var(--gray-100)}
-        .btn-sm{padding:6px 10px;font-size:12px}
-        .btn-danger{background:none;color:var(--red-500);padding:5px 8px}
+        .btn-primary{background:var(--pink-deep);color:#fff;box-shadow:0 4px 12px rgba(255,143,175,0.3)}
+        .btn-primary:active{transform:scale(0.96);box-shadow:0 2px 8px rgba(255,143,175,0.2)}
+        .btn-soft{background:var(--pink-light);color:var(--pink-text)}
+        .btn-soft:active{background:var(--pink)}
+        .btn-ghost{background:none;color:var(--text-secondary);padding:8px 12px}
+        .btn-sm{padding:8px 14px;font-size:12px;border-radius:var(--radius-xs)}
+        .btn-round{width:52px;height:52px;border-radius:50%;padding:0;justify-content:center;font-size:22px;box-shadow:0 6px 20px rgba(255,143,175,0.35)}
 
-        /* === Stat Cards === */
-        .stat-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}
-        .stat-card{
-            padding:14px;border-radius:var(--radius-sm);
-            position:relative;overflow:hidden;
+        /* FAB */
+        .fab{position:fixed;bottom:calc(var(--bottom-h) + var(--safe-b) + 20px);right:20px;z-index:150}
+
+        /* Divider */
+        .divider{border:none;border-top:1.5px dashed var(--border);margin:14px 0}
+
+        /* Record items (card-list style) */
+        .record-list{display:flex;flex-direction:column;gap:12px}
+        .record-item{
+            background:var(--card);
+            border-radius:var(--radius-lg);
+            padding:16px 18px;
+            box-shadow:var(--shadow-card);
+            border:1px solid rgba(0,0,0,0.02);
+            position:relative;
         }
-        .stat-card.pink{background:linear-gradient(135deg,var(--pink-50),var(--pink-100))}
-        .stat-card.blue{background:linear-gradient(135deg,var(--blue-50),var(--blue-100))}
-        .stat-card.green{background:linear-gradient(135deg,var(--green-50),var(--green-100))}
-        .stat-card.purple{background:linear-gradient(135deg,var(--purple-50),var(--purple-100))}
-        .stat-card.orange{background:linear-gradient(135deg,var(--orange-50),var(--orange-100))}
-        .stat-card .s-label{font-size:11px;color:var(--gray-500);font-weight:500;margin-bottom:4px}
-        .stat-card .s-value{font-size:16px;font-weight:700;color:var(--gray-800)}
-        .stat-card .s-icon{position:absolute;right:10px;bottom:10px;font-size:24px;opacity:0.15}
+        .record-item .ri-top{display:flex;justify-content:space-between;align-items:flex-start}
+        .record-item .ri-title{font-size:15px;font-weight:700;color:var(--text-primary)}
+        .record-item .ri-right{text-align:right}
+        .record-item .ri-value{font-size:18px;font-weight:800;color:var(--text-primary)}
+        .record-item .ri-sub{font-size:11px;color:var(--text-muted);margin-top:2px}
+        .record-item .ri-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1.5px dashed var(--border)}
+        .record-item .ri-tag{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500}
+        .record-item .ri-actions{display:flex;gap:4px}
 
-        /* === Tables === */
-        .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -16px;padding:0 16px}
-        table{width:100%;border-collapse:collapse;min-width:480px}
-        thead th{padding:8px 10px;text-align:left;font-size:11px;font-weight:600;color:var(--gray-400);border-bottom:1px solid var(--gray-100);white-space:nowrap}
-        tbody td{padding:10px;border-bottom:1px solid var(--gray-50);font-size:13px}
-        tbody tr:last-child td{border-bottom:none}
-        .actions{white-space:nowrap}
+        /* Tags */
+        .tag{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+        .tag-pink{background:var(--pink-light);color:var(--pink-text)}
+        .tag-green{background:var(--green-light);color:#2e7d32}
+        .tag-blue{background:var(--blue-light);color:#1565c0}
+        .tag-orange{background:var(--orange-light);color:#e65100}
+        .tag-red{background:var(--red-light);color:#c62828}
+        .tag-purple{background:var(--purple-light);color:#7b1fa2}
+        .tag-warm{background:var(--brown-light);color:var(--brown-deep)}
 
-        /* === Tags === */
-        .tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
-        .tag-pink{background:var(--pink-100);color:var(--pink-500)}
-        .tag-blue{background:var(--blue-100);color:var(--blue-600)}
-        .tag-green{background:var(--green-100);color:var(--green-600)}
-        .tag-orange{background:var(--orange-100);color:var(--orange-600)}
-        .tag-purple{background:var(--purple-100);color:var(--purple-500)}
-        .tag-red{background:var(--red-100);color:var(--red-600)}
-        .tag-gray{background:var(--gray-100);color:var(--gray-600)}
-
-        /* === Profile Overview === */
-        .profile-hero{
-            text-align:center;padding:24px 16px 20px;
-            background:linear-gradient(180deg,var(--pink-50) 0%,transparent 100%);
-            border-radius:var(--radius);margin-bottom:12px;
-            border:1px solid rgba(244,114,168,0.1);
+        /* Profile Card */
+        .id-card{
+            background:var(--card);
+            border-radius:var(--radius-xl);
+            overflow:hidden;
+            box-shadow:var(--shadow-card);
+            border:1px solid rgba(0,0,0,0.02);
+            margin-bottom:20px;
         }
-        .avatar{
-            width:72px;height:72px;border-radius:50%;margin:0 auto 12px;
-            background:linear-gradient(135deg,var(--pink-100),var(--pink-200));
+        .id-card-header{
+            background:linear-gradient(135deg,var(--pink-light),var(--warm-200));
+            padding:16px 20px;
+            display:flex;align-items:center;justify-content:space-between;
+        }
+        .id-card-header .label{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--pink-text);text-transform:uppercase}
+        .id-card-header .breed-info{font-size:12px;font-weight:600;color:var(--text-secondary)}
+        .id-card-body{padding:24px 20px}
+        .id-card-top{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+        .id-avatar{
+            width:80px;height:80px;border-radius:50%;
+            background:linear-gradient(135deg,var(--pink-light),var(--pink));
             display:flex;align-items:center;justify-content:center;
-            font-size:32px;cursor:pointer;overflow:hidden;
-            border:3px solid var(--white);box-shadow:0 4px 12px rgba(244,114,168,0.2);
+            font-size:36px;cursor:pointer;overflow:hidden;
+            border:3px solid var(--card);
+            box-shadow:0 4px 16px rgba(255,143,175,0.2);
+            flex-shrink:0;
         }
-        .avatar img{width:100%;height:100%;object-fit:cover}
-        .profile-hero h2{font-size:20px;font-weight:700;color:var(--gray-900);margin-bottom:2px}
-        .profile-hero p{font-size:13px;color:var(--gray-500)}
-
-        /* === Reminders === */
-        .reminder{
-            padding:10px 14px;border-radius:var(--radius-sm);
-            font-size:12px;margin-bottom:10px;
-            display:flex;align-items:center;gap:8px;
-            border:1px solid transparent;
+        .id-avatar img{width:100%;height:100%;object-fit:cover}
+        .id-card-name .name{font-size:26px;font-weight:800;letter-spacing:-0.5px;color:var(--text-primary)}
+        .id-card-name .sub{font-size:12px;color:var(--text-muted);margin-top:2px}
+        .id-card-fields{display:flex;flex-direction:column;gap:16px}
+        .id-field{display:flex;align-items:baseline;gap:8px}
+        .id-field .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:2px}
+        .id-field .f-label{font-size:12px;color:var(--text-muted);min-width:50px}
+        .id-field .f-value{font-size:15px;font-weight:600;color:var(--text-primary)}
+        .id-card-footer{
+            display:flex;justify-content:space-around;
+            padding:16px 20px;
+            border-top:1.5px dashed var(--border);
+            margin-top:20px;
         }
-        .reminder.warn{background:var(--orange-50);border-color:rgba(249,115,22,0.15);color:var(--orange-600)}
-        .reminder.danger{background:var(--red-50);border-color:rgba(239,68,68,0.15);color:var(--red-600)}
-        .reminder.ok{background:var(--green-50);border-color:rgba(34,197,94,0.15);color:var(--green-600)}
-        .reminder .r-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-        .reminder.warn .r-dot{background:var(--orange-500)}
-        .reminder.danger .r-dot{background:var(--red-500)}
-        .reminder.ok .r-dot{background:var(--green-500)}
+        .id-stat{text-align:center}
+        .id-stat .sv{font-size:18px;font-weight:800;color:var(--text-primary)}
+        .id-stat .sl{font-size:11px;color:var(--text-muted);margin-top:2px}
 
-        /* === Calendar === */
-        .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-        .cal-header h3{font-size:16px;font-weight:700;color:var(--gray-800)}
-        .cal-nav{display:flex;gap:6px}
-        .cal-nav button{width:30px;height:30px;border-radius:50%;border:1px solid var(--gray-200);background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gray-500);font-size:14px}
-        .cal-nav button:active{background:var(--gray-100)}
-        .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:12px}
-        .cal-dow{text-align:center;font-size:11px;font-weight:600;color:var(--gray-400);padding:4px 0}
+        /* Reminder Cards */
+        .reminder-card{
+            padding:14px 18px;
+            border-radius:var(--radius-lg);
+            margin-bottom:12px;
+            display:flex;align-items:center;gap:12px;
+        }
+        .reminder-card.warn{background:var(--orange-light);border:1px solid rgba(255,167,38,0.2)}
+        .reminder-card.danger{background:var(--red-light);border:1px solid rgba(239,83,80,0.2)}
+        .reminder-card.ok{background:var(--green-light);border:1px solid rgba(102,187,106,0.2)}
+        .reminder-card .rc-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+        .reminder-card.warn .rc-icon{background:rgba(255,167,38,0.15)}
+        .reminder-card.danger .rc-icon{background:rgba(239,83,80,0.15)}
+        .reminder-card.ok .rc-icon{background:rgba(102,187,106,0.15)}
+        .reminder-card .rc-text{font-size:13px;font-weight:500;color:var(--text-primary)}
+        .reminder-card .rc-sub{font-size:11px;color:var(--text-muted)}
+        .reminder-card .rc-countdown{margin-left:auto;font-size:16px;font-weight:800;color:var(--text-primary);white-space:nowrap}
+
+        /* Calendar */
+        .cal-nav-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+        .cal-nav-row h3{font-size:18px;font-weight:700}
+        .cal-arrows{display:flex;gap:8px}
+        .cal-arrows button{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:16px;color:var(--text-secondary);display:flex;align-items:center;justify-content:center}
+        .cal-arrows button:active{background:var(--pink-light)}
+        .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:16px}
+        .cal-dow{text-align:center;font-size:11px;font-weight:600;color:var(--text-muted);padding:4px 0}
         .cal-day{
             aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-            border-radius:var(--radius-xs);font-size:13px;color:var(--gray-700);
-            cursor:pointer;position:relative;transition:all 0.15s;gap:2px;
+            border-radius:var(--radius-xs);font-size:14px;font-weight:500;color:var(--text-primary);
+            cursor:pointer;position:relative;transition:all 0.15s;gap:3px;
         }
-        .cal-day:active{transform:scale(0.92)}
-        .cal-day.today{background:var(--pink-100);color:var(--pink-500);font-weight:700}
-        .cal-day.selected{background:var(--pink-400);color:#fff;font-weight:600;box-shadow:var(--shadow-pink)}
-        .cal-day.other{color:var(--gray-300)}
-        .cal-day .dots{display:flex;gap:2px;position:absolute;bottom:3px}
+        .cal-day:active{transform:scale(0.9)}
+        .cal-day.today{background:var(--pink-light);color:var(--pink-text);font-weight:700}
+        .cal-day.selected{background:var(--pink-deep);color:#fff;font-weight:700;box-shadow:0 4px 12px rgba(255,143,175,0.3)}
+        .cal-day.other{color:var(--text-muted);opacity:0.4}
+        .cal-day .dots{display:flex;gap:2px;position:absolute;bottom:4px}
         .cal-day .dots span{width:4px;height:4px;border-radius:50%}
 
-        .day-events{
-            background:var(--gray-50);border-radius:var(--radius-sm);padding:12px;
-            border:1px solid var(--gray-100);min-height:60px;
+        .day-detail{background:var(--warm-50);border-radius:var(--radius-lg);padding:16px;border:1px solid var(--border)}
+        .day-detail-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--border)}
+        .day-detail-item:last-child{border-bottom:none}
+        .day-detail-item .dd-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+        .day-detail-item .dd-text{font-size:13px;font-weight:500;color:var(--text-primary)}
+        .day-detail-empty{text-align:center;padding:16px;font-size:13px;color:var(--text-muted)}
+
+        /* Weight Chart */
+        .chart-wrap{position:relative;width:100%;height:180px;margin:8px 0}
+        .chart-wrap canvas{width:100%!important;height:100%!important}
+        .weight-summary{display:flex;gap:12px;margin-bottom:16px}
+        .ws-card{flex:1;padding:16px;border-radius:var(--radius-lg);text-align:center}
+        .ws-card.current{background:var(--pink-light)}
+        .ws-card.change{background:var(--green-light)}
+        .ws-card.goal{background:var(--warm-200)}
+        .ws-card .ws-val{font-size:22px;font-weight:800;color:var(--text-primary);margin-bottom:2px}
+        .ws-card .ws-label{font-size:11px;color:var(--text-muted)}
+
+        /* Feeding today */
+        .feed-today-card{
+            background:linear-gradient(135deg,var(--orange-light),var(--warm-100));
+            border-radius:var(--radius-xl);padding:20px;margin-bottom:16px;
+            border:1px solid rgba(255,167,38,0.1);
         }
-        .day-events .de-item{
-            display:flex;align-items:center;gap:8px;padding:6px 0;
-            border-bottom:1px solid var(--gray-100);font-size:13px;
-        }
-        .day-events .de-item:last-child{border-bottom:none}
-        .day-events .de-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-        .day-events .de-empty{text-align:center;color:var(--gray-400);font-size:12px;padding:12px}
 
-        /* === Chart === */
-        .chart-box{position:relative;width:100%;height:170px;margin:8px 0}
-        .chart-box canvas{width:100%!important;height:100%!important}
+        /* Segments */
+        .seg-bar{display:flex;background:var(--warm-100);border-radius:var(--radius-sm);padding:4px;margin-bottom:16px}
+        .seg-btn{flex:1;padding:9px 0;text-align:center;border-radius:var(--radius-xs);font-size:13px;font-weight:600;color:var(--text-muted);cursor:pointer;border:none;background:none;font-family:inherit;transition:all 0.2s}
+        .seg-btn.active{background:var(--card);color:var(--text-primary);box-shadow:var(--shadow-card)}
 
-        /* === Expense Chart === */
-        .expense-chart{display:flex;align-items:center;gap:16px;padding:8px 0}
-        .pie-wrap{position:relative;width:100px;height:100px;flex-shrink:0}
-        .pie-wrap canvas{width:100%!important;height:100%!important}
-        .pie-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-        .pie-center .pc-val{font-size:14px;font-weight:700;color:var(--gray-800)}
-        .pie-center .pc-label{font-size:10px;color:var(--gray-400)}
-        .legend{display:flex;flex-direction:column;gap:6px}
-        .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--gray-600)}
-        .legend-item .l-dot{width:8px;height:8px;border-radius:2px}
-
-        /* === Segments (Vaccine/Deworm) === */
-        .seg-tabs{display:flex;background:var(--gray-100);border-radius:var(--radius-xs);padding:3px;margin-bottom:14px}
-        .seg-tab{flex:1;padding:7px 0;text-align:center;border-radius:5px;font-size:13px;font-weight:500;color:var(--gray-500);cursor:pointer;transition:all 0.2s;border:none;background:none;font-family:inherit}
-        .seg-tab.active{background:var(--white);color:var(--gray-800);box-shadow:var(--shadow-sm)}
-
-        /* === Timeline === */
-        .timeline{padding-left:16px;position:relative}
-        .timeline::before{content:'';position:absolute;left:4px;top:6px;bottom:6px;width:2px;background:var(--gray-200);border-radius:1px}
-        .tl-item{position:relative;padding:0 0 16px 16px}
+        /* Timeline */
+        .timeline{padding-left:20px;position:relative}
+        .timeline::before{content:'';position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:var(--border);border-radius:1px}
+        .tl-item{position:relative;padding:0 0 20px 18px}
         .tl-item:last-child{padding-bottom:0}
-        .tl-item::before{content:'';position:absolute;left:-14px;top:6px;width:8px;height:8px;border-radius:50%;border:2px solid var(--white);box-shadow:var(--shadow-xs)}
-        .tl-item.pink::before{background:var(--pink-400)}
-        .tl-item.blue::before{background:var(--blue-400)}
-        .tl-item.green::before{background:var(--green-400)}
-        .tl-item.orange::before{background:var(--orange-400)}
-        .tl-item .tl-date{font-size:11px;color:var(--gray-400)}
-        .tl-item .tl-text{font-size:13px;color:var(--gray-700);margin-top:1px}
-        .tl-item .tl-sub{font-size:11px;color:var(--gray-400);margin-top:2px}
+        .tl-item::before{content:'';position:absolute;left:-18px;top:6px;width:10px;height:10px;border-radius:50%;border:2.5px solid var(--card)}
+        .tl-item.c-pink::before{background:var(--pink-deep)}
+        .tl-item.c-green::before{background:var(--green)}
+        .tl-item.c-blue::before{background:var(--blue)}
+        .tl-item.c-orange::before{background:var(--orange)}
+        .tl-item .tl-date{font-size:11px;color:var(--text-muted);font-weight:500}
+        .tl-item .tl-title{font-size:14px;font-weight:600;color:var(--text-primary);margin-top:2px}
+        .tl-item .tl-sub{font-size:12px;color:var(--text-muted);margin-top:2px}
 
-        /* === Photos === */
-        .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-        .photo-item{aspect-ratio:1;border-radius:var(--radius-sm);overflow:hidden;position:relative;cursor:pointer}
-        .photo-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.2s}
-        .photo-item:active img{transform:scale(1.03)}
-        .photo-item .p-meta{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));color:#fff;padding:14px 6px 5px;font-size:10px}
-        .photo-item .p-del{position:absolute;top:4px;right:4px;width:20px;height:20px;background:rgba(255,255,255,0.9);border:none;border-radius:50%;font-size:10px;color:var(--red-500);cursor:pointer;display:none;align-items:center;justify-content:center}
-        .photo-item:active .p-del{display:flex}
-        .photo-add{aspect-ratio:1;border-radius:var(--radius-sm);border:1.5px dashed var(--gray-300);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:var(--gray-400);gap:4px;font-size:11px}
-        .photo-add:active{border-color:var(--pink-400);background:var(--pink-50)}
-
-        /* === More Page === */
-        .more-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-        .more-item{
-            padding:20px 16px;border-radius:var(--radius);cursor:pointer;
-            display:flex;flex-direction:column;align-items:center;gap:10px;
-            border:1px solid rgba(0,0,0,0.04);transition:transform 0.15s;
-            box-shadow:var(--shadow-sm);
+        /* Expense */
+        .expense-hero{
+            background:linear-gradient(135deg,var(--pink-mid),var(--pink-deep));
+            border-radius:var(--radius-xl);padding:24px;margin-bottom:16px;
+            text-align:center;color:#fff;
         }
-        .more-item:active{transform:scale(0.97)}
-        .more-item.mi-immune{background:linear-gradient(135deg,var(--green-50),var(--green-100))}
-        .more-item.mi-expense{background:linear-gradient(135deg,var(--orange-50),var(--orange-100))}
-        .more-item.mi-medical{background:linear-gradient(135deg,var(--blue-50),var(--blue-100))}
-        .more-item.mi-photo{background:linear-gradient(135deg,var(--purple-50),var(--purple-100))}
-        .more-item svg{width:28px;height:28px}
-        .more-item .mi-label{font-size:13px;font-weight:600;color:var(--gray-700)}
-        .more-item .mi-sub{font-size:11px;color:var(--gray-500)}
+        .expense-hero .eh-label{font-size:12px;opacity:0.8;font-weight:500}
+        .expense-hero .eh-value{font-size:36px;font-weight:800;letter-spacing:-1px;margin-top:4px}
 
-        /* === Modal === */
-        .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:500;justify-content:center;align-items:flex-end}
+        /* Pie chart */
+        .pie-section{display:flex;align-items:center;gap:20px;padding:8px 0}
+        .pie-canvas-wrap{width:90px;height:90px;flex-shrink:0;position:relative}
+        .pie-canvas-wrap canvas{width:100%!important;height:100%!important}
+        .legend-list{display:flex;flex-direction:column;gap:8px}
+        .legend-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-secondary)}
+        .legend-dot{width:10px;height:10px;border-radius:3px}
+
+        /* More page */
+        .more-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+        .more-card{
+            padding:24px 16px;border-radius:var(--radius-xl);
+            display:flex;flex-direction:column;align-items:center;gap:12px;
+            cursor:pointer;transition:all 0.2s;
+            box-shadow:var(--shadow-card);border:1px solid rgba(0,0,0,0.02);
+        }
+        .more-card:active{transform:scale(0.97);box-shadow:var(--shadow-card-hover)}
+        .more-card.mc-immune{background:linear-gradient(160deg,#f0fff0,var(--green-light))}
+        .more-card.mc-expense{background:linear-gradient(160deg,#fffaf0,var(--orange-light))}
+        .more-card.mc-medical{background:linear-gradient(160deg,#f0f8ff,var(--blue-light))}
+        .more-card.mc-photos{background:linear-gradient(160deg,#fdf0ff,var(--purple-light))}
+        .more-card svg{width:32px;height:32px}
+        .more-card .mc-title{font-size:14px;font-weight:700;color:var(--text-primary)}
+        .more-card .mc-sub{font-size:11px;color:var(--text-muted)}
+
+        /* Photos */
+        .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+        .photo-item{aspect-ratio:1;border-radius:var(--radius-md);overflow:hidden;position:relative;cursor:pointer}
+        .photo-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.2s}
+        .photo-item:active img{transform:scale(1.05)}
+        .photo-item .pm{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));color:#fff;padding:16px 8px 6px;font-size:10px;font-weight:500}
+        .photo-item .pd{position:absolute;top:6px;right:6px;width:22px;height:22px;background:rgba(255,255,255,0.9);border:none;border-radius:50%;font-size:11px;color:#ef5350;cursor:pointer;display:none;align-items:center;justify-content:center}
+        .photo-item:active .pd{display:flex}
+        .photo-add{aspect-ratio:1;border-radius:var(--radius-md);border:2px dashed var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:6px;color:var(--text-muted);font-size:11px;background:var(--warm-50)}
+        .photo-add:active{border-color:var(--pink);background:var(--pink-light)}
+
+        /* Modal */
+        .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(45,32,23,0.3);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:500;align-items:flex-end;justify-content:center}
         .modal-overlay.show{display:flex}
         .modal{
-            background:var(--white);border-radius:var(--radius) var(--radius) 0 0;
-            padding:20px 16px calc(16px + var(--safe-b));
-            width:100%;max-width:500px;max-height:85vh;max-height:85dvh;overflow-y:auto;
-            box-shadow:var(--shadow-lg);animation:slideUp 0.3s cubic-bezier(0.32,0.72,0,1);
+            background:var(--card);border-radius:var(--radius-xl) var(--radius-xl) 0 0;
+            padding:8px 20px calc(20px + var(--safe-b));
+            width:100%;max-width:500px;max-height:88vh;max-height:88dvh;overflow-y:auto;
+            box-shadow:0 -10px 40px rgba(0,0,0,0.12);
+            animation:sheetUp 0.35s cubic-bezier(0.32,0.72,0,1);
         }
-        @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-        .modal-handle{width:36px;height:4px;border-radius:2px;background:var(--gray-300);margin:0 auto 16px}
-        .modal h3{font-size:16px;font-weight:700;color:var(--gray-800);margin-bottom:16px}
-
-        .form-group{margin-bottom:12px}
-        .form-group label{display:block;font-size:12px;font-weight:500;color:var(--gray-500);margin-bottom:4px}
+        @keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+        .modal-handle{width:40px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 20px}
+        .modal h3{font-size:18px;font-weight:700;margin-bottom:20px;color:var(--text-primary)}
+        .form-group{margin-bottom:14px}
+        .form-group label{display:block;font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:6px;letter-spacing:0.2px}
         .form-group input,.form-group select,.form-group textarea{
-            width:100%;padding:10px 12px;border:1px solid var(--gray-200);border-radius:var(--radius-xs);
-            font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s,box-shadow 0.2s;
-            background:var(--gray-50);
+            width:100%;padding:12px 14px;
+            border:1.5px solid var(--border);border-radius:var(--radius-sm);
+            font-size:15px;font-family:inherit;outline:none;
+            background:var(--warm-50);color:var(--text-primary);
+            transition:all 0.2s;
         }
-        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--pink-300);box-shadow:0 0 0 3px rgba(244,114,168,0.08);background:var(--white)}
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--pink);background:var(--card);box-shadow:0 0 0 4px rgba(255,143,175,0.08)}
         .form-group textarea{resize:vertical;min-height:60px}
-        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-        .form-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+        .form-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
 
-        /* quick select chips */
-        .chip-group{display:flex;flex-wrap:wrap;gap:6px}
-        .chip{padding:6px 12px;border-radius:20px;font-size:12px;border:1px solid var(--gray-200);background:var(--white);cursor:pointer;color:var(--gray-600);transition:all 0.15s}
-        .chip.active{background:var(--pink-100);border-color:var(--pink-300);color:var(--pink-500);font-weight:500}
+        /* Chip select */
+        .chip-group{display:flex;flex-wrap:wrap;gap:8px}
+        .chip{padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1.5px solid var(--border);background:var(--card);cursor:pointer;color:var(--text-secondary);transition:all 0.15s}
+        .chip.active{background:var(--pink-light);border-color:var(--pink);color:var(--pink-text)}
         .chip:active{transform:scale(0.95)}
 
-        /* === Lightbox === */
+        /* Back */
+        .back-row{display:flex;align-items:center;gap:6px;margin-bottom:16px;cursor:pointer;color:var(--text-muted);font-size:13px;font-weight:500}
+        .back-row:active{color:var(--text-primary)}
+
+        /* Lightbox */
         .lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:600;justify-content:center;align-items:center;cursor:pointer}
         .lightbox.show{display:flex}
-        .lightbox img{max-width:95%;max-height:90%;border-radius:6px}
+        .lightbox img{max-width:95%;max-height:90%;border-radius:8px}
 
-        /* === Empty === */
-        .empty{text-align:center;padding:24px 12px;color:var(--gray-400);font-size:13px}
+        /* Empty */
+        .empty-state{text-align:center;padding:32px 16px;color:var(--text-muted);font-size:13px}
 
-        /* === Back button for sub pages === */
-        .back-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--gray-500);cursor:pointer;border:none;background:none;padding:4px 0;margin-bottom:12px;font-family:inherit}
-        .back-btn:active{color:var(--gray-700)}
+        /* Section header */
+        .section-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;margin-top:8px}
 
-        /* === Progress Ring === */
-        .ring-wrap{position:relative;display:inline-flex;align-items:center;justify-content:center}
-        .ring-wrap svg{transform:rotate(-90deg)}
-        .ring-label{position:absolute;text-align:center}
-        .ring-label .rv{font-size:14px;font-weight:700;color:var(--gray-800)}
-        .ring-label .rl{font-size:9px;color:var(--gray-400)}
-
-        /* Desktop */
         @media(min-width:768px){
-            .main{max-width:520px;padding:24px}
-            .stat-row{grid-template-columns:repeat(3,1fr)}
-            .photo-grid{grid-template-columns:repeat(4,1fr);gap:10px}
-            .more-grid{grid-template-columns:repeat(4,1fr)}
+            .main{max-width:480px;padding:28px}
+            .photo-grid{grid-template-columns:repeat(4,1fr)}
+            .more-grid{gap:16px}
         }
     </style>
 </head>
 <body>
 <div class="app">
     <main class="main">
-        <!-- === Profile === -->
+        <!-- ========== PROFILE ========== -->
         <div id="p-profile" class="module active">
-            <div class="profile-hero">
-                <div class="avatar" id="avatarEl" onclick="document.getElementById('avInput').click()">🐱</div>
-                <h2 id="pName">未命名</h2>
-                <p id="pSub">设置猫咪信息</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                <div>
+                    <p class="text-sm" id="pGreeting">Hi!</p>
+                    <p class="heading-lg" id="pHello">这是你今天要做的事~</p>
+                </div>
+                <button class="btn btn-soft btn-sm" onclick="editProfile()">编辑</button>
             </div>
+
             <div id="pReminders"></div>
-            <div class="stat-row" id="pStats"></div>
-            <div class="card accent-pink">
-                <div class="card-hd"><span class="card-title">最近体重</span></div>
-                <div id="pWeight"></div>
-            </div>
-            <div class="card accent-blue">
-                <div class="card-hd"><span class="card-title">近期事项</span></div>
-                <div id="pEvents"></div>
-            </div>
-            <div style="text-align:center;margin-top:8px">
-                <button class="btn btn-outline btn-sm" onclick="editProfile()">编辑档案</button>
+
+            <div class="id-card">
+                <div class="id-card-header">
+                    <span class="label">Identity Card</span>
+                    <span class="breed-info" id="idBreed"></span>
+                </div>
+                <div class="id-card-body">
+                    <div class="id-card-top">
+                        <div class="id-avatar" id="avatarEl" onclick="document.getElementById('avInput').click()">🐱</div>
+                        <div class="id-card-name">
+                            <div class="name" id="idName">未命名</div>
+                            <div class="sub" id="idSub">点击编辑设置信息</div>
+                        </div>
+                    </div>
+                    <div class="id-card-fields" id="idFields"></div>
+                    <div class="id-card-footer" id="idFooter"></div>
+                </div>
             </div>
         </div>
 
-        <!-- === Calendar === -->
+        <!-- ========== CALENDAR ========== -->
         <div id="p-calendar" class="module">
-            <div class="page-hd"><h2>月历</h2><button class="btn btn-primary btn-sm" onclick="openHealthForm()">+ 异常</button></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                <h2 class="heading-lg">月历</h2>
+                <button class="btn btn-primary btn-sm" onclick="openHealthForm()">+ 记录异常</button>
+            </div>
             <div class="card">
-                <div class="cal-header">
+                <div class="cal-nav-row">
                     <h3 id="calTitle"></h3>
-                    <div class="cal-nav">
+                    <div class="cal-arrows">
                         <button onclick="changeMonth(-1)">‹</button>
                         <button onclick="changeMonth(1)">›</button>
                     </div>
                 </div>
                 <div class="cal-grid" id="calGrid"></div>
-                <div class="day-events" id="dayEvents"><div class="de-empty">选择日期查看事项</div></div>
+            </div>
+            <div class="day-detail" id="dayDetail">
+                <div class="day-detail-empty">选择日期查看事项</div>
             </div>
         </div>
 
-        <!-- === Weight === -->
+        <!-- ========== WEIGHT ========== -->
         <div id="p-weight" class="module">
-            <div class="page-hd"><h2>体重</h2><button class="btn btn-primary btn-sm" onclick="openWeightForm()">+ 记录</button></div>
-            <div class="card accent-green">
-                <div class="card-hd"><span class="card-title">趋势</span><button class="btn btn-ghost btn-sm" onclick="setWeightGoal()">设目标</button></div>
-                <div class="chart-box"><canvas id="wChart"></canvas></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                <h2 class="heading-lg">体重</h2>
+                <button class="btn btn-primary btn-sm" onclick="openWeightForm()">+ 记录</button>
             </div>
+            <div class="weight-summary" id="wSummary"></div>
             <div class="card">
-                <div class="table-wrap"><table><thead><tr><th>日期</th><th>体重</th><th>变化</th><th>备注</th><th></th></tr></thead><tbody id="wTb"></tbody></table></div>
-                <div class="empty" id="wEmpty">暂无记录</div>
+                <div class="chart-wrap"><canvas id="wChart"></canvas></div>
             </div>
+            <div class="section-hd"><span class="heading-sm">历史记录</span><button class="btn btn-ghost btn-sm" onclick="setWeightGoal()">设目标</button></div>
+            <div class="record-list" id="wList"></div>
+            <div class="empty-state" id="wEmpty">暂无体重记录</div>
         </div>
 
-        <!-- === Feeding === -->
+        <!-- ========== FEEDING ========== -->
         <div id="p-feeding" class="module">
-            <div class="page-hd"><h2>喂养</h2><button class="btn btn-primary btn-sm" onclick="openFeedForm()">+ 记录</button></div>
-            <div class="card accent-orange">
-                <div class="card-hd"><span class="card-title">今日喂养</span><span class="card-badge tag-orange" id="feedToday">0 次</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                <h2 class="heading-lg">喂养</h2>
+                <button class="btn btn-primary btn-sm" onclick="openFeedForm()">+ 记录</button>
+            </div>
+            <div class="feed-today-card" id="feedTodayCard">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                    <span class="heading-md">今日喂养</span>
+                    <span class="tag tag-orange" id="feedCount">0 次</span>
+                </div>
                 <div id="feedTodayList"></div>
             </div>
-            <div class="card">
-                <div class="card-hd"><span class="card-title">历史记录</span></div>
-                <div class="table-wrap"><table><thead><tr><th>日期</th><th>时间</th><th>类型</th><th>品牌</th><th>产品</th><th>用量</th><th></th></tr></thead><tbody id="fTb"></tbody></table></div>
-                <div class="empty" id="fEmpty">暂无记录</div>
-            </div>
+            <div class="section-hd"><span class="heading-sm">历史记录</span></div>
+            <div class="record-list" id="fList"></div>
+            <div class="empty-state" id="fEmpty">暂无喂养记录</div>
         </div>
 
-        <!-- === More === -->
+        <!-- ========== MORE ========== -->
         <div id="p-more" class="module">
-            <div class="page-hd"><h2>更多</h2></div>
+            <h2 class="heading-lg" style="margin-bottom:20px">更多</h2>
             <div class="more-grid">
-                <div class="more-item mi-immune" onclick="goSub('immune')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="1.8"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
-                    <span class="mi-label">免疫</span>
-                    <span class="mi-sub">疫苗 · 驱虫</span>
+                <div class="more-card mc-immune" onclick="goSub('immune')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="1.6"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+                    <span class="mc-title">免疫</span>
+                    <span class="mc-sub">疫苗 · 驱虫</span>
                 </div>
-                <div class="more-item mi-expense" onclick="goSub('expense')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="1.8"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-                    <span class="mi-label">消费</span>
-                    <span class="mi-sub">统计 · 记录</span>
+                <div class="more-card mc-expense" onclick="goSub('expense')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#e65100" stroke-width="1.6"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                    <span class="mc-title">消费</span>
+                    <span class="mc-sub">统计 · 记账</span>
                 </div>
-                <div class="more-item mi-medical" onclick="goSub('medical')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8m-4-4h8"/></svg>
-                    <span class="mi-label">医疗</span>
-                    <span class="mi-sub">就诊记录</span>
+                <div class="more-card mc-medical" onclick="goSub('medical')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#1565c0" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8m-4-4h8"/></svg>
+                    <span class="mc-title">医疗</span>
+                    <span class="mc-sub">就诊记录</span>
                 </div>
-                <div class="more-item mi-photo" onclick="goSub('photos')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                    <span class="mi-label">照片</span>
-                    <span class="mi-sub">成长相册</span>
+                <div class="more-card mc-photos" onclick="goSub('photos')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#7b1fa2" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span class="mc-title">照片</span>
+                    <span class="mc-sub">成长相册</span>
                 </div>
             </div>
         </div>
 
-        <!-- === Sub: Immune === -->
+        <!-- ========== SUB: IMMUNE ========== -->
         <div id="p-immune" class="module">
-            <button class="back-btn" onclick="goSub('more')">‹ 返回</button>
-            <div class="page-hd"><h2>免疫管理</h2><button class="btn btn-primary btn-sm" id="imAddBtn" onclick="openVaccineForm()">+ 添加</button></div>
+            <div class="back-row" onclick="goSub('more')">‹ 返回</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                <h2 class="heading-lg">免疫管理</h2>
+                <button class="btn btn-primary btn-sm" id="imAddBtn" onclick="openVaccineForm()">+ 添加</button>
+            </div>
             <div id="imAlerts"></div>
-            <div class="seg-tabs">
-                <button class="seg-tab active" onclick="switchSeg('vaccine',this)">疫苗</button>
-                <button class="seg-tab" onclick="switchSeg('deworm',this)">驱虫</button>
+            <div class="seg-bar">
+                <button class="seg-btn active" onclick="switchSeg('vaccine',this)">疫苗</button>
+                <button class="seg-btn" onclick="switchSeg('deworm',this)">驱虫</button>
             </div>
             <div id="seg-vaccine">
-                <div class="card accent-green">
-                    <div class="card-hd"><span class="card-title">接种时间线</span></div>
-                    <div class="timeline" id="vTimeline"></div>
-                    <div class="empty" id="vEmpty">暂无疫苗记录</div>
-                </div>
-                <div class="card"><div class="table-wrap"><table><thead><tr><th>日期</th><th>名称</th><th>针次</th><th>下次</th><th>医院</th><th></th></tr></thead><tbody id="vTb"></tbody></table></div></div>
+                <div class="card"><div class="timeline" id="vTimeline"></div><div class="empty-state" id="vEmpty">暂无疫苗记录</div></div>
             </div>
             <div id="seg-deworm" style="display:none">
-                <div class="card accent-blue">
-                    <div class="card-hd"><span class="card-title">驱虫时间线</span></div>
-                    <div class="timeline" id="dTimeline"></div>
-                    <div class="empty" id="dEmpty">暂无驱虫记录</div>
-                </div>
-                <div class="card"><div class="table-wrap"><table><thead><tr><th>日期</th><th>类型</th><th>品牌</th><th>下次</th><th>备注</th><th></th></tr></thead><tbody id="dTb"></tbody></table></div></div>
+                <div class="card"><div class="timeline" id="dTimeline"></div><div class="empty-state" id="dEmpty">暂无驱虫记录</div></div>
             </div>
         </div>
 
-        <!-- === Sub: Expense === -->
+        <!-- ========== SUB: EXPENSE ========== -->
         <div id="p-expense" class="module">
-            <button class="back-btn" onclick="goSub('more')">‹ 返回</button>
-            <div class="page-hd"><h2>消费</h2><button class="btn btn-primary btn-sm" onclick="openExpenseForm()">+ 记录</button></div>
-            <div class="card accent-orange">
-                <div class="card-hd"><span class="card-title">消费统计</span></div>
-                <div class="expense-chart">
-                    <div class="pie-wrap"><canvas id="pieChart"></canvas><div class="pie-center"><div class="pc-val" id="pieTotal">¥0</div><div class="pc-label">本月</div></div></div>
-                    <div class="legend" id="pieLegend"></div>
+            <div class="back-row" onclick="goSub('more')">‹ 返回</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                <h2 class="heading-lg">消费</h2>
+                <button class="btn btn-primary btn-sm" onclick="openExpenseForm()">+ 记录</button>
+            </div>
+            <div class="expense-hero">
+                <div class="eh-label">总支出</div>
+                <div class="eh-value" id="expTotal">¥0</div>
+            </div>
+            <div class="card">
+                <div class="pie-section">
+                    <div class="pie-canvas-wrap"><canvas id="pieChart"></canvas></div>
+                    <div class="legend-list" id="pieLegend"></div>
                 </div>
             </div>
-            <div class="stat-row" id="expStats"></div>
-            <div class="card"><div class="table-wrap"><table><thead><tr><th>日期</th><th>分类</th><th>项目</th><th>金额</th><th>备注</th><th></th></tr></thead><tbody id="eTb"></tbody></table></div><div class="empty" id="eEmpty">暂无记录</div></div>
+            <div class="section-hd"><span class="heading-sm">消费记录</span></div>
+            <div class="record-list" id="eList"></div>
+            <div class="empty-state" id="eEmpty">暂无消费记录</div>
         </div>
 
-        <!-- === Sub: Medical === -->
+        <!-- ========== SUB: MEDICAL ========== -->
         <div id="p-medical" class="module">
-            <button class="back-btn" onclick="goSub('more')">‹ 返回</button>
-            <div class="page-hd"><h2>医疗</h2><button class="btn btn-primary btn-sm" onclick="openMedicalForm()">+ 记录</button></div>
-            <div class="card"><div class="table-wrap"><table><thead><tr><th>日期</th><th>类型</th><th>项目</th><th>医院</th><th>费用</th><th></th></tr></thead><tbody id="mTb"></tbody></table></div><div class="empty" id="mEmpty">暂无记录</div></div>
+            <div class="back-row" onclick="goSub('more')">‹ 返回</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                <h2 class="heading-lg">医疗</h2>
+                <button class="btn btn-primary btn-sm" onclick="openMedicalForm()">+ 记录</button>
+            </div>
+            <div class="record-list" id="mList"></div>
+            <div class="empty-state" id="mEmpty">暂无就诊记录</div>
         </div>
 
-        <!-- === Sub: Photos === -->
+        <!-- ========== SUB: PHOTOS ========== -->
         <div id="p-photos" class="module">
-            <button class="back-btn" onclick="goSub('more')">‹ 返回</button>
-            <div class="page-hd"><h2>照片</h2></div>
+            <div class="back-row" onclick="goSub('more')">‹ 返回</div>
+            <h2 class="heading-lg" style="margin-bottom:16px">成长照片</h2>
             <div class="photo-grid" id="photoGrid"></div>
         </div>
     </main>
@@ -477,19 +565,24 @@
     <!-- Tab Bar -->
     <nav class="tab-bar">
         <button class="tab-item active" data-t="profile" onclick="go('profile')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg><span>首页</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V10.5z"/><path d="M9 21V12h6v9"/></svg>
+            <span>首页</span>
         </button>
         <button class="tab-item" data-t="calendar" onclick="go('calendar')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>月历</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+            <span>月历</span>
         </button>
         <button class="tab-item" data-t="weight" onclick="go('weight')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3v18h18"/><polyline points="7 14 11 10 15 12 21 6"/></svg><span>体重</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 2 6-6"/><circle cx="21" cy="6" r="1.5" fill="currentColor"/></svg>
+            <span>体重</span>
         </button>
         <button class="tab-item" data-t="feeding" onclick="go('feeding')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/></svg><span>喂养</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><path d="M6 1v3M10 1v3M14 1v3"/></svg>
+            <span>喂养</span>
         </button>
         <button class="tab-item" data-t="more" onclick="go('more')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="5" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="19" r="1.5" fill="currentColor"/></svg><span>更多</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+            <span>更多</span>
         </button>
     </nav>
 </div>
@@ -503,86 +596,89 @@
 <input type="file" id="phInput" accept="image/*" style="display:none" onchange="handlePhoto(event)">
 
 <script>
-// ==================== DATA ====================
-const KEY='catcare_v4';
-const D_INIT=()=>({profile:{name:'',breed:'',gender:'',birthday:'',adoptDate:'',sterilizeDate:'',color:'',chip:'',notes:'',avatar:''},weight:[],weightGoal:null,vaccine:[],deworm:[],medical:[],feeding:[],expense:[],photos:[],health:[]});
-let D=(()=>{try{const d=JSON.parse(localStorage.getItem(KEY));return d&&d.profile?d:D_INIT()}catch(e){return D_INIT()}})();
+// =============== DATA ===============
+const KEY='catcare_v5';
+const INIT=()=>({profile:{name:'',breed:'',gender:'',birthday:'',adoptDate:'',sterilizeDate:'',color:'',chip:'',notes:'',avatar:''},weight:[],weightGoal:null,vaccine:[],deworm:[],medical:[],feeding:[],expense:[],photos:[],health:[]});
+let D=(()=>{try{const d=JSON.parse(localStorage.getItem(KEY));return d&&d.profile?d:INIT()}catch(e){return INIT()}})();
 const save=()=>localStorage.setItem(KEY,JSON.stringify(D));
-const today=()=>new Date().toISOString().slice(0,10);
+const td=()=>new Date().toISOString().slice(0,10);
+const gi=id=>document.getElementById(id).value;
 
-// ==================== NAV ====================
-let currentPage='profile';
-function go(page){
+// =============== NAV ===============
+function go(p){
     document.querySelectorAll('.module').forEach(e=>e.classList.remove('active'));
-    document.getElementById('p-'+page).classList.add('active');
+    document.getElementById('p-'+p).classList.add('active');
     document.querySelectorAll('.tab-item').forEach(e=>e.classList.remove('active'));
-    const t=document.querySelector(`.tab-item[data-t="${page}"]`);if(t)t.classList.add('active');
-    currentPage=page;
-    if(page==='weight')setTimeout(drawWeightChart,80);
-    if(page==='calendar')renderCalendar();
-    if(page==='feeding')renderFeeding();
+    const t=document.querySelector(`.tab-item[data-t="${p}"]`);if(t)t.classList.add('active');
+    if(p==='weight')setTimeout(drawChart,80);
+    if(p==='calendar')renderCalendar();
+    if(p==='feeding')renderFeeding();
 }
-function goSub(page){
+function goSub(p){
     document.querySelectorAll('.module').forEach(e=>e.classList.remove('active'));
-    document.getElementById('p-'+page).classList.add('active');
-    currentPage=page;
-    if(page==='expense')setTimeout(drawPie,80);
-    if(page==='more'){document.querySelectorAll('.tab-item').forEach(e=>e.classList.remove('active'));document.querySelector('.tab-item[data-t="more"]').classList.add('active')}
+    document.getElementById('p-'+p).classList.add('active');
+    if(p==='expense')setTimeout(drawPie,80);
+    if(p==='immune')renderImmune();
+    if(p==='more'){document.querySelectorAll('.tab-item').forEach(e=>e.classList.remove('active'));document.querySelector('.tab-item[data-t="more"]').classList.add('active')}
 }
 
-// ==================== MODAL ====================
+// =============== MODAL ===============
 function openModal(){document.getElementById('mOverlay').classList.add('show')}
 function closeModal(){document.getElementById('mOverlay').classList.remove('show')}
 function setModal(h){document.getElementById('mBody').innerHTML='<div class="modal-handle"></div>'+h;openModal()}
 
-// ==================== PROFILE ====================
+// =============== PROFILE ===============
 function renderProfile(){
     const p=D.profile;
-    const av=document.getElementById('avatarEl');
-    av.innerHTML=p.avatar?`<img src="${p.avatar}" alt="">`:'🐱';
-    document.getElementById('pName').textContent=p.name||'未命名';
-    const parts=[];
-    if(p.breed)parts.push(p.breed);
-    if(p.gender)parts.push(p.gender==='公'?'♂':'♀');
-    if(p.birthday)parts.push(calcAge(p.birthday));
-    document.getElementById('pSub').textContent=parts.join(' · ')||'点击下方编辑设置信息';
+    // Avatar
+    document.getElementById('avatarEl').innerHTML=p.avatar?`<img src="${p.avatar}" alt="">`:'🐱';
+    // Greeting
+    const h=new Date().getHours();
+    document.getElementById('pGreeting').textContent=h<12?'早上好 ☀️':h<18?'下午好 🌤️':'晚上好 🌙';
+    document.getElementById('pHello').textContent=p.name?`${p.name}的日常`:'这是你今天要做的事~';
+    // ID card
+    document.getElementById('idName').textContent=p.name||'未命名';
+    const subParts=[];
+    if(p.gender)subParts.push(p.gender==='公'?'♂ 男孩':'♀ 女孩');
+    document.getElementById('idSub').textContent=subParts.join(' · ')||'设置猫咪信息';
+    document.getElementById('idBreed').textContent=[p.breed,p.color,p.gender==='公'?'弟弟':'妹妹'].filter(Boolean).join(' · ');
 
-    // Stats
-    let statsHtml='';
-    if(p.birthday)statsHtml+=`<div class="stat-card pink"><div class="s-label">年龄</div><div class="s-value">${calcAge(p.birthday)}</div><div class="s-icon">🎂</div></div>`;
-    if(D.weight.length){const s=[...D.weight].sort((a,b)=>b.date.localeCompare(a.date));statsHtml+=`<div class="stat-card green"><div class="s-label">体重</div><div class="s-value">${s[0].value} kg</div><div class="s-icon">⚖</div></div>`}
-    if(p.adoptDate){const days=Math.ceil((new Date()-new Date(p.adoptDate))/864e5);statsHtml+=`<div class="stat-card blue"><div class="s-label">在一起</div><div class="s-value">${days} 天</div><div class="s-icon">🏠</div></div>`}
-    if(D.expense.length){const t=D.expense.reduce((s,r)=>s+(parseFloat(r.amount)||0),0);statsHtml+=`<div class="stat-card orange"><div class="s-label">总花费</div><div class="s-value">¥${t.toFixed(0)}</div><div class="s-icon">💰</div></div>`}
-    document.getElementById('pStats').innerHTML=statsHtml;
+    // Fields
+    let fieldsHtml='';
+    if(p.birthday){const age=calcAge(p.birthday);fieldsHtml+=`<div class="id-field"><span class="dot" style="background:var(--pink)"></span><span class="f-label">年龄</span><span class="f-value">${age}</span></div>`}
+    if(p.birthday)fieldsHtml+=`<div class="id-field"><span class="dot" style="background:var(--orange)"></span><span class="f-label">生日</span><span class="f-value">${formatDate(p.birthday)}</span></div>`;
+    if(p.adoptDate){const days=Math.ceil((new Date()-new Date(p.adoptDate))/864e5);fieldsHtml+=`<div class="id-field"><span class="dot" style="background:var(--pink-deep)"></span><span class="f-label">在一起</span><span class="f-value">${days} 天</span></div>`}
+    if(p.sterilizeDate)fieldsHtml+=`<div class="id-field"><span class="dot" style="background:var(--green)"></span><span class="f-label">绝育</span><span class="f-value">${formatDate(p.sterilizeDate)}</span></div>`;
+    if(p.chip)fieldsHtml+=`<div class="id-field"><span class="dot" style="background:var(--blue)"></span><span class="f-label">芯片</span><span class="f-value">${p.chip}</span></div>`;
+    document.getElementById('idFields').innerHTML=fieldsHtml||'<p class="text-sm" style="text-align:center;padding:12px">点击编辑设置猫咪信息</p>';
+
+    // Footer stats
+    let footerHtml='';
+    if(D.weight.length){const w=[...D.weight].sort((a,b)=>b.date.localeCompare(a.date))[0];footerHtml+=`<div class="id-stat"><div class="sv">${w.value} kg</div><div class="sl">最新体重</div></div>`}
+    if(D.expense.length){const t=D.expense.reduce((s,r)=>s+(parseFloat(r.amount)||0),0);footerHtml+=`<div class="id-stat"><div class="sv">¥${t.toFixed(0)}</div><div class="sl">累计花费</div></div>`}
+    if(D.feeding.length){footerHtml+=`<div class="id-stat"><div class="sv">${D.feeding.length}</div><div class="sl">喂养次数</div></div>`}
+    document.getElementById('idFooter').innerHTML=footerHtml||'';
+    document.getElementById('idFooter').style.display=footerHtml?'flex':'none';
 
     // Reminders
-    const todayStr=today();
-    let rHtml='';
+    const todayStr=td();let rHtml='';
     const overdueV=D.vaccine.filter(r=>r.nextDate&&r.nextDate<todayStr);
     const overdueD=D.deworm.filter(r=>r.nextDate&&r.nextDate<todayStr);
-    if(overdueV.length)rHtml+=`<div class="reminder danger"><span class="r-dot"></span>${overdueV.length}项疫苗已过期</div>`;
-    if(overdueD.length)rHtml+=`<div class="reminder warn"><span class="r-dot"></span>${overdueD.length}项驱虫已过期</div>`;
+    overdueV.forEach(r=>{rHtml+=reminderCard('danger','⚠️',r.name+' 已过期','应于 '+r.nextDate,'过期')});
+    overdueD.forEach(r=>{rHtml+=reminderCard('danger','⚠️','驱虫已过期','应于 '+r.nextDate,'过期')});
     const nextV=D.vaccine.filter(r=>r.nextDate&&r.nextDate>=todayStr).sort((a,b)=>a.nextDate.localeCompare(b.nextDate))[0];
     const nextD=D.deworm.filter(r=>r.nextDate&&r.nextDate>=todayStr).sort((a,b)=>a.nextDate.localeCompare(b.nextDate))[0];
-    if(nextV&&!overdueV.length){const d=Math.ceil((new Date(nextV.nextDate)-new Date())/864e5);rHtml+=`<div class="reminder ${d<=7?'warn':'ok'}"><span class="r-dot"></span>${nextV.name} ${nextV.nextDate}（${d}天后）</div>`}
-    if(nextD&&!overdueD.length){const d=Math.ceil((new Date(nextD.nextDate)-new Date())/864e5);rHtml+=`<div class="reminder ${d<=7?'warn':'ok'}"><span class="r-dot"></span>驱虫 ${nextD.nextDate}（${d}天后）</div>`}
+    if(nextV){const d=Math.ceil((new Date(nextV.nextDate)-new Date())/864e5);rHtml+=reminderCard(d<=7?'warn':'ok','💉',nextV.name,nextV.nextDate,'倒计时'+d+'天')}
+    if(nextD){const d=Math.ceil((new Date(nextD.nextDate)-new Date())/864e5);rHtml+=reminderCard(d<=7?'warn':'ok','🛡️','驱虫',nextD.nextDate,'倒计时'+d+'天')}
     document.getElementById('pReminders').innerHTML=rHtml;
-
-    // Recent weight
-    const wEl=document.getElementById('pWeight');
-    if(D.weight.length){const r=[...D.weight].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,3);wEl.innerHTML=r.map(w=>`<div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px"><span style="color:var(--gray-500)">${w.date}</span><span style="font-weight:600">${w.value} kg</span></div>`).join('')}else{wEl.innerHTML='<div class="empty">暂无</div>'}
-
-    // Recent events
-    const eEl=document.getElementById('pEvents');
-    const events=[];
-    D.vaccine.forEach(r=>events.push({date:r.date,text:'疫苗: '+r.name,color:'green'}));
-    D.deworm.forEach(r=>events.push({date:r.date,text:'驱虫: '+(r.brand||r.type),color:'blue'}));
-    D.medical.forEach(r=>events.push({date:r.date,text:'就诊: '+r.diagnosis,color:'orange'}));
-    events.sort((a,b)=>b.date.localeCompare(a.date));
-    if(events.length){eEl.innerHTML=events.slice(0,4).map(e=>`<div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13px"><span class="tag tag-${e.color}" style="min-width:fit-content">${e.date}</span><span>${e.text}</span></div>`).join('')}else{eEl.innerHTML='<div class="empty">暂无</div>'}
 }
 
-function calcAge(b){const born=new Date(b),now=new Date();let m=(now.getFullYear()-born.getFullYear())*12+(now.getMonth()-born.getMonth());if(now.getDate()<born.getDate())m--;if(m<0)m=0;return m>=12?(Math.floor(m/12)+'岁'+(m%12?m%12+'月':'')):m+'个月'}
+function reminderCard(type,icon,title,sub,countdown){
+    return`<div class="reminder-card ${type}"><div class="rc-icon">${icon}</div><div><div class="rc-text">${title}</div><div class="rc-sub">${sub}</div></div><div class="rc-countdown">${countdown}</div></div>`;
+}
+
+function calcAge(b){const born=new Date(b),now=new Date();let m=(now.getFullYear()-born.getFullYear())*12+(now.getMonth()-born.getMonth());if(now.getDate()<born.getDate())m--;if(m<0)m=0;if(m>=12){const y=Math.floor(m/12),rm=m%12;return y+'岁'+(rm?rm+'个月':'')}return m+'个月'}
+function formatDate(d){if(!d)return'';const parts=d.split('-');return parseInt(parts[1])+'月'+parseInt(parts[2])+'日'}
 
 function editProfile(){
     const p=D.profile;
@@ -592,321 +688,292 @@ function editProfile(){
     <div class="form-row"><div class="form-group"><label>出生日期</label><input type="date" id="fp-bd" value="${p.birthday||''}"></div><div class="form-group"><label>接回日期</label><input type="date" id="fp-ad" value="${p.adoptDate||''}"></div></div>
     <div class="form-row"><div class="form-group"><label>绝育日期</label><input type="date" id="fp-sd" value="${p.sterilizeDate||''}"></div><div class="form-group"><label>芯片号</label><input id="fp-ch" value="${p.chip||''}"></div></div>
     <div class="form-group"><label>备注</label><textarea id="fp-nt">${p.notes||''}</textarea></div>
-    <div class="form-actions"><button class="btn btn-outline" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveProfile()">保存</button></div>`);
+    <div class="form-actions"><button class="btn btn-ghost" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveProfile()">保存</button></div>`);
 }
 function saveProfile(){D.profile={...D.profile,name:gi('fp-n'),breed:gi('fp-b'),gender:gi('fp-g'),color:gi('fp-c'),birthday:gi('fp-bd'),adoptDate:gi('fp-ad'),sterilizeDate:gi('fp-sd'),chip:gi('fp-ch'),notes:gi('fp-nt')};save();renderProfile();closeModal()}
 function handleAvatar(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{D.profile.avatar=ev.target.result;save();renderProfile()};r.readAsDataURL(f)}
-function gi(id){return document.getElementById(id).value}
 
-// ==================== CALENDAR ====================
-let calYear,calMonth,calSelected=today();
-(function(){const d=new Date();calYear=d.getFullYear();calMonth=d.getMonth()})();
+// =============== CALENDAR ===============
+let calY,calM,calSel=td();
+(function(){const d=new Date();calY=d.getFullYear();calM=d.getMonth()})();
 
 function renderCalendar(){
-    document.getElementById('calTitle').textContent=`${calYear}年${calMonth+1}月`;
+    document.getElementById('calTitle').textContent=`${calY}年${calM+1}月`;
     const grid=document.getElementById('calGrid');
     const dows=['日','一','二','三','四','五','六'];
     let html=dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');
-    const firstDay=new Date(calYear,calMonth,1).getDay();
-    const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
-    const prevDays=new Date(calYear,calMonth,0).getDate();
-    const todayStr=today();
-
-    // Get events for this month
-    const monthStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}`;
-    const eventDays=getMonthEvents(monthStr);
-
-    for(let i=0;i<firstDay;i++){const d=prevDays-firstDay+1+i;html+=`<div class="cal-day other">${d}</div>`}
-    for(let d=1;d<=daysInMonth;d++){
-        const dateStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-        const isToday=dateStr===todayStr;
-        const isSel=dateStr===calSelected;
-        const dots=eventDays[dateStr]||[];
-        let dotHtml='';
-        if(dots.length)dotHtml=`<div class="dots">${dots.slice(0,3).map(c=>`<span style="background:var(--${c}-400)"></span>`).join('')}</div>`;
-        html+=`<div class="cal-day${isToday?' today':''}${isSel?' selected':''}" onclick="selectDay('${dateStr}')">${d}${dotHtml}</div>`;
+    const first=new Date(calY,calM,1).getDay();
+    const days=new Date(calY,calM+1,0).getDate();
+    const prev=new Date(calY,calM,0).getDate();
+    const mStr=`${calY}-${String(calM+1).padStart(2,'0')}`;
+    const evMap=getMonthEvents(mStr);
+    for(let i=0;i<first;i++){html+=`<div class="cal-day other">${prev-first+1+i}</div>`}
+    for(let d=1;d<=days;d++){
+        const ds=`${mStr}-${String(d).padStart(2,'0')}`;
+        const isT=ds===td(),isS=ds===calSel;
+        const dots=evMap[ds]||[];
+        let dotH=dots.length?`<div class="dots">${dots.slice(0,3).map(c=>`<span style="background:${c}"></span>`).join('')}</div>`:'';
+        html+=`<div class="cal-day${isT?' today':''}${isS?' selected':''}" onclick="pickDay('${ds}')">${d}${dotH}</div>`;
     }
-    const remain=42-(firstDay+daysInMonth);
-    for(let i=1;i<=remain;i++){html+=`<div class="cal-day other">${i}</div>`}
+    const rem=42-(first+days);for(let i=1;i<=rem;i++)html+=`<div class="cal-day other">${i}</div>`;
     grid.innerHTML=html;
-    renderDayEvents(calSelected);
+    renderDayDetail(calSel);
 }
-
-function getMonthEvents(monthStr){
+function getMonthEvents(m){
     const map={};
-    D.vaccine.forEach(r=>{if(r.date.startsWith(monthStr)){(map[r.date]=map[r.date]||[]).push('green')}if(r.nextDate&&r.nextDate.startsWith(monthStr)){(map[r.nextDate]=map[r.nextDate]||[]).push('green')}});
-    D.deworm.forEach(r=>{if(r.date.startsWith(monthStr)){(map[r.date]=map[r.date]||[]).push('blue')}if(r.nextDate&&r.nextDate.startsWith(monthStr)){(map[r.nextDate]=map[r.nextDate]||[]).push('blue')}});
-    D.medical.forEach(r=>{if(r.date.startsWith(monthStr)){(map[r.date]=map[r.date]||[]).push('orange')}});
-    D.health.forEach(r=>{if(r.date.startsWith(monthStr)){(map[r.date]=map[r.date]||[]).push('red')}});
-    D.weight.forEach(r=>{if(r.date.startsWith(monthStr)){(map[r.date]=map[r.date]||[]).push('pink')}});
+    const add=(d,c)=>{if(d&&d.startsWith(m))(map[d]=map[d]||[]).push(c)};
+    D.vaccine.forEach(r=>{add(r.date,'var(--green)');add(r.nextDate,'var(--green)')});
+    D.deworm.forEach(r=>{add(r.date,'var(--blue)');add(r.nextDate,'var(--blue)')});
+    D.medical.forEach(r=>add(r.date,'var(--orange)'));
+    D.health.forEach(r=>add(r.date,'var(--red)'));
+    D.weight.forEach(r=>add(r.date,'var(--pink-deep)'));
     return map;
 }
-
-function selectDay(dateStr){calSelected=dateStr;renderCalendar()}
-function changeMonth(dir){calMonth+=dir;if(calMonth>11){calMonth=0;calYear++}if(calMonth<0){calMonth=11;calYear--}renderCalendar()}
-
-function renderDayEvents(dateStr){
-    const el=document.getElementById('dayEvents');
-    const events=[];
-    D.vaccine.forEach(r=>{if(r.date===dateStr)events.push({color:'green',text:`疫苗接种: ${r.name}${r.dose?' 第'+r.dose+'针':''}`});if(r.nextDate===dateStr)events.push({color:'green',text:`[预定] 疫苗: ${r.name}`})});
-    D.deworm.forEach(r=>{if(r.date===dateStr)events.push({color:'blue',text:`驱虫: ${r.type||''}${r.brand?' '+r.brand:''}`});if(r.nextDate===dateStr)events.push({color:'blue',text:`[预定] 驱虫`})});
-    D.medical.forEach(r=>{if(r.date===dateStr)events.push({color:'orange',text:`就诊: ${r.diagnosis}`})});
-    D.health.forEach(r=>{if(r.date===dateStr)events.push({color:'red',text:`异常: ${r.type}${r.severity?' ('+r.severity+')':''}${r.note?' - '+r.note:''}`})});
-    D.weight.forEach(r=>{if(r.date===dateStr)events.push({color:'pink',text:`体重: ${r.value} kg`})});
-    D.feeding.filter(r=>r.date===dateStr).forEach(r=>{events.push({color:'gray',text:`喂养: ${r.type}${r.brand?' '+r.brand:''} ${r.amount||''}`})});
-
-    if(!events.length){el.innerHTML=`<div class="de-empty">${dateStr} 无事项</div>`;return}
-    el.innerHTML=events.map(e=>`<div class="de-item"><span class="de-dot" style="background:var(--${e.color}-400)"></span><span>${e.text}</span></div>`).join('');
+function pickDay(ds){calSel=ds;renderCalendar()}
+function changeMonth(dir){calM+=dir;if(calM>11){calM=0;calY++}if(calM<0){calM=11;calY--}renderCalendar()}
+function renderDayDetail(ds){
+    const el=document.getElementById('dayDetail');
+    const evs=[];
+    D.vaccine.forEach(r=>{if(r.date===ds)evs.push({c:'var(--green)',t:'疫苗: '+r.name+(r.dose?' 第'+r.dose+'针':'')});if(r.nextDate===ds)evs.push({c:'var(--green)',t:'[预定] 疫苗: '+r.name})});
+    D.deworm.forEach(r=>{if(r.date===ds)evs.push({c:'var(--blue)',t:'驱虫: '+(r.type||'')+(r.brand?' '+r.brand:'')});if(r.nextDate===ds)evs.push({c:'var(--blue)',t:'[预定] 驱虫'})});
+    D.medical.forEach(r=>{if(r.date===ds)evs.push({c:'var(--orange)',t:'就诊: '+r.diagnosis})});
+    D.health.forEach(r=>{if(r.date===ds)evs.push({c:'var(--red)',t:'异常: '+r.type+(r.severity?' ('+r.severity+')':'')+(r.note?' - '+r.note:'')})});
+    D.weight.forEach(r=>{if(r.date===ds)evs.push({c:'var(--pink-deep)',t:'体重: '+r.value+' kg'})});
+    if(!evs.length){el.innerHTML=`<div class="day-detail-empty">${ds} 暂无事项</div>`;return}
+    el.innerHTML=evs.map(e=>`<div class="day-detail-item"><span class="dd-dot" style="background:${e.c}"></span><span class="dd-text">${e.t}</span></div>`).join('');
 }
-
-// Health record
 function openHealthForm(){
     setModal(`<h3>记录异常</h3>
-    <div class="form-group"><label>日期</label><input type="date" id="fh-d" value="${today()}"></div>
-    <div class="form-group"><label>异常类型</label>
-        <div class="chip-group" id="fh-chips">
-            ${['软便','腹泻','呕吐','食欲下降','咳嗽','打喷嚏','精神萎靡','皮肤异常','眼睛异常','其他'].map(t=>`<div class="chip" onclick="selectChip(this,'fh-type')" data-v="${t}">${t}</div>`).join('')}
-        </div>
-        <input type="hidden" id="fh-type" value="">
-    </div>
-    <div class="form-group"><label>严重程度</label><select id="fh-sev"><option value="轻微">轻微</option><option value="中等">中等</option><option value="严重">严重 / 需就医</option></select></div>
-    <div class="form-group"><label>备注</label><textarea id="fh-n" placeholder="描述具体情况…"></textarea></div>
-    <div class="form-actions"><button class="btn btn-outline" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveHealth()">保存</button></div>`);
+    <div class="form-group"><label>日期</label><input type="date" id="fh-d" value="${td()}"></div>
+    <div class="form-group"><label>异常类型</label><div class="chip-group" id="fhChips">${['软便','腹泻','呕吐','食欲下降','咳嗽','打喷嚏','精神萎靡','皮肤异常','眼睛异常','其他'].map(t=>`<div class="chip" onclick="pickChip(this)" data-v="${t}">${t}</div>`).join('')}</div><input type="hidden" id="fh-type"></div>
+    <div class="form-group"><label>严重程度</label><select id="fh-sev"><option>轻微</option><option>中等</option><option>严重</option></select></div>
+    <div class="form-group"><label>备注</label><textarea id="fh-n" placeholder="描述具体情况"></textarea></div>
+    <div class="form-actions"><button class="btn btn-ghost" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveHealth()">保存</button></div>`);
 }
-function selectChip(el,inputId){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');document.getElementById(inputId).value=el.dataset.v}
-function saveHealth(){const r={date:gi('fh-d'),type:gi('fh-type'),severity:gi('fh-sev'),note:gi('fh-n')};if(!r.date||!r.type){alert('请选择类型');return}D.health.push(r);save();renderCalendar();closeModal()}
+function pickChip(el){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');document.getElementById('fh-type').value=el.dataset.v}
+function saveHealth(){const r={date:gi('fh-d'),type:gi('fh-type'),severity:gi('fh-sev'),note:gi('fh-n')};if(!r.type){alert('请选择异常类型');return}D.health.push(r);save();renderCalendar();closeModal()}
 
-// ==================== WEIGHT ====================
+// =============== WEIGHT ===============
 function renderWeight(){
     const sorted=[...D.weight].sort((a,b)=>b.date.localeCompare(a.date));
-    const tb=document.getElementById('wTb'),em=document.getElementById('wEmpty');
-    if(!sorted.length){tb.innerHTML='';em.style.display='block';return}
+    // Summary cards
+    let sumHtml='';
+    if(sorted.length){
+        sumHtml+=`<div class="ws-card current"><div class="ws-val">${sorted[0].value} kg</div><div class="ws-label">当前体重</div></div>`;
+        if(sorted.length>=2){const diff=(sorted[0].value-sorted[1].value).toFixed(2);sumHtml+=`<div class="ws-card change"><div class="ws-val">${diff>0?'+':''}${diff}</div><div class="ws-label">较上次</div></div>`}
+        if(D.weightGoal)sumHtml+=`<div class="ws-card goal"><div class="ws-val">${D.weightGoal} kg</div><div class="ws-label">目标</div></div>`;
+    }
+    document.getElementById('wSummary').innerHTML=sumHtml;
+    // List
+    const list=document.getElementById('wList'),em=document.getElementById('wEmpty');
+    if(!sorted.length){list.innerHTML='';em.style.display='block';return}
     em.style.display='none';
-    tb.innerHTML=sorted.map((r,i)=>{
-        const idx=D.weight.indexOf(r);const prev=sorted[i+1];
-        let chg='-';
-        if(prev){const d=(r.value-prev.value).toFixed(2);chg=d>0?`<span style="color:var(--green-600)">+${d}</span>`:d<0?`<span style="color:var(--red-600)">${d}</span>`:'0'}
-        return`<tr><td>${r.date}</td><td>${r.value} kg</td><td>${chg}</td><td>${r.note||'-'}</td><td class="actions"><button class="btn btn-ghost btn-sm" onclick="openWeightForm(${idx})">编辑</button><button class="btn btn-danger btn-sm" onclick="delRec('weight',${idx})">删除</button></td></tr>`
+    list.innerHTML=sorted.map((r,i)=>{
+        const idx=D.weight.indexOf(r);
+        const prev=sorted[i+1];
+        let chg='';
+        if(prev){const d=(r.value-prev.value).toFixed(2);chg=d>0?`<span style="color:var(--green)">↑ ${d}</span>`:d<0?`<span style="color:var(--red)">↓ ${Math.abs(d)}</span>`:''}
+        return`<div class="record-item"><div class="ri-top"><div><div class="ri-title">${r.value} kg</div><div class="ri-sub">${r.date}${r.note?' · '+r.note:''}</div></div><div class="ri-right">${chg}</div></div><div class="ri-bottom"><span></span><div class="ri-actions"><button class="btn btn-ghost btn-sm" onclick="openWeightForm(${idx})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="delRec('weight',${idx})">删除</button></div></div></div>`;
     }).join('');
 }
 
-function drawWeightChart(){
+function drawChart(){
     const c=document.getElementById('wChart');if(!c)return;
     const ctx=c.getContext('2d');const rect=c.parentElement.getBoundingClientRect();
     c.width=rect.width*2;c.height=rect.height*2;ctx.scale(2,2);
     const W=rect.width,H=rect.height;ctx.clearRect(0,0,W,H);
     const sorted=[...D.weight].sort((a,b)=>a.date.localeCompare(b.date));
-    if(sorted.length<2){ctx.fillStyle='#9ca3af';ctx.font='13px sans-serif';ctx.textAlign='center';ctx.fillText('需要至少2条记录',W/2,H/2);return}
+    if(sorted.length<2){ctx.fillStyle='#b8a99a';ctx.font='500 13px sans-serif';ctx.textAlign='center';ctx.fillText('需要至少 2 条记录',W/2,H/2);return}
     const vals=sorted.map(r=>r.value);
     let mn=Math.min(...vals)-0.3,mx=Math.max(...vals)+0.3;
     if(D.weightGoal){mn=Math.min(mn,D.weightGoal-0.3);mx=Math.max(mx,D.weightGoal+0.3)}
-    const pad={t:14,r:14,b:22,l:34},cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
-    // Grid
-    ctx.strokeStyle='#f3f4f6';ctx.lineWidth=1;
-    for(let i=0;i<=4;i++){const y=pad.t+(cH/4)*i;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();ctx.fillStyle='#9ca3af';ctx.font='10px sans-serif';ctx.textAlign='right';ctx.fillText((mx-(mx-mn)*i/4).toFixed(1),pad.l-4,y+3)}
+    const pad={t:24,r:12,b:28,l:38},cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
+    // Horizontal grid
+    ctx.strokeStyle='#f2ebe4';ctx.lineWidth=1;
+    for(let i=0;i<=4;i++){const y=pad.t+(cH/4)*i;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();ctx.fillStyle='#b8a99a';ctx.font='500 10px -apple-system,sans-serif';ctx.textAlign='right';ctx.fillText((mx-(mx-mn)*i/4).toFixed(1),pad.l-6,y+3)}
     // Goal line
-    if(D.weightGoal){
-        const gy=pad.t+cH-((D.weightGoal-mn)/(mx-mn))*cH;
-        ctx.setLineDash([4,3]);ctx.strokeStyle='#f472a8';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(W-pad.r,gy);ctx.stroke();ctx.setLineDash([]);
-        ctx.fillStyle='#f472a8';ctx.font='10px sans-serif';ctx.textAlign='left';ctx.fillText('目标 '+D.weightGoal,W-pad.r-40,gy-4);
-    }
-    const pts=sorted.map((r,i)=>({x:pad.l+(cW/(sorted.length-1))*i,y:pad.t+cH-((r.value-mn)/(mx-mn))*cH}));
-    // Fill
-    const grad=ctx.createLinearGradient(0,pad.t,0,H-pad.b);grad.addColorStop(0,'rgba(34,197,94,0.1)');grad.addColorStop(1,'rgba(34,197,94,0)');
+    if(D.weightGoal){const gy=pad.t+cH-((D.weightGoal-mn)/(mx-mn))*cH;ctx.setLineDash([5,4]);ctx.strokeStyle='var(--pink-deep)';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(W-pad.r,gy);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#ff8fab';ctx.font='600 10px sans-serif';ctx.textAlign='right';ctx.fillText('目标 '+D.weightGoal,W-pad.r,gy-6)}
+    // Points
+    const pts=sorted.map((r,i)=>({x:pad.l+(cW/(sorted.length-1))*i,y:pad.t+cH-((r.value-mn)/(mx-mn))*cH,v:r.value}));
+    // Area fill
+    const grad=ctx.createLinearGradient(0,pad.t,0,H-pad.b);grad.addColorStop(0,'rgba(255,143,175,0.15)');grad.addColorStop(1,'rgba(255,143,175,0)');
     ctx.beginPath();ctx.moveTo(pts[0].x,H-pad.b);pts.forEach(p=>ctx.lineTo(p.x,p.y));ctx.lineTo(pts[pts.length-1].x,H-pad.b);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
     // Line
-    ctx.beginPath();ctx.lineWidth=2;ctx.lineJoin='round';ctx.lineCap='round';pts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));ctx.strokeStyle='#22c55e';ctx.stroke();
-    // Dots
-    pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,3.5,0,Math.PI*2);ctx.fillStyle='#22c55e';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke()});
+    ctx.beginPath();ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.lineCap='round';pts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));ctx.strokeStyle='#ff8fab';ctx.stroke();
+    // Dots + labels
+    pts.forEach((p,i)=>{
+        ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);ctx.fillStyle='#ff8fab';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+        // Value labels on dots
+        ctx.fillStyle='#2d2017';ctx.font='700 11px -apple-system,sans-serif';ctx.textAlign='center';ctx.fillText(p.v,p.x,p.y-10);
+    });
     // X labels
-    ctx.fillStyle='#9ca3af';ctx.font='10px sans-serif';ctx.textAlign='center';
+    ctx.fillStyle='#b8a99a';ctx.font='500 10px sans-serif';ctx.textAlign='center';
     const step=Math.max(1,Math.floor(sorted.length/5));
-    sorted.forEach((r,i)=>{if(i%step===0||i===sorted.length-1)ctx.fillText(r.date.slice(5),pts[i].x,H-pad.b+12)});
+    sorted.forEach((r,i)=>{if(i%step===0||i===sorted.length-1)ctx.fillText(r.date.slice(5),pts[i].x,H-pad.b+14)});
 }
 
 function openWeightForm(idx=-1){
-    const e=idx>=0,r=e?D.weight[idx]:{date:today(),value:'',note:''};
+    const e=idx>=0,r=e?D.weight[idx]:{date:td(),value:'',note:''};
     setModal(`<h3>${e?'编辑':'记录'}体重</h3>
-    <div class="form-row"><div class="form-group"><label>日期</label><input type="date" id="fw-d" value="${r.date}"></div><div class="form-group"><label>体重 (kg)</label><input type="number" step="0.01" id="fw-v" value="${r.value}"></div></div>
+    <div class="form-row"><div class="form-group"><label>日期</label><input type="date" id="fw-d" value="${r.date}"></div><div class="form-group"><label>体重 (kg)</label><input type="number" step="0.01" id="fw-v" value="${r.value}" placeholder="3.50"></div></div>
     <div class="form-group"><label>备注</label><input id="fw-n" value="${r.note||''}"></div>
-    <div class="form-actions"><button class="btn btn-outline" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveWeight(${idx})">保存</button></div>`);
+    <div class="form-actions"><button class="btn btn-ghost" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveWeight(${idx})">保存</button></div>`);
 }
-function saveWeight(idx){const r={date:gi('fw-d'),value:parseFloat(gi('fw-v')),note:gi('fw-n')};if(!r.date||isNaN(r.value)){alert('请填写');return}if(idx>=0)D.weight[idx]=r;else D.weight.push(r);save();renderWeight();drawWeightChart();renderProfile();closeModal()}
-function setWeightGoal(){const v=prompt('设定目标体重 (kg)：',D.weightGoal||'');if(v===null)return;D.weightGoal=parseFloat(v)||null;save();drawWeightChart()}
+function saveWeight(idx){const r={date:gi('fw-d'),value:parseFloat(gi('fw-v')),note:gi('fw-n')};if(!r.date||isNaN(r.value)){alert('请填写日期和体重');return}if(idx>=0)D.weight[idx]=r;else D.weight.push(r);save();renderWeight();drawChart();renderProfile();closeModal()}
+function setWeightGoal(){const v=prompt('设定目标体重 (kg)：',D.weightGoal||'');if(v===null)return;D.weightGoal=parseFloat(v)||null;save();drawChart();renderWeight()}
 
-// ==================== FEEDING ====================
+// =============== FEEDING ===============
 function renderFeeding(){
     const sorted=[...D.feeding].sort((a,b)=>b.date!==a.date?b.date.localeCompare(a.date):(b.time||'').localeCompare(a.time||''));
-    const tb=document.getElementById('fTb'),em=document.getElementById('fEmpty');
-    // Today summary
-    const todayRecs=D.feeding.filter(r=>r.date===today());
-    document.getElementById('feedToday').textContent=todayRecs.length+' 次';
+    const todayRecs=D.feeding.filter(r=>r.date===td());
+    document.getElementById('feedCount').textContent=todayRecs.length+' 次';
     const ftl=document.getElementById('feedTodayList');
-    if(todayRecs.length){ftl.innerHTML=todayRecs.map(r=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px"><span class="tag tag-${feedColor(r.type)}">${r.type}</span><span>${r.brand||''} ${r.product||''}</span><span style="color:var(--gray-400);margin-left:auto">${r.time||''} ${r.amount||''}</span></div>`).join('')}else{ftl.innerHTML='<div class="empty">今天还没有喂养记录</div>'}
-
-    if(!sorted.length){tb.innerHTML='';em.style.display='block';return}
+    if(todayRecs.length){ftl.innerHTML=todayRecs.map(r=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-top:1px dashed var(--border)"><span style="font-size:13px;font-weight:600">${r.type} ${r.brand||''}</span><span class="text-sm">${r.time||''} ${r.amount||''}</span></div>`).join('')}else{ftl.innerHTML='<p class="text-sm" style="opacity:0.6;margin-top:4px">今天还没有喂养记录哦</p>'}
+    const list=document.getElementById('fList'),em=document.getElementById('fEmpty');
+    if(!sorted.length){list.innerHTML='';em.style.display='block';return}
     em.style.display='none';
-    tb.innerHTML=sorted.map(r=>{const i=D.feeding.indexOf(r);return`<tr><td>${r.date}</td><td>${r.time||'-'}</td><td><span class="tag tag-${feedColor(r.type)}">${r.type}</span></td><td>${r.brand||'-'}</td><td>${r.product||'-'}</td><td>${r.amount||'-'}</td><td class="actions"><button class="btn btn-ghost btn-sm" onclick="openFeedForm(${i})">编辑</button><button class="btn btn-danger btn-sm" onclick="delRec('feeding',${i})">删除</button></td></tr>`}).join('');
+    const fc=t=>({干粮:'tag-orange',湿粮:'tag-blue',零食:'tag-purple',生骨肉:'tag-green'}[t]||'tag-warm');
+    list.innerHTML=sorted.slice(0,30).map(r=>{const i=D.feeding.indexOf(r);return`<div class="record-item"><div class="ri-top"><div><div class="ri-title">${r.type}${r.brand?' · '+r.brand:''}</div><div class="ri-sub">${r.date} ${r.time||''}</div></div><div class="ri-right"><span class="tag ${fc(r.type)}">${r.type}</span></div></div>${r.product||r.amount?`<div class="ri-bottom"><span class="text-sm">${[r.product,r.amount].filter(Boolean).join(' · ')}</span><div class="ri-actions"><button class="btn btn-ghost btn-sm" onclick="openFeedForm(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="delRec('feeding',${i})">删除</button></div></div>`:`<div class="ri-bottom"><span></span><div class="ri-actions"><button class="btn btn-ghost btn-sm" onclick="openFeedForm(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="delRec('feeding',${i})">删除</button></div></div>`}</div>`}).join('');
 }
-function feedColor(t){return{干粮:'orange',湿粮:'blue',零食:'purple',生骨肉:'green'}[t]||'gray'}
-
 function openFeedForm(idx=-1){
-    const e=idx>=0,r=e?D.feeding[idx]:{date:today(),time:'',type:'',brand:'',product:'',amount:'',note:''};
+    const e=idx>=0,r=e?D.feeding[idx]:{date:td(),time:'',type:'',brand:'',product:'',amount:'',note:''};
     setModal(`<h3>${e?'编辑':'记录'}喂养</h3>
     <div class="form-row"><div class="form-group"><label>日期</label><input type="date" id="ff-d" value="${r.date}"></div><div class="form-group"><label>时间</label><input type="time" id="ff-t" value="${r.time||''}"></div></div>
     <div class="form-group"><label>类型</label><select id="ff-tp"><option value="">选择</option>${['干粮','湿粮','零食','生骨肉','冻干','营养膏','水','其他'].map(t=>`<option${r.type===t?' selected':''}>${t}</option>`).join('')}</select></div>
     <div class="form-row"><div class="form-group"><label>品牌</label><input id="ff-b" value="${r.brand||''}"></div><div class="form-group"><label>产品</label><input id="ff-p" value="${r.product||''}"></div></div>
     <div class="form-group"><label>用量</label><input id="ff-a" value="${r.amount||''}" placeholder="30g / 半罐"></div>
-    <div class="form-group"><label>备注</label><input id="ff-n" value="${r.note||''}"></div>
-    <div class="form-actions"><button class="btn btn-outline" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveFeed(${idx})">保存</button></div>`);
+    <div class="form-actions"><button class="btn btn-ghost" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveFeed(${idx})">保存</button></div>`);
 }
-function saveFeed(idx){const r={date:gi('ff-d'),time:gi('ff-t'),type:gi('ff-tp'),brand:gi('ff-b'),product:gi('ff-p'),amount:gi('ff-a'),note:gi('ff-n')};if(!r.date||!r.type){alert('请填写');return}if(idx>=0)D.feeding[idx]=r;else D.feeding.push(r);save();renderFeeding();closeModal()}
+function saveFeed(idx){const r={date:gi('ff-d'),time:gi('ff-t'),type:gi('ff-tp'),brand:gi('ff-b'),product:gi('ff-p'),amount:gi('ff-a'),note:''};if(!r.date||!r.type){alert('请填写日期和类型');return}if(idx>=0)D.feeding[idx]=r;else D.feeding.push(r);save();renderFeeding();closeModal()}
 
-// ==================== IMMUNE ====================
-function switchSeg(seg,btn){
-    btn.parentElement.querySelectorAll('.seg-tab').forEach(e=>e.classList.remove('active'));btn.classList.add('active');
-    document.getElementById('seg-vaccine').style.display=seg==='vaccine'?'block':'none';
-    document.getElementById('seg-deworm').style.display=seg==='deworm'?'block':'none';
-    document.getElementById('imAddBtn').onclick=seg==='vaccine'?()=>openVaccineForm():()=>openDewormForm();
-}
-
+// =============== IMMUNE ===============
+function switchSeg(seg,btn){btn.parentElement.querySelectorAll('.seg-btn').forEach(e=>e.classList.remove('active'));btn.classList.add('active');document.getElementById('seg-vaccine').style.display=seg==='vaccine'?'block':'none';document.getElementById('seg-deworm').style.display=seg==='deworm'?'block':'none';document.getElementById('imAddBtn').onclick=seg==='vaccine'?()=>openVaccineForm():()=>openDewormForm()}
 function renderImmune(){
-    // Vaccine
+    // Vaccine timeline
     const vSorted=[...D.vaccine].sort((a,b)=>b.date.localeCompare(a.date));
-    const vTb=document.getElementById('vTb'),vTl=document.getElementById('vTimeline'),vEm=document.getElementById('vEmpty');
-    if(!vSorted.length){vTb.innerHTML='';vTl.innerHTML='';vEm.style.display='block'}else{
+    const vTl=document.getElementById('vTimeline'),vEm=document.getElementById('vEmpty');
+    if(!vSorted.length){vTl.innerHTML='';vEm.style.display='block'}else{
         vEm.style.display='none';
-        vTb.innerHTML=vSorted.map(r=>{const i=D.vaccine.indexOf(r);return`<tr><td>${r.date}</td><td>${r.name}</td><td>${r.dose||'-'}</td><td>${r.nextDate||'-'}</td><td>${r.hospital||'-'}</td><td class="actions"><button class="btn btn-ghost btn-sm" onclick="openVaccineForm(${i})">编辑</button><button class="btn btn-danger btn-sm" onclick="delRec('vaccine',${i})">删除</button></td></tr>`}).join('');
-        vTl.innerHTML=[...vSorted].reverse().map(r=>`<div class="tl-item green"><div class="tl-date">${r.date}</div><div class="tl-text">${r.name}${r.dose?' · 第'+r.dose+'针':''}</div>${r.nextDate?`<div class="tl-sub">下次: ${r.nextDate}</div>`:''}</div>`).join('');
+        vTl.innerHTML=[...vSorted].reverse().map(r=>{const i=D.vaccine.indexOf(r);return`<div class="tl-item c-green"><div class="tl-date">${r.date}</div><div class="tl-title">${r.name}${r.dose?' · 第'+r.dose+'针':''}</div>${r.nextDate?`<div class="tl-sub">下次: ${r.nextDate}</div>`:''}<div style="margin-top:6px"><button class="btn btn-ghost btn-sm" onclick="openVaccineForm(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="delRec('vaccine',${i})">删除</button></div></div>`}).join('');
     }
     // Deworm
     const dSorted=[...D.deworm].sort((a,b)=>b.date.localeCompare(a.date));
-    const dTb=document.getElementById('dTb'),dTl=document.getElementById('dTimeline'),dEm=document.getElementById('dEmpty');
-    if(!dSorted.length){dTb.innerHTML='';dTl.innerHTML='';dEm.style.display='block'}else{
+    const dTl=document.getElementById('dTimeline'),dEm=document.getElementById('dEmpty');
+    if(!dSorted.length){dTl.innerHTML='';dEm.style.display='block'}else{
         dEm.style.display='none';
-        dTb.innerHTML=dSorted.map(r=>{const i=D.deworm.indexOf(r);return`<tr><td>${r.date}</td><td>${r.type||'-'}</td><td>${r.brand||'-'}</td><td>${r.nextDate||'-'}</td><td>${r.note||'-'}</td><td class="actions"><button class="btn btn-ghost btn-sm" onclick="openDewormForm(${i})">编辑</button><button class="btn btn-danger btn-sm" onclick="delRec('deworm',${i})">删除</button></td></tr>`}).join('');
-        dTl.innerHTML=[...dSorted].reverse().map(r=>`<div class="tl-item blue"><div class="tl-date">${r.date}</div><div class="tl-text">${r.type||'驱虫'}${r.brand?' · '+r.brand:''}</div>${r.nextDate?`<div class="tl-sub">下次: ${r.nextDate}</div>`:''}</div>`).join('');
+        dTl.innerHTML=[...dSorted].reverse().map(r=>{const i=D.deworm.indexOf(r);return`<div class="tl-item c-blue"><div class="tl-date">${r.date}</div><div class="tl-title">${r.type||'驱虫'}${r.brand?' · '+r.brand:''}</div>${r.nextDate?`<div class="tl-sub">下次: ${r.nextDate}</div>`:''}<div style="margin-top:6px"><button class="btn btn-ghost btn-sm" onclick="openDewormForm(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="delRec('deworm',${i})">删除</button></div></div>`}).join('');
     }
     // Alerts
-    const todayStr=today();let aHtml='';
-    D.vaccine.filter(r=>r.nextDate&&r.nextDate<todayStr).forEach(r=>{aHtml+=`<div class="reminder danger"><span class="r-dot"></span>${r.name} 已过期（应于 ${r.nextDate}）</div>`});
-    D.deworm.filter(r=>r.nextDate&&r.nextDate<todayStr).forEach(r=>{aHtml+=`<div class="reminder danger"><span class="r-dot"></span>驱虫已过期（应于 ${r.nextDate}）</div>`});
-    const nextV=D.vaccine.filter(r=>r.nextDate&&r.nextDate>=todayStr).sort((a,b)=>a.nextDate.localeCompare(b.nextDate))[0];
-    const nextD=D.deworm.filter(r=>r.nextDate&&r.nextDate>=todayStr).sort((a,b)=>a.nextDate.localeCompare(b.nextDate))[0];
-    if(nextV){const d=Math.ceil((new Date(nextV.nextDate)-new Date())/864e5);aHtml+=`<div class="reminder ${d<=7?'warn':'ok'}"><span class="r-dot"></span>${nextV.name}: ${nextV.nextDate}（${d}天后）</div>`}
-    if(nextD){const d=Math.ceil((new Date(nextD.nextDate)-new Date())/864e5);aHtml+=`<div class="reminder ${d<=7?'warn':'ok'}"><span class="r-dot"></span>驱虫: ${nextD.nextDate}（${d}天后）</div>`}
-    document.getElementById('imAlerts').innerHTML=aHtml;
+    const todayStr=td();let aH='';
+    D.vaccine.filter(r=>r.nextDate&&r.nextDate<todayStr).forEach(r=>{aH+=reminderCard('danger','💉',r.name+' 已过期',r.nextDate,'过期')});
+    D.deworm.filter(r=>r.nextDate&&r.nextDate<todayStr).forEach(r=>{aH+=reminderCard('danger','🛡️','驱虫已过期',r.nextDate,'过期')});
+    const nv=D.vaccine.filter(r=>r.nextDate&&r.nextDate>=todayStr).sort((a,b)=>a.nextDate.localeCompare(b.nextDate))[0];
+    const nd=D.deworm.filter(r=>r.nextDate&&r.nextDate>=todayStr).sort((a,b)=>a.nextDate.localeCompare(b.nextDate))[0];
+    if(nv){const d=Math.ceil((new Date(nv.nextDate)-new Date())/864e5);aH+=reminderCard(d<=7?'warn':'ok','💉',nv.name,nv.nextDate,'倒计时'+d+'天')}
+    if(nd){const d=Math.ceil((new Date(nd.nextDate)-new Date())/864e5);aH+=reminderCard(d<=7?'warn':'ok','🛡️','驱虫',nd.nextDate,'倒计时'+d+'天')}
+    document.getElementById('imAlerts').innerHTML=aH;
 }
-
 function openVaccineForm(idx=-1){
-    const e=idx>=0,r=e?D.vaccine[idx]:{date:today(),name:'',dose:'',nextDate:'',hospital:'',note:''};
+    const e=idx>=0,r=e?D.vaccine[idx]:{date:td(),name:'',dose:'',nextDate:'',hospital:'',note:''};
     setModal(`<h3>${e?'编辑':'添加'}疫苗</h3>
     <div class="form-row"><div class="form-group"><label>日期</label><input type="date" id="fv-d" value="${r.date}"></div><div class="form-group"><label>名称</label><input id="fv-n" value="${r.name||''}" placeholder="猫三联 / 狂犬"></div></div>
     <div class="form-row"><div class="form-group"><label>第几针</label><input id="fv-ds" value="${r.dose||''}"></div><div class="form-group"><label>下次日期</label><input type="date" id="fv-nx" value="${r.nextDate||''}"></div></div>
     <div class="form-group"><label>医院</label><input id="fv-h" value="${r.hospital||''}"></div>
     <div class="form-group"><label>备注</label><input id="fv-nt" value="${r.note||''}"></div>
-    <div class="form-actions"><button class="btn btn-outline" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveVaccine(${idx})">保存</button></div>`);
+    <div class="form-actions"><button class="btn btn-ghost" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveVaccine(${idx})">保存</button></div>`);
 }
 function saveVaccine(idx){const r={date:gi('fv-d'),name:gi('fv-n'),dose:gi('fv-ds'),nextDate:gi('fv-nx'),hospital:gi('fv-h'),note:gi('fv-nt')};if(!r.date||!r.name){alert('请填写');return}if(idx>=0)D.vaccine[idx]=r;else D.vaccine.push(r);save();renderImmune();renderProfile();closeModal()}
-
 function openDewormForm(idx=-1){
-    const e=idx>=0,r=e?D.deworm[idx]:{date:today(),type:'',brand:'',nextDate:'',note:''};
+    const e=idx>=0,r=e?D.deworm[idx]:{date:td(),type:'',brand:'',nextDate:'',note:''};
     setModal(`<h3>${e?'编辑':'添加'}驱虫</h3>
     <div class="form-row"><div class="form-group"><label>日期</label><input type="date" id="fd-d" value="${r.date}"></div><div class="form-group"><label>类型</label><select id="fd-t"><option value="">选择</option><option${r.type==='内驱'?' selected':''}>内驱</option><option${r.type==='外驱'?' selected':''}>外驱</option><option${r.type==='内外同驱'?' selected':''}>内外同驱</option></select></div></div>
-    <div class="form-row"><div class="form-group"><label>品牌/产品</label><input id="fd-b" value="${r.brand||''}" placeholder="博来恩 / 大宠爱"></div><div class="form-group"><label>下次日期</label><input type="date" id="fd-nx" value="${r.nextDate||''}"></div></div>
+    <div class="form-row"><div class="form-group"><label>品牌</label><input id="fd-b" value="${r.brand||''}" placeholder="博来恩 / 大宠爱"></div><div class="form-group"><label>下次日期</label><input type="date" id="fd-nx" value="${r.nextDate||''}"></div></div>
     <div class="form-group"><label>备注</label><input id="fd-n" value="${r.note||''}"></div>
-    <div class="form-actions"><button class="btn btn-outline" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveDeworm(${idx})">保存</button></div>`);
+    <div class="form-actions"><button class="btn btn-ghost" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveDeworm(${idx})">保存</button></div>`);
 }
 function saveDeworm(idx){const r={date:gi('fd-d'),type:gi('fd-t'),brand:gi('fd-b'),nextDate:gi('fd-nx'),note:gi('fd-n')};if(!r.date){alert('请填写');return}if(idx>=0)D.deworm[idx]=r;else D.deworm.push(r);save();renderImmune();renderProfile();closeModal()}
 
-// ==================== EXPENSE ====================
+// =============== EXPENSE ===============
 function renderExpense(){
     const sorted=[...D.expense].sort((a,b)=>b.date.localeCompare(a.date));
-    const tb=document.getElementById('eTb'),em=document.getElementById('eEmpty');
-    // Stats
     const total=D.expense.reduce((s,r)=>s+(parseFloat(r.amount)||0),0);
-    const mStr=today().slice(0,7);
-    const mTotal=D.expense.filter(r=>r.date.startsWith(mStr)).reduce((s,r)=>s+(parseFloat(r.amount)||0),0);
-    document.getElementById('expStats').innerHTML=`
-        <div class="stat-card orange"><div class="s-label">累计消费</div><div class="s-value">¥${total.toFixed(0)}</div></div>
-        <div class="stat-card pink"><div class="s-label">本月消费</div><div class="s-value">¥${mTotal.toFixed(0)}</div></div>
-    `;
-    if(!sorted.length){tb.innerHTML='';em.style.display='block';return}
+    document.getElementById('expTotal').textContent='¥'+total.toFixed(2);
+    const list=document.getElementById('eList'),em=document.getElementById('eEmpty');
+    if(!sorted.length){list.innerHTML='';em.style.display='block';return}
     em.style.display='none';
-    tb.innerHTML=sorted.map(r=>{const i=D.expense.indexOf(r);return`<tr><td>${r.date}</td><td><span class="tag tag-${expColor(r.category)}">${r.category}</span></td><td>${r.item}</td><td style="font-weight:600">¥${r.amount}</td><td>${r.note||'-'}</td><td class="actions"><button class="btn btn-ghost btn-sm" onclick="openExpenseForm(${i})">编辑</button><button class="btn btn-danger btn-sm" onclick="delRec('expense',${i})">删除</button></td></tr>`}).join('');
+    // Group by date
+    const groups={};sorted.forEach(r=>{(groups[r.date]=groups[r.date]||[]).push(r)});
+    let html='';
+    Object.entries(groups).forEach(([date,recs])=>{
+        const dayTotal=recs.reduce((s,r)=>s+(parseFloat(r.amount)||0),0);
+        const weekday=['周日','周一','周二','周三','周四','周五','周六'][new Date(date).getDay()];
+        html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;margin-top:8px"><span class="heading-sm">${date.slice(5)} ${weekday}</span><span class="text-sm">支出: ¥${dayTotal.toFixed(2)}</span></div>`;
+        recs.forEach(r=>{const i=D.expense.indexOf(r);
+            html+=`<div class="record-item"><div class="ri-top"><div class="ri-title">${r.category} · ${r.item}</div><div class="ri-value">-¥${parseFloat(r.amount).toFixed(2)}</div></div>${r.note?`<div class="ri-bottom"><span class="text-sm">${r.note}</span><div class="ri-actions"><button class="btn btn-ghost btn-sm" onclick="openExpenseForm(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="delRec('expense',${i})">删除</button></div></div>`:`<div class="ri-bottom"><span></span><div class="ri-actions"><button class="btn btn-ghost btn-sm" onclick="openExpenseForm(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="delRec('expense',${i})">删除</button></div></div>`}</div>`;
+        });
+    });
+    list.innerHTML=html;
 }
-function expColor(c){return{粮食:'orange',用品:'blue',医疗:'green',玩具:'purple',洗护:'pink'}[c]||'gray'}
-
 function drawPie(){
     const c=document.getElementById('pieChart');if(!c)return;
-    const ctx=c.getContext('2d');c.width=200;c.height=200;
-    const mStr=today().slice(0,7);
-    const mData=D.expense.filter(r=>r.date.startsWith(mStr));
-    const catMap={};mData.forEach(r=>{catMap[r.category]=(catMap[r.category]||0)+(parseFloat(r.amount)||0)});
+    const ctx=c.getContext('2d');c.width=180;c.height=180;
+    const catMap={};D.expense.forEach(r=>{catMap[r.category]=(catMap[r.category]||0)+(parseFloat(r.amount)||0)});
     const cats=Object.entries(catMap).sort((a,b)=>b[1]-a[1]);
-    const mTotal=cats.reduce((s,c)=>s+c[1],0);
-    document.getElementById('pieTotal').textContent='¥'+mTotal.toFixed(0);
-    const colors={'粮食':'#fb923c','用品':'#60a5fa','医疗':'#4ade80','玩具':'#a855f7','洗护':'#f472a8','其他':'#9ca3af'};
-    const cx=100,cy=100,r=42;
-    ctx.clearRect(0,0,200,200);
-    if(!cats.length){ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='#e5e7eb';ctx.lineWidth=16;ctx.stroke();return}
+    const total=cats.reduce((s,c)=>s+c[1],0);
+    const colors={'粮食':'#ffa726','用品':'#42a5f5','医疗':'#66bb6a','玩具':'#ab47bc','洗护':'#ff8fab','其他':'#b8a99a'};
+    const cx=90,cy=90,r=36;
+    ctx.clearRect(0,0,180,180);
+    if(!cats.length){ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='#f2ebe4';ctx.lineWidth=18;ctx.stroke();
+        document.getElementById('pieLegend').innerHTML='<span class="text-sm">暂无数据</span>';return}
     let start=-Math.PI/2;
-    cats.forEach(([cat,val])=>{
-        const angle=(val/mTotal)*Math.PI*2;
-        ctx.beginPath();ctx.arc(cx,cy,r,start,start+angle);ctx.strokeStyle=colors[cat]||'#9ca3af';ctx.lineWidth=16;ctx.lineCap='butt';ctx.stroke();
-        start+=angle;
-    });
-    // Legend
-    document.getElementById('pieLegend').innerHTML=cats.map(([cat,val])=>`<div class="legend-item"><span class="l-dot" style="background:${colors[cat]||'#9ca3af'}"></span>${cat} ¥${val.toFixed(0)}</div>`).join('');
+    cats.forEach(([cat,val])=>{const angle=(val/total)*Math.PI*2;ctx.beginPath();ctx.arc(cx,cy,r,start,start+angle);ctx.strokeStyle=colors[cat]||'#b8a99a';ctx.lineWidth=18;ctx.lineCap='butt';ctx.stroke();start+=angle});
+    document.getElementById('pieLegend').innerHTML=cats.map(([cat,val])=>`<div class="legend-row"><span class="legend-dot" style="background:${colors[cat]||'#b8a99a'}"></span>${cat} <span style="margin-left:auto;font-weight:600">¥${val.toFixed(0)}</span></div>`).join('');
 }
-
 function openExpenseForm(idx=-1){
-    const e=idx>=0,r=e?D.expense[idx]:{date:today(),category:'',item:'',amount:'',note:''};
-    setModal(`<h3>${e?'编辑':'添加'}消费</h3>
+    const e=idx>=0,r=e?D.expense[idx]:{date:td(),category:'',item:'',amount:'',note:''};
+    setModal(`<h3>${e?'编辑':'记录'}消费</h3>
     <div class="form-row"><div class="form-group"><label>日期</label><input type="date" id="fe-d" value="${r.date}"></div><div class="form-group"><label>分类</label><select id="fe-c"><option value="">选择</option>${['粮食','用品','医疗','玩具','洗护','其他'].map(t=>`<option${r.category===t?' selected':''}>${t}</option>`).join('')}</select></div></div>
     <div class="form-row"><div class="form-group"><label>项目</label><input id="fe-i" value="${r.item||''}"></div><div class="form-group"><label>金额</label><input type="number" step="0.01" id="fe-a" value="${r.amount||''}"></div></div>
     <div class="form-group"><label>备注</label><input id="fe-n" value="${r.note||''}"></div>
-    <div class="form-actions"><button class="btn btn-outline" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveExpense(${idx})">保存</button></div>`);
+    <div class="form-actions"><button class="btn btn-ghost" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveExpense(${idx})">保存</button></div>`);
 }
-function saveExpense(idx){const r={date:gi('fe-d'),category:gi('fe-c'),item:gi('fe-i'),amount:gi('fe-a'),note:gi('fe-n')};if(!r.date||!r.category||!r.item||!r.amount){alert('请填写');return}if(idx>=0)D.expense[idx]=r;else D.expense.push(r);save();renderExpense();drawPie();renderProfile();closeModal()}
+function saveExpense(idx){const r={date:gi('fe-d'),category:gi('fe-c'),item:gi('fe-i'),amount:gi('fe-a'),note:gi('fe-n')};if(!r.date||!r.category||!r.item||!r.amount){alert('请填写完整');return}if(idx>=0)D.expense[idx]=r;else D.expense.push(r);save();renderExpense();drawPie();renderProfile();closeModal()}
 
-// ==================== MEDICAL ====================
+// =============== MEDICAL ===============
 function renderMedical(){
     const sorted=[...D.medical].sort((a,b)=>b.date.localeCompare(a.date));
-    const tb=document.getElementById('mTb'),em=document.getElementById('mEmpty');
-    if(!sorted.length){tb.innerHTML='';em.style.display='block';return}
+    const list=document.getElementById('mList'),em=document.getElementById('mEmpty');
+    if(!sorted.length){list.innerHTML='';em.style.display='block';return}
     em.style.display='none';
-    const tc=t=>({疫苗:'green',驱虫:'blue',体检:'orange',手术:'red'}[t]||'gray');
-    tb.innerHTML=sorted.map(r=>{const i=D.medical.indexOf(r);return`<tr><td>${r.date}</td><td><span class="tag tag-${tc(r.type)}">${r.type}</span></td><td>${r.diagnosis}</td><td>${r.hospital||'-'}</td><td>${r.cost?'¥'+r.cost:'-'}</td><td class="actions"><button class="btn btn-ghost btn-sm" onclick="openMedicalForm(${i})">编辑</button><button class="btn btn-danger btn-sm" onclick="delRec('medical',${i})">删除</button></td></tr>`}).join('');
+    const tc=t=>({体检:'tag-orange',就诊:'tag-blue',手术:'tag-red',疫苗:'tag-green',驱虫:'tag-green'}[t]||'tag-warm');
+    list.innerHTML=sorted.map(r=>{const i=D.medical.indexOf(r);return`<div class="record-item"><div class="ri-top"><div><div class="ri-title">${r.diagnosis}</div><div class="ri-sub">${r.date}${r.hospital?' · '+r.hospital:''}</div></div><div class="ri-right">${r.cost?'<div class="ri-value">¥'+r.cost+'</div>':''}<span class="tag ${tc(r.type)}">${r.type}</span></div></div><div class="ri-bottom"><span class="text-sm">${r.note||''}</span><div class="ri-actions"><button class="btn btn-ghost btn-sm" onclick="openMedicalForm(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="delRec('medical',${i})">删除</button></div></div></div>`}).join('');
 }
-
 function openMedicalForm(idx=-1){
-    const e=idx>=0,r=e?D.medical[idx]:{date:today(),type:'',diagnosis:'',hospital:'',cost:'',note:''};
-    setModal(`<h3>${e?'编辑':'添加'}就诊</h3>
+    const e=idx>=0,r=e?D.medical[idx]:{date:td(),type:'',diagnosis:'',hospital:'',cost:'',note:''};
+    setModal(`<h3>${e?'编辑':'添加'}就诊记录</h3>
     <div class="form-row"><div class="form-group"><label>日期</label><input type="date" id="fm-d" value="${r.date}"></div><div class="form-group"><label>类型</label><select id="fm-t"><option value="">选择</option>${['体检','就诊','手术','疫苗','驱虫','其他'].map(t=>`<option${r.type===t?' selected':''}>${t}</option>`).join('')}</select></div></div>
     <div class="form-group"><label>项目/诊断</label><input id="fm-dg" value="${r.diagnosis||''}"></div>
     <div class="form-row"><div class="form-group"><label>医院</label><input id="fm-h" value="${r.hospital||''}"></div><div class="form-group"><label>费用</label><input type="number" id="fm-c" value="${r.cost||''}"></div></div>
     <div class="form-group"><label>备注</label><textarea id="fm-n">${r.note||''}</textarea></div>
-    <div class="form-actions"><button class="btn btn-outline" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveMedical(${idx})">保存</button></div>`);
+    <div class="form-actions"><button class="btn btn-ghost" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveMedical(${idx})">保存</button></div>`);
 }
 function saveMedical(idx){const r={date:gi('fm-d'),type:gi('fm-t'),diagnosis:gi('fm-dg'),hospital:gi('fm-h'),cost:gi('fm-c'),note:gi('fm-n')};if(!r.date||!r.type||!r.diagnosis){alert('请填写');return}if(idx>=0)D.medical[idx]=r;else D.medical.push(r);save();renderMedical();renderProfile();closeModal()}
 
-// ==================== PHOTOS ====================
+// =============== PHOTOS ===============
 function renderPhotos(){
     const sorted=[...D.photos].sort((a,b)=>b.date.localeCompare(a.date));
     const g=document.getElementById('photoGrid');
-    g.innerHTML=sorted.map((p,i)=>{const idx=D.photos.indexOf(p);return`<div class="photo-item" onclick="document.getElementById('lbImg').src='${p.src}';document.getElementById('lb').classList.add('show')"><img src="${p.src}" alt=""><div class="p-meta">${p.date}${p.note?' · '+p.note:''}</div><button class="p-del" onclick="event.stopPropagation();delRec('photos',${idx})">✕</button></div>`}).join('')+`<div class="photo-add" onclick="document.getElementById('phInput').click()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>上传</span></div>`;
+    g.innerHTML=sorted.map((p,i)=>{const idx=D.photos.indexOf(p);return`<div class="photo-item" onclick="document.getElementById('lbImg').src='${p.src}';document.getElementById('lb').classList.add('show')"><img src="${p.src}" alt=""><div class="pm">${p.date}${p.note?' · '+p.note:''}</div><button class="pd" onclick="event.stopPropagation();delRec('photos',${idx})">✕</button></div>`}).join('')+`<div class="photo-add" onclick="document.getElementById('phInput').click()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>上传</span></div>`;
 }
-function handlePhoto(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{const n=prompt('备注：','')||'';D.photos.push({src:ev.target.result,date:today(),note:n});save();renderPhotos()};r.readAsDataURL(f);e.target.value=''}
+function handlePhoto(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{const n=prompt('备注（可选）：','')||'';D.photos.push({src:ev.target.result,date:td(),note:n});save();renderPhotos()};r.readAsDataURL(f);e.target.value=''}
 
-// ==================== GENERIC DELETE ====================
+// =============== DELETE ===============
 function delRec(key,idx){if(!confirm('确认删除？'))return;D[key].splice(idx,1);save();renderAll()}
 
-// ==================== RENDER ALL ====================
-function renderAll(){renderProfile();renderWeight();renderFeeding();renderImmune();renderExpense();renderMedical();renderPhotos();renderCalendar()}
+// =============== INIT ===============
+function renderAll(){renderProfile();renderWeight();renderCalendar();renderFeeding();renderImmune();renderExpense();renderMedical();renderPhotos()}
 renderAll();
 
-// Register SW
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>

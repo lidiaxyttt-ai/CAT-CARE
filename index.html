@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8"/>
@@ -13,20 +13,20 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
---bg:#f0ece6;--card:#faf8f5;
---pink-soft:#e8d9d6;--pink-deep:#c79a96;--pink-text:#9d706b;
---yellow-soft:#e8e0d0;--yellow-deep:#b09b6f;
---mint-soft:#d6e0d8;--mint-deep:#7e9a86;
---lav-soft:#ddd8e0;--lav-deep:#8d83a0;
---cream:#f3efe9;
---td:#4a423b;--tm:#6b6058;--ts:#9a9088;--tl:#bcb4ab;
---border:#e5ddd3;--dash:#dcd3c8;
---sh:0 4px 20px rgba(120,105,90,.07);
+--bg:#fdf6f0;--card:#fff;
+--pink-soft:#fde8ef;--pink-deep:#f2849e;--pink-text:#c9546e;
+--yellow-soft:#fff4d8;--yellow-deep:#e0a82e;
+--mint-soft:#def5eb;--mint-deep:#45b692;
+--lav-soft:#f0eaf8;--lav-deep:#9262d1;
+--cream:#fef9f3;
+--td:#2c1810;--tm:#4a3728;--ts:#9a8576;--tl:#c4b5a6;
+--border:#f0e8df;--dash:#e8ddd0;
+--sh:0 4px 20px rgba(160,120,80,.06);
 --rx:28px;--rl:22px;--rm:16px;--rs:12px;
 --fc:'ZCOOL KuaiLe',cursive;--fm:-apple-system,'PingFang SC',sans-serif;
 --th:62px;--sb:env(safe-area-inset-bottom,0px);
 }
-body{font-family:var(--fm);background:var(--bg);color:var(--tm);font-size:14px;line-height:1.6;min-height:100vh}
+body{font-family:var(--fm);background:radial-gradient(circle at 18% -8%,rgba(253,232,239,.85),transparent 30%),radial-gradient(circle at 95% 8%,rgba(222,245,235,.72),transparent 26%),linear-gradient(180deg,#fff9f3 0%,var(--bg) 42%,#f8f1ea 100%);color:var(--tm);font-size:14px;line-height:1.6;min-height:100vh}
 .app{max-width:500px;margin:0 auto;padding:20px 18px calc(var(--th) + var(--sb) + 20px)}
 .cute{font-family:var(--fc)}
 .tab-bar{position:fixed;bottom:0;left:0;right:0;height:calc(var(--th)+var(--sb));padding-bottom:var(--sb);background:rgba(255,255,255,.96);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;z-index:200}
@@ -53,22 +53,33 @@ body{font-family:var(--fm);background:var(--bg);color:var(--tm);font-size:14px;l
 .block.mint{background:var(--mint-soft)}
 .block .b-label{font-size:11px;font-weight:700;color:var(--ts);letter-spacing:.5px;margin-bottom:6px}
 .block .b-age{font-family:var(--fc);font-size:30px;color:var(--td);line-height:1.1}
-.block .b-sub{font-size:13px;color:var(--ts);margin-top:6px}
-.block .b-img{position:absolute;right:16px;top:18px;width:76px;height:76px;object-fit:contain}
-.block .b-age,.block .b-sub{padding-right:90px}
-.mini-row{display:flex;gap:10px;margin-top:16px}
-.mini{flex:1;background:rgba(255,255,255,.65);border-radius:var(--rm);padding:12px 14px}
+.block .b-sub{font-size:13px;color:var(--ts);margin-top:6px;overflow-wrap:anywhere}
+.block.pink{display:grid;grid-template-columns:minmax(0,1fr) 96px;grid-template-areas:"age img" "sub img" "mini mini";column-gap:12px;align-items:center}
+.block.pink .b-age{grid-area:age}
+.block.pink .b-sub{grid-area:sub}
+.block .b-img{grid-area:img;justify-self:end;width:90px;height:90px;object-fit:contain}
+.mini-row{grid-area:mini;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+.mini{min-width:0;background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.78);border-radius:var(--rm);padding:12px 14px}
 .mini .m-l{font-size:10px;color:var(--ts);font-weight:600;margin-bottom:3px}
-.mini .m-v{font-family:var(--fc);font-size:18px;color:var(--td)}
-.card{background:var(--card);border-radius:var(--rx);padding:20px;margin-bottom:16px;box-shadow:var(--sh)}
+.mini .m-v{font-family:var(--fc);font-size:18px;color:var(--td);overflow-wrap:anywhere}
+.card{background:rgba(255,255,255,.92);border:1px solid rgba(240,232,223,.72);border-radius:var(--rx);padding:20px;margin-bottom:16px;box-shadow:var(--sh)}
 .pill-row{display:flex;gap:10px;margin-bottom:16px}
-.pill{flex:1;background:var(--card);border-radius:var(--rl);padding:16px 10px;text-align:center;box-shadow:var(--sh)}
+.pill{flex:1;background:#fff;border-radius:28px;padding:14px 8px;text-align:center;box-shadow:0 8px 22px rgba(160,120,80,.06);border:6px solid transparent}
 .pill .p-v{font-family:var(--fc);font-size:22px;color:var(--td)}
 .pill .p-l{font-size:11px;color:var(--ts);margin-top:2px}
-.pill:nth-child(1){border-top:3px solid var(--pink-deep)}
-.pill:nth-child(2){border-top:3px solid var(--mint-deep)}
-.pill:nth-child(3){border-top:3px solid var(--yellow-deep)}
-.today{border-radius:var(--rx);padding:22px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;background:var(--yellow-soft)}
+.pill:nth-child(1){border-color:#ffd9e3;box-shadow:0 8px 22px rgba(253,166,186,.16)}
+.pill:nth-child(2){border-color:#d4f2e5;box-shadow:0 8px 22px rgba(69,182,146,.13)}
+.pill:nth-child(3){border-color:#ffedbd;box-shadow:0 8px 22px rgba(224,168,46,.13)}
+.care-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.care-i{min-width:0;border-radius:var(--rl);padding:14px;background:var(--cream)}
+.care-i:nth-child(1){background:var(--pink-soft)}
+.care-i:nth-child(2){background:var(--mint-soft)}
+.care-i:nth-child(3){background:var(--yellow-soft)}
+.care-i:nth-child(4){background:var(--lav-soft)}
+.care-l{font-size:10px;font-weight:700;color:var(--ts);margin-bottom:4px}
+.care-v{font-family:var(--fc);font-size:18px;color:var(--td);line-height:1.25;overflow-wrap:anywhere}
+.care-s{font-size:11px;color:var(--ts);margin-top:4px;line-height:1.35}
+.today{border-radius:var(--rx);padding:22px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--yellow-soft),#fff9ec);border:1px solid rgba(224,168,46,.14);box-shadow:var(--sh)}
 .today .t-txt{font-family:var(--fc);font-size:18px;color:var(--td);line-height:1.5}
 .today img{width:60px;height:60px;object-fit:contain}
 .sec-t{font-family:var(--fc);font-size:16px;color:var(--td);margin:8px 0 14px}
@@ -92,12 +103,12 @@ body{font-family:var(--fm);background:var(--bg);color:var(--tm);font-size:14px;l
 .hstat .h-v{font-family:var(--fc);font-size:20px;color:var(--td)}
 .hstat .h-l{font-size:11px;color:var(--ts);margin-top:3px}
 .feed-stats{display:flex;gap:10px;margin-bottom:16px}
-.fst{flex:1;background:var(--card);border-radius:var(--rl);padding:16px 8px;text-align:center;box-shadow:var(--sh)}
+.fst{flex:1;background:#fff;border-radius:28px;padding:14px 7px;text-align:center;box-shadow:0 8px 22px rgba(160,120,80,.06);border:6px solid transparent}
 .fst .f-v{font-family:var(--fc);font-size:20px;color:var(--td)}
 .fst .f-l{font-size:10px;color:var(--ts);margin-top:3px}
-.fst:nth-child(1){border-top:3px solid var(--pink-deep)}
-.fst:nth-child(2){border-top:3px solid var(--mint-deep)}
-.fst:nth-child(3){border-top:3px solid var(--yellow-deep)}
+.fst:nth-child(1){border-color:#ffd9e3;box-shadow:0 8px 22px rgba(253,166,186,.16)}
+.fst:nth-child(2){border-color:#d4f2e5;box-shadow:0 8px 22px rgba(69,182,146,.13)}
+.fst:nth-child(3){border-color:#ffedbd;box-shadow:0 8px 22px rgba(224,168,46,.13)}
 .rec{background:var(--card);border-radius:var(--rx);padding:18px 20px;margin-bottom:12px;box-shadow:var(--sh)}
 .rec-top{display:flex;justify-content:space-between;align-items:flex-start}
 .rec-t{font-size:15px;font-weight:700;color:var(--td)}
@@ -129,12 +140,80 @@ body{font-family:var(--fm);background:var(--bg);color:var(--tm);font-size:14px;l
 .more-i{background:var(--card);border-radius:var(--rx);padding:28px 20px;box-shadow:var(--sh);display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;transition:transform .15s}
 .more-i:active{transform:scale(.97)}
 .more-i .mi-ic{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.more-i:nth-child(1) .mi-ic{background:var(--mint-soft)}
-.more-i:nth-child(2) .mi-ic{background:var(--lav-soft)}
-.more-i:nth-child(3) .mi-ic{background:var(--yellow-soft)}
+.more-i:nth-child(1) .mi-ic{background:#def5eb}
+.more-i:nth-child(2) .mi-ic{background:#f0eaf8}
+.more-i:nth-child(3) .mi-ic{background:#fff4d8}
+.more-i:nth-child(4) .mi-ic{background:#fde8ef}
+.more-i:nth-child(5) .mi-ic{background:#e8f1ff}
+.more-i:nth-child(6) .mi-ic{background:#eaf7d8}
+.more-i:nth-child(7) .mi-ic{background:#ffe9dc}
+.more-i:nth-child(8) .mi-ic{background:#e7f6f7}
 .more-i .mi-ic svg{width:24px;height:24px;stroke-width:1.7}
+.more-i .mi-ic img{width:32px;height:32px;object-fit:contain}
 .more-i .mi-t{font-family:var(--fc);font-size:15px;color:var(--td)}
 .more-i .mi-s{font-size:11px;color:var(--tl)}
+.brand-lib{display:flex;flex-direction:column;gap:12px}
+.brand-cat{background:var(--cream);border-radius:var(--rl);padding:14px}
+.brand-cat-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.brand-cat-t{font-family:var(--fc);font-size:15px;color:var(--td)}
+.brand-tags{display:flex;flex-wrap:wrap;gap:8px}
+.brand-tag{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:16px;background:var(--card);border:1px solid var(--border);font-size:12px;color:var(--tm)}
+.brand-del{border:none;background:none;color:var(--pink-deep);font-size:14px;line-height:1;cursor:pointer}
+.dash-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.dash-i{background:var(--card);border-radius:var(--rl);padding:14px;box-shadow:var(--sh);min-width:0}
+.dash-i:nth-child(1){background:#fde8ef}
+.dash-i:nth-child(2){background:#fff4d8}
+.dash-i:nth-child(3){background:#def5eb}
+.dash-i:nth-child(4){background:#f0eaf8}
+.dash-i .d-l{font-size:10px;color:var(--ts);font-weight:700;margin-bottom:4px}
+.dash-i .d-v{font-family:var(--fc);font-size:20px;color:var(--td);line-height:1.2;overflow-wrap:anywhere}
+.inv-card{background:var(--card);border-radius:var(--rx);padding:18px;margin-bottom:12px;box-shadow:var(--sh);border-left:4px solid var(--pink-deep)}
+.inv-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.inv-name{font-size:15px;font-weight:800;color:var(--td)}
+.inv-sub{font-size:12px;color:var(--ts);margin-top:3px}
+.inv-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.warn{background:var(--yellow-soft);border:1px solid rgba(224,168,46,.18);border-radius:var(--rl);padding:13px 14px;margin-bottom:10px;color:var(--tm)}
+.warn.urgent{background:var(--pink-soft);border-color:rgba(242,132,158,.22)}
+.timeline{padding-left:22px;position:relative}
+.timeline::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.time-i{position:relative;background:var(--card);border-radius:var(--rl);padding:14px 16px;margin-bottom:12px;box-shadow:var(--sh)}
+.time-i::before{content:'';position:absolute;left:-21px;top:18px;width:10px;height:10px;border-radius:50%;background:var(--pink-deep);border:3px solid var(--card)}
+.time-d{font-size:11px;color:var(--tl);margin-bottom:3px}
+.time-t{font-size:14px;font-weight:800;color:var(--td)}
+.time-s{font-size:12px;color:var(--ts);margin-top:3px}
+.report-hero{border-radius:var(--rx);padding:22px;margin-bottom:14px;background:linear-gradient(135deg,var(--mint-soft),var(--yellow-soft));box-shadow:var(--sh);display:flex;align-items:center;justify-content:space-between;gap:14px}
+.report-hero.bad{background:linear-gradient(135deg,var(--pink-soft),var(--yellow-soft))}
+.report-mark{width:76px;height:76px;border-radius:24px;background:rgba(255,255,255,.56);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.report-mark img{width:64px;height:64px;object-fit:contain}
+.score-row{display:flex;gap:8px;margin:12px 0}
+.score-i{flex:1;background:rgba(255,255,255,.65);border-radius:var(--rm);padding:10px;text-align:center}
+.score-i:nth-child(1){background:#fde8ef}
+.score-i:nth-child(2){background:#def5eb}
+.score-i:nth-child(3){background:#fff4d8}
+.score-i .s-v{font-family:var(--fc);font-size:20px;color:var(--td)}
+.score-i .s-l{font-size:10px;color:var(--ts)}
+.bar{height:8px;border-radius:8px;background:var(--border);overflow:hidden;margin-top:8px}
+.bar span{display:block;height:100%;border-radius:8px;background:var(--mint-deep)}
+.obs-hero{display:flex;align-items:center;justify-content:space-between;gap:14px;border-radius:var(--rl);padding:14px;background:linear-gradient(135deg,var(--mint-soft),var(--cream));margin-bottom:12px}
+.obs-hero.warn{background:linear-gradient(135deg,var(--pink-soft),var(--yellow-soft))}
+.obs-hero img{width:58px;height:58px;object-fit:contain;flex-shrink:0}
+.obs-title{font-family:var(--fc);font-size:20px;color:var(--td);line-height:1.2}
+.obs-sub{font-size:12px;color:var(--ts);margin-top:4px}
+.obs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.obs-card{min-width:0;border-radius:var(--rl);padding:12px;background:var(--cream);border:1px solid transparent}
+.obs-card:nth-child(1){background:#fde8ef}
+.obs-card:nth-child(2){background:#def5eb}
+.obs-card:nth-child(3){background:#fff4d8}
+.obs-card:nth-child(4){background:#f0eaf8}
+.obs-card:nth-child(5){background:#e8f1ff}
+.obs-card:nth-child(6){background:#ffe9dc}
+.obs-card.watch{border-color:rgba(224,168,46,.28)}
+.obs-card.bad{border-color:rgba(242,132,158,.34);box-shadow:inset 0 0 0 1px rgba(242,132,158,.12)}
+.obs-card-top{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.obs-card-top img{width:34px;height:34px;object-fit:contain;flex-shrink:0}
+.obs-name{font-weight:800;color:var(--td);font-size:13px;line-height:1.2}
+.obs-v{font-family:var(--fc);font-size:15px;color:var(--pink-text);line-height:1.2}
+.obs-desc{font-size:11px;color:var(--ts);line-height:1.35}
 .back{display:flex;align-items:center;gap:5px;margin-bottom:16px;cursor:pointer;font-size:13px;color:var(--ts);font-weight:600;border:none;background:none;font-family:var(--fc)}
 .seg-bar{display:flex;background:var(--cream);border-radius:var(--rs);padding:4px;margin-bottom:18px}
 .seg-b{flex:1;padding:10px 0;text-align:center;border-radius:8px;font-size:13px;font-weight:600;color:var(--tl);cursor:pointer;border:none;background:none;font-family:var(--fc)}
@@ -157,12 +236,12 @@ body{font-family:var(--fm);background:var(--bg);color:var(--tm);font-size:14px;l
 .dm::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--pink-deep)}
 .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .cal-arrows{display:flex;gap:8px}
-.cal-arrows button{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--card);cursor:pointer;font-size:16px;color:var(--ts);font-family:var(--fc)}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:16px}
+.cal-arrows button{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--card);cursor:pointer;font-size:16px;color:var(--ts);font-family:var(--fc);box-shadow:0 2px 10px rgba(160,120,80,.06)}
+.cal-legend{display:flex;flex-wrap:wrap;gap:8px;margin:-6px 0 14px}.cal-leg{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;border-radius:12px;background:var(--cream);font-size:10px;color:var(--ts);font-weight:600}.cal-leg span{width:7px;height:7px;border-radius:50%}.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-bottom:16px}
 .cal-dow{text-align:center;font-size:11px;font-weight:600;color:var(--tl);padding:6px 0}
-.cal-d{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:50%;font-size:14px;color:var(--tm);cursor:pointer;position:relative}
-.cal-d.today{background:var(--pink-soft);color:var(--pink-text);font-weight:700}
-.cal-d.sel{background:var(--pink-deep);color:#fff;font-weight:700}
+.cal-d{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:16px;font-size:14px;color:var(--tm);cursor:pointer;position:relative;background:rgba(254,249,243,.72);border:1px solid transparent;transition:background .18s,transform .18s,border-color .18s}.cal-d:hover{background:#fff;border-color:var(--border);transform:translateY(-1px)}
+.cal-d.today{padding:0;margin-bottom:0;background:var(--pink-soft);color:var(--pink-text);font-weight:700;border-color:rgba(242,132,158,.28)}
+.cal-d.sel{padding:0;margin-bottom:0;background:var(--pink-deep);color:#fff;font-weight:700;box-shadow:0 8px 18px rgba(242,132,158,.26)}
 .cal-d.other{opacity:.3}
 .cal-d .dots{display:flex;gap:2px;position:absolute;bottom:3px}
 .cal-d .dots span{width:4px;height:4px;border-radius:50%}
@@ -193,6 +272,32 @@ body{font-family:var(--fm);background:var(--bg);color:var(--tm);font-size:14px;l
 .lb.show{display:flex}
 .lb img{max-width:95%;max-height:90%;border-radius:8px}
 .sec-hd{display:flex;justify-content:space-between;align-items:center;margin:6px 0 12px;font-size:12px;color:var(--ts)}
+@media (max-width:430px){
+  .app{padding:16px 14px calc(var(--th) + var(--sb) + 18px)}
+  .ptop{margin-bottom:14px}
+  .ptop h1{font-size:22px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .block{border-radius:24px;padding:18px}
+  .block.pink{grid-template-columns:minmax(0,1fr) 78px;column-gap:8px}
+  .block .b-age{font-size:27px;line-height:1.15}
+  .block .b-sub{font-size:12px;line-height:1.45;margin-top:4px}
+  .block .b-img{width:76px;height:76px}
+  .mini-row{gap:8px;margin-top:14px}
+  .mini{padding:10px 11px;border-radius:14px}
+  .mini .m-v{font-size:16px}
+  .pill-row,.feed-stats,.hstat-row{gap:8px}
+  .pill,.fst,.hstat{border-radius:18px;padding:13px 7px}
+  .care-grid{gap:8px}
+  .care-i{border-radius:18px;padding:12px}
+  .today{padding:18px;border-radius:24px}
+  .today .t-txt{font-size:17px}
+  .today img{width:54px;height:54px;margin-left:10px;flex-shrink:0}
+}
+@media (max-width:360px){
+  .block.pink{grid-template-columns:1fr;grid-template-areas:"img" "age" "sub" "mini";justify-items:center;text-align:center}
+  .block .b-img{justify-self:center;width:82px;height:82px;margin-bottom:4px}
+  .mini-row,.care-grid{grid-template-columns:1fr}
+  .ptop h1{max-width:180px}
+}
 </style>
 </head>
 <body>
@@ -214,6 +319,7 @@ body{font-family:var(--fm);background:var(--bg);color:var(--tm);font-size:14px;l
     <div class="mini-row" id="hMini"></div>
   </div>
   <div class="pill-row" id="hPills"></div>
+  <div class="card" id="homeInsight"></div>
   <div class="today" id="todayCard"><div class="t-txt">今日无事<br>保持开心~</div><img src="cat1.png" alt=""></div>
   <div id="schSec"></div>
   <div class="card" id="hWCard" style="display:none">
@@ -238,7 +344,7 @@ body{font-family:var(--fm);background:var(--bg);color:var(--tm);font-size:14px;l
 
 <!-- FEED -->
 <section id="p-feed" class="module">
-  <div class="ptop"><h1>喂养</h1><button class="btn btn-sm" onclick="openFeed()">+ 记录</button></div>
+  <div class="ptop"><h1>喂养</h1><div class="ico-btns"><button class="btn btn-soft btn-sm" onclick="openBrandLib()">品牌库</button><button class="btn btn-sm" onclick="openFeed()">+ 记录</button></div></div>
   <div class="feed-stats" id="feedStats"></div>
   <div class="sec-hd"><span>历史记录</span></div>
   <div id="fList"></div><div class="empty" id="fEm">暂无喂养记录</div>
@@ -257,10 +363,55 @@ body{font-family:var(--fm);background:var(--bg);color:var(--tm);font-size:14px;l
 <section id="p-more" class="module">
   <h1 class="cute" style="font-size:24px;color:var(--td);margin-bottom:20px">更多</h1>
   <div class="more-grid">
-    <div class="more-i" onclick="go('medical')"><div class="mi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1d7a4e"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8m-4-4h8"/></svg></div><span class="mi-t">医疗</span><span class="mi-s">疫苗·驱虫·就诊</span></div>
-    <div class="more-i" onclick="go('diary')"><div class="mi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#5e35b1"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M8 7h8M8 11h6"/></svg></div><span class="mi-t">日记</span><span class="mi-s">记录日常</span></div>
-    <div class="more-i" onclick="showCal()"><div class="mi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#b8860b"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><span class="mi-t">月历</span><span class="mi-s">事项总览</span></div>
+    <div class="more-i" onclick="go('medical')"><div class="mi-ic"><img src="icons/medical.png" onerror="this.onerror=null;this.src='cat4.png'" alt=""></div><span class="mi-t">医疗</span><span class="mi-s">疫苗·驱虫·就诊</span></div>
+    <div class="more-i" onclick="go('diary')"><div class="mi-ic"><img src="icons/diary.png" onerror="this.onerror=null;this.src='cat3.png'" alt=""></div><span class="mi-t">日记</span><span class="mi-s">记录日常</span></div>
+    <div class="more-i" onclick="showCal()"><div class="mi-ic"><img src="icons/calendar.png" onerror="this.onerror=null;this.src='cat2.png'" alt=""></div><span class="mi-t">月历</span><span class="mi-s">事项总览</span></div>
+    <div class="more-i" onclick="go('inventory')"><div class="mi-ic"><img src="icons/inventory.png" onerror="this.onerror=null;this.src='cat5.png'" alt=""></div><span class="mi-t">库存</span><span class="mi-s">罐头·冻干·生骨肉</span></div>
+    <div class="more-i" onclick="go('reminder')"><div class="mi-ic"><img src="icons/reminder.png" onerror="this.onerror=null;this.src='cat6.png'" alt=""></div><span class="mi-t">提醒</span><span class="mi-s">到期与开封</span></div>
+    <div class="more-i" onclick="go('timeline')"><div class="mi-ic"><img src="icons/timeline.png" onerror="this.onerror=null;this.src='cat1.png'" alt=""></div><span class="mi-t">时间线</span><span class="mi-s">成长事件</span></div>
+    <div class="more-i" onclick="go('observe')"><div class="mi-ic"><img src="icons/observe.png" onerror="this.onerror=null;this.src='cat2.png'" alt=""></div><span class="mi-t">观察</span><span class="mi-s">症状打分表</span></div>
+    <div class="more-i" onclick="go('report')"><div class="mi-ic"><img src="icons/report.png" onerror="this.onerror=null;this.src='cat1.png'" alt=""></div><span class="mi-t">周报</span><span class="mi-s">夸夸与提醒</span></div>
   </div>
+</section>
+
+<!-- INVENTORY -->
+<section id="p-inventory" class="module">
+  <button class="back" onclick="go('more')">‹ 返回</button>
+  <div class="ptop"><h1>库存</h1><div class="ico-btns"><button class="btn btn-soft btn-sm" onclick="openCan()">开罐</button><button class="btn btn-sm" onclick="openStock()">+ 入库</button></div></div>
+  <div class="dash-grid" id="invStats"></div>
+  <div class="sec-hd"><span>库存清单</span></div>
+  <div id="stockList"></div><div class="empty" id="stockEm">暂无库存，先添加常吃的罐头或冻干吧</div>
+  <div class="sec-hd"><span>开罐记录</span></div>
+  <div id="canList"></div><div class="empty" id="canEm">暂无开罐记录</div>
+</section>
+
+<!-- REMINDER -->
+<section id="p-reminder" class="module">
+  <button class="back" onclick="go('more')">‹ 返回</button>
+  <div class="ptop"><h1>提醒</h1><button class="btn btn-sm" onclick="go('medical')">+ 安排</button></div>
+  <div id="remList"></div><div class="empty" id="remEm">最近没有需要提醒的事项</div>
+</section>
+
+<!-- TIMELINE -->
+<section id="p-timeline" class="module">
+  <button class="back" onclick="go('more')">‹ 返回</button>
+  <div class="ptop"><h1>成长时间线</h1><button class="btn btn-sm" onclick="openDiary()">+ 日记</button></div>
+  <div class="timeline" id="timeList"></div><div class="empty" id="timeEm">记录体重、医疗或日记后会自动生成时间线</div>
+</section>
+
+<!-- OBSERVE -->
+<section id="p-observe" class="module">
+  <button class="back" onclick="go('more')">‹ 返回</button>
+  <div class="ptop"><h1>症状观察</h1><button class="btn btn-sm" onclick="openObs()">+ 观察</button></div>
+  <div class="card" id="obsToday"></div>
+  <div id="obsList"></div><div class="empty" id="obsEm">暂无观察记录</div>
+</section>
+
+<!-- REPORT -->
+<section id="p-report" class="module">
+  <button class="back" onclick="go('more')">‹ 返回</button>
+  <div class="ptop"><h1>每周健康报告</h1><button class="btn btn-sm" onclick="renderReport()">刷新</button></div>
+  <div id="reportBody"></div>
 </section>
 
 <!-- MEDICAL -->
@@ -286,7 +437,7 @@ body{font-family:var(--fm);background:var(--bg);color:var(--tm);font-size:14px;l
   <h1 class="cute" style="font-size:22px;color:var(--td);margin-bottom:16px">月历</h1>
   <div class="card">
     <div class="cal-head"><span class="cute" style="font-size:16px" id="calTitle"></span><div class="cal-arrows"><button onclick="chgMo(-1)">‹</button><button onclick="chgMo(1)">›</button></div></div>
-    <div class="cal-grid" id="calGrid"></div>
+    <div class="cal-legend"><div class="cal-leg"><span style="background:#45b692"></span>疫苗</div><div class="cal-leg"><span style="background:#9262d1"></span>驱虫</div><div class="cal-leg"><span style="background:#e0a82e"></span>就诊</div><div class="cal-leg"><span style="background:#f2849e"></span>健康</div><div class="cal-leg"><span style="background:#c9546e"></span>体重</div></div><div class="cal-grid" id="calGrid"></div>
   </div>
   <div class="dd" id="dayDet"><div class="dd-e">选择日期查看事项</div></div>
 </section>
@@ -308,15 +459,33 @@ body{font-family:var(--fm);background:var(--bg);color:var(--tm);font-size:14px;l
 
 <script>
 const KEY='catcare_v9';
-const INIT=()=>({profile:{name:'布丁',breed:'英长',gender:'公',color:'金渐层',birthday:'2026-03-25',adoptDate:'',sterilizeDate:'',avatar:''},weight:[],weightGoal:null,vaccine:[],deworm:[],medical:[],feeding:[],expense:[],diary:[],health:[],poop:[],brands:[]});
+const FEED_TYPES=['主食罐','零食罐','冻干','生骨肉','少量干粮','营养膏','水','其他'];
+const DEFAULT_BRANDS={
+  '主食罐':['巅峰','K9','Feline Natural','Tiki Cat','Wellness','Instinct','汪喵星球'],
+  '零食罐':['希宝','珍致','猫恋','喵达','Tiki Cat'],
+  '冻干':['K9','Primal',"Stella & Chewy's",'Northwest Naturals','Vital Essentials','Instinct'],
+  '生骨肉':['Primal','Smallbatch',"Steve's Real Food",'Instinct Raw','自制'],
+  '少量干粮':['渴望','爱肯拿','百利','纽翠斯','皇家'],
+  '营养膏':['红狗','卫仕','麦德氏'],
+  '水':[],
+  '其他':[]
+};
+const INIT=()=>({profile:{name:'布丁',breed:'英长',gender:'公',color:'金渐层',birthday:'2026-03-25',adoptDate:'',sterilizeDate:'',avatar:''},weight:[],weightGoal:null,vaccine:[],deworm:[],medical:[],feeding:[],expense:[],diary:[],health:[],poop:[],brands:[],brandLib:JSON.parse(JSON.stringify(DEFAULT_BRANDS)),stock:[],canLog:[],observe:[]});
 let D=(()=>{try{const d=JSON.parse(localStorage.getItem(KEY));return d&&d.profile?Object.assign(INIT(),d):INIT()}catch(e){return INIT()}})();
 const save=()=>localStorage.setItem(KEY,JSON.stringify(D));
 const td=()=>new Date().toISOString().slice(0,10);
 const $=id=>document.getElementById(id);
 const gi=id=>$(id).value;
 let range=30,diaryPhotos=[];
+function uniq(a){return [...new Set((a||[]).map(s=>(s||'').trim()).filter(Boolean))]}
+function ensureBrandLib(){D.brandLib=D.brandLib||JSON.parse(JSON.stringify(DEFAULT_BRANDS));FEED_TYPES.forEach(t=>{if(!Array.isArray(D.brandLib[t]))D.brandLib[t]=DEFAULT_BRANDS[t]||[];D.brandLib[t]=uniq(D.brandLib[t])})}
+ensureBrandLib();
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function icon(name,fb='cat1.png'){return `icons/${name}.png`}
+function iconImg(name,fb='cat1.png',alt=''){return `<img src="${icon(name,fb)}" alt="${alt}" onerror="this.onerror=null;this.src='${fb}'">`}
+function daysBetween(a,b=td()){return Math.ceil((new Date(a)-new Date(b))/864e5)}
 
-function go(p){document.querySelectorAll('.module').forEach(e=>e.classList.remove('active'));$('p-'+p).classList.add('active');document.querySelectorAll('.tab-item').forEach(e=>e.classList.remove('active'));const t=document.querySelector(`[data-t="${p}"]`);if(t)t.classList.add('active');window.scrollTo(0,0);if(p==='home')renderHome();if(p==='health'){renderHealth();setTimeout(drawW,60)}if(p==='feed')renderFeed();if(p==='expense'){renderExp();setTimeout(drawPie,60)}if(p==='medical')renderMed();if(p==='diary')renderDiary()}
+function go(p){document.querySelectorAll('.module').forEach(e=>e.classList.remove('active'));$('p-'+p).classList.add('active');document.querySelectorAll('.tab-item').forEach(e=>e.classList.remove('active'));const t=document.querySelector(`[data-t="${p}"]`);if(t)t.classList.add('active');window.scrollTo(0,0);if(p==='home')renderHome();if(p==='health'){renderHealth();setTimeout(drawW,60)}if(p==='feed')renderFeed();if(p==='expense'){renderExp();setTimeout(drawPie,60)}if(p==='medical')renderMed();if(p==='diary')renderDiary();if(p==='inventory')renderInventory();if(p==='reminder')renderReminder();if(p==='timeline')renderTimeline();if(p==='observe')renderObserve();if(p==='report')renderReport()}
 function showCal(){document.querySelectorAll('.module').forEach(e=>e.classList.remove('active'));$('p-calendar').classList.add('active');renderCal();window.scrollTo(0,0)}
 function openM(){$('mOv').classList.add('show')}
 function closeM(){$('mOv').classList.remove('show')}
@@ -340,6 +509,12 @@ function renderHome(){
   mini+=`<div class="mini"><div class="m-l">下次生日</div><div class="m-v">${daysToBday(p.birthday)} 天</div></div>`;
   $('hMini').innerHTML=mini;
   $('hPills').innerHTML=`<div class="pill"><div class="p-v">${D.vaccine.length}</div><div class="p-l">疫苗</div></div><div class="pill"><div class="p-v">${D.deworm.length}</div><div class="p-l">驱虫</div></div><div class="pill"><div class="p-v">${D.health.length}</div><div class="p-l">异常</div></div>`;
+  const todayFeed=D.feeding.filter(r=>r.date===td());
+  const water=todayFeed.filter(r=>r.type==='水').reduce((s,r)=>s+(parseInt(r.amount)||0),0);
+  const month=td().slice(0,7);
+  const monthCost=D.expense.filter(r=>r.date&&r.date.startsWith(month)).reduce((s,r)=>s+(parseFloat(r.amount)||0),0);
+  const lastDiary=D.diary.length?[...D.diary].sort((a,b)=>b.datetime.localeCompare(a.datetime))[0]:null;
+  $('homeInsight').innerHTML=`<div class="sec-hd" style="margin-top:0"><span class="cute" style="font-size:15px;color:var(--td)">今日照护概览</span><button class="btn btn-ghost btn-sm" onclick="go('feed')">去记录</button></div><div class="care-grid"><div class="care-i"><div class="care-l">今日喂养</div><div class="care-v">${todayFeed.length} 次</div><div class="care-s">含饮水 ${water||0}ml</div></div><div class="care-i"><div class="care-l">最近体重</div><div class="care-v">${cw}</div><div class="care-s">${D.weightGoal?'目标 '+D.weightGoal+' kg':'可设置目标体重'}</div></div><div class="care-i"><div class="care-l">本月花费</div><div class="care-v">¥${monthCost.toFixed(0)}</div><div class="care-s">粮食、医疗、用品汇总</div></div><div class="care-i"><div class="care-l">最近日记</div><div class="care-v">${lastDiary?fmtD(lastDiary.datetime.slice(0,10)):'暂无'}</div><div class="care-s">${lastDiary?'有新的陪伴记录':'可以记录照片和趣事'}</div></div></div>`;
   // schedules
   const t=td(),sch=[];
   D.vaccine.forEach(r=>{if(r.nextDate){const d=Math.ceil((new Date(r.nextDate)-new Date())/864e5);sch.push({nm:r.name,dt:r.nextDate,de:'疫苗'+(r.hospital?' · '+r.hospital:''),d,img:'cat2.png'})}});
@@ -378,7 +553,7 @@ function renderHealth(){
   // anomaly
   if(D.health.length){const hs=[...D.health].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,10);$('anoList').innerHTML=hs.map(h=>{const i=D.health.indexOf(h);return`<div class="wi"><div><span class="wi-d">${fmtD(h.date)}</span> <span class="tag tag-pink">${h.type}</span> <span style="font-size:11px;color:var(--ts)">${h.severity||''}</span></div><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('health',${i})">删</button></div>`}).join('')}else $('anoList').innerHTML='<div class="empty">暂无异常记录</div>';
   const ws=[...D.weight].sort((a,b)=>b.date.localeCompare(a.date));
-  $('wSummary').innerHTML=ws.length?`<div style="font-family:var(--fc);font-size:24px;color:var(--td);margin:8px 0">${ws[0].value} kg <span style="font-size:13px;color:${chg.startsWith('+')?'var(--mint-deep)':'var(--pink-deep)'}">${chg!=='-'?chg+'kg':''}</span></div>`:'';
+  $('wSummary').innerHTML=ws.length?`<div style="font-family:var(--fc);font-size:24px;color:var(--td);margin:8px 0">${ws[0].value} kg <span style="font-size:13px;color:${chg.startsWith('+')?'var(--mint-deep)':'var(--pink-deep)'}">${chg!=='-'?chg+'kg':''}</span>${D.weightGoal?` <span class="tag tag-lav" style="vertical-align:middle">目标 ${D.weightGoal}kg</span>`:''}</div>`:(D.weightGoal?`<div style="margin:8px 0"><span class="tag tag-lav">目标 ${D.weightGoal}kg</span></div>`:'');
 }
 function drawW(){
   const c=$('wChart');if(!c||!$('p-health').classList.contains('active'))return;
@@ -386,11 +561,13 @@ function drawW(){
   c.width=rect.width*2;c.height=rect.height*2;ctx.scale(2,2);const W=rect.width,H=rect.height;ctx.clearRect(0,0,W,H);
   const cut=new Date(Date.now()-range*864e5).toISOString().slice(0,10);
   const sorted=[...D.weight].filter(r=>r.date>=cut).sort((a,b)=>a.date.localeCompare(b.date));
-  if(sorted.length<2){ctx.fillStyle='#c4b5a6';ctx.font='500 13px sans-serif';ctx.textAlign='center';ctx.fillText('该时间段记录不足',W/2,H/2);return}
-  const vals=sorted.map(r=>r.value);let mn=Math.min(...vals)-0.3,mx=Math.max(...vals)+0.3;if(D.weightGoal){mn=Math.min(mn,D.weightGoal-0.3);mx=Math.max(mx,D.weightGoal+0.3)}
+  if(sorted.length<2&&!D.weightGoal){ctx.fillStyle='#c4b5a6';ctx.font='500 13px sans-serif';ctx.textAlign='center';ctx.fillText('该时间段记录不足',W/2,H/2);return}
+  const vals=sorted.map(r=>r.value);if(D.weightGoal)vals.push(D.weightGoal);let mn=Math.min(...vals)-0.3,mx=Math.max(...vals)+0.3;
   const pad={t:24,r:12,b:24,l:36},cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
   ctx.strokeStyle='#f0e8df';ctx.lineWidth=1;
   for(let i=0;i<=4;i++){const y=pad.t+(cH/4)*i;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();ctx.fillStyle='#c4b5a6';ctx.font='10px sans-serif';ctx.textAlign='right';ctx.fillText((mx-(mx-mn)*i/4).toFixed(1),pad.l-5,y+3)}
+  if(D.weightGoal){const gy=pad.t+cH-((D.weightGoal-mn)/(mx-mn))*cH;ctx.save();ctx.setLineDash([7,5]);ctx.lineWidth=1.6;ctx.strokeStyle='#9262d1';ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(W-pad.r,gy);ctx.stroke();ctx.restore();ctx.fillStyle='#9262d1';ctx.font='700 11px sans-serif';ctx.textAlign='left';ctx.fillText('目标 '+D.weightGoal+'kg',pad.l+4,Math.max(pad.t+10,gy-6))}
+  if(sorted.length<2){ctx.fillStyle='#c4b5a6';ctx.font='500 13px sans-serif';ctx.textAlign='center';ctx.fillText('体重记录不足，已显示目标线',W/2,H/2+18);return}
   const pts=sorted.map((r,i)=>({x:pad.l+(cW/(sorted.length-1))*i,y:pad.t+cH-((r.value-mn)/(mx-mn))*cH,v:r.value}));
   const g=ctx.createLinearGradient(0,pad.t,0,H-pad.b);g.addColorStop(0,'rgba(242,132,158,.18)');g.addColorStop(1,'rgba(242,132,158,0)');
   ctx.beginPath();ctx.moveTo(pts[0].x,H-pad.b);pts.forEach(p=>ctx.lineTo(p.x,p.y));ctx.lineTo(pts[pts.length-1].x,H-pad.b);ctx.closePath();ctx.fillStyle=g;ctx.fill();
@@ -405,7 +582,7 @@ function openPoop(){setM(`<h3>记录排泄</h3><div class="fg"><label>日期</la
 function poopPick(el,v){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');$('fpp-s').value=v;$('fpp-typeWrap').style.display=v==='异常'?'block':'none'}
 function poopType(el){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');$('fpp-t').value=el.dataset.v}
 function savePoop(){const s=gi('fpp-s');const r={date:gi('fpp-d'),status:s,type:s==='异常'?gi('fpp-t'):''};D.poop.push(r);save();renderHealth();closeM()}
-function openAno(){setM(`<h3>记录异常</h3><div class="fg"><label>日期</label><input type="date" id="fa-d" value="${td()}"></div><div class="fg"><label>异常类型</label><div class="chips">${['呕吐','食欲下降','咳嗽','打喷嚏','精神萎靡','皮肤异常','其他'].map(t=>`<div class="chip" onclick="anoPick(this)" data-v="${t}">${t}</div>`).join('')}</div><input type="hidden" id="fa-t"></div><div class="fg"><label>严重程度</label><select id="fa-s"><option>轻微</option><option>中等</option><option>严重</option></select></div><div class="fg"><label>备注</label><textarea id="fa-n"></textarea></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveAno()">保存</button></div>`)}
+function openAno(){setM(`<h3>记录异常</h3><div class="fg"><label>日期</label><input type="date" id="fa-d" value="${td()}"></div><div class="fg"><label>异常类型</label><div class="chips">${['软便','呕吐','食欲下降','咳嗽','打喷嚏','精神萎靡','皮肤异常','其他'].map(t=>`<div class="chip" onclick="anoPick(this)" data-v="${t}">${t}</div>`).join('')}</div><input type="hidden" id="fa-t"></div><div class="fg"><label>严重程度</label><select id="fa-s"><option>轻微</option><option>中等</option><option>严重</option></select></div><div class="fg"><label>备注</label><textarea id="fa-n"></textarea></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveAno()">保存</button></div>`)}
 function anoPick(el){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');$('fa-t').value=el.dataset.v}
 function saveAno(){if(!gi('fa-t')){alert('请选择类型');return}D.health.push({date:gi('fa-d'),type:gi('fa-t'),severity:gi('fa-s'),note:gi('fa-n')});save();renderHealth();renderHome();closeM()}
 
@@ -418,10 +595,132 @@ function renderFeed(){
   if(!sorted.length){$('fList').innerHTML='';$('fEm').style.display='block';return}$('fEm').style.display='none';
   $('fList').innerHTML=sorted.slice(0,40).map(r=>{const i=D.feeding.indexOf(r);return`<div class="rec"><div class="rec-top"><div><div class="rec-t">${r.type}${r.brand?' · '+r.brand:''}</div><div class="rec-s">${fmtD(r.date)} ${r.time||''}</div></div><div class="rec-v">${r.amount||''}</div></div><div class="rec-bm"><span class="tag tag-yellow">${r.product||r.type}</span><div class="rec-act"><button class="btn btn-ghost btn-sm" onclick="openFeed(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('feeding',${i})">删除</button></div></div></div>`}).join('');
 }
-function openFeed(idx=-1){const e=idx>=0,r=e?D.feeding[idx]:{date:td(),time:'',type:'',brand:'',product:'',amount:''};
-const brandOpts=D.brands.map(b=>`<option value="${b}">`).join('');
-setM(`<h3>${e?'编辑':'记录'}喂养</h3><div class="frow"><div class="fg"><label>日期</label><input type="date" id="ff-d" value="${r.date}"></div><div class="fg"><label>时间</label><input type="time" id="ff-t" value="${r.time||''}"></div></div><div class="fg"><label>类型</label><select id="ff-tp"><option value="">选择</option>${['主食罐','零食罐','冻干','干粮','生骨肉','营养膏','水','其他'].map(t=>`<option ${r.type===t?'selected':''}>${t}</option>`).join('')}</select></div><div class="fg"><label>品牌（输入后自动保存，下次可选）</label><input id="ff-b" list="brandList" value="${r.brand||''}" placeholder="如:K9/巅峰/希喂"><datalist id="brandList">${brandOpts}</datalist></div><div class="frow"><div class="fg"><label>产品</label><input id="ff-p" value="${r.product||''}"></div><div class="fg"><label>用量</label><input id="ff-a" value="${r.amount||''}" placeholder="80g/1罐/50ml"></div></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveFeed(${idx})">保存</button></div>`)}
-function saveFeed(idx){const b=gi('ff-b').trim();const r={date:gi('ff-d'),time:gi('ff-t'),type:gi('ff-tp'),brand:b,product:gi('ff-p'),amount:gi('ff-a')};if(!r.type){alert('请选择类型');return}if(b&&!D.brands.includes(b))D.brands.push(b);if(idx>=0)D.feeding[idx]=r;else D.feeding.push(r);save();renderFeed();closeM()}
+function brandOptions(type){ensureBrandLib();return uniq([...(D.brandLib[type]||[]),...(D.brands||[])]).map(b=>`<option value="${esc(b)}">`).join('')}
+function onFeedTypeChange(){const t=gi('ff-tp');$('brandList').innerHTML=brandOptions(t);$('ff-b').placeholder=t==='水'?'可留空':t?'选择或输入'+t+'品牌':'先选择类型'}
+function openFeed(idx=-1){ensureBrandLib();const e=idx>=0,r=e?D.feeding[idx]:{date:td(),time:'',type:'主食罐',brand:'',product:'',amount:''};
+setM(`<h3>${e?'编辑':'记录'}喂养</h3><div class="frow"><div class="fg"><label>日期</label><input type="date" id="ff-d" value="${r.date}"></div><div class="fg"><label>时间</label><input type="time" id="ff-t" value="${r.time||''}"></div></div><div class="fg"><label>类型</label><select id="ff-tp" onchange="onFeedTypeChange()"><option value="">选择</option>${FEED_TYPES.map(t=>`<option ${r.type===t?'selected':''}>${t}</option>`).join('')}</select></div><div class="fg"><label>品牌库</label><input id="ff-b" list="brandList" value="${r.brand||''}" placeholder="选择或输入品牌"><datalist id="brandList">${brandOptions(r.type)}</datalist></div><div class="frow"><div class="fg"><label>产品/口味</label><input id="ff-p" value="${r.product||''}" placeholder="如:鸡肉/兔肉/牛肉"></div><div class="fg"><label>用量</label><input id="ff-a" value="${r.amount||''}" placeholder="80g/1罐/10g冻干"></div></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveFeed(${idx})">保存</button></div>`);onFeedTypeChange()}
+function saveFeed(idx){const b=gi('ff-b').trim(),tp=gi('ff-tp');const r={date:gi('ff-d'),time:gi('ff-t'),type:tp,brand:b,product:gi('ff-p'),amount:gi('ff-a')};if(!r.type){alert('请选择类型');return}if(b){D.brands=uniq([...(D.brands||[]),b]);D.brandLib[tp]=uniq([...(D.brandLib[tp]||[]),b])}if(idx>=0)D.feeding[idx]=r;else D.feeding.push(r);save();renderFeed();renderHome();closeM()}
+function openBrandLib(){ensureBrandLib();let cats=FEED_TYPES.filter(t=>t!=='水').map(t=>`<div class="brand-cat"><div class="brand-cat-h"><div class="brand-cat-t">${t}</div><button class="btn btn-ghost btn-sm" onclick="addBrandPrompt('${t}')">+ 添加</button></div><div class="brand-tags">${(D.brandLib[t]||[]).length?D.brandLib[t].map((b,i)=>`<span class="brand-tag">${b}<button class="brand-del" onclick="delBrand('${t}',${i})">×</button></span>`).join(''):'<span style="font-size:12px;color:var(--tl)">暂无品牌</span>'}</div></div>`).join('');setM(`<h3>品牌库</h3><div class="brand-lib">${cats}</div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">关闭</button><button class="btn" onclick="openFeed()">记一餐</button></div>`)}
+function addBrandPrompt(type){const b=prompt('添加到「'+type+'」的品牌名');if(!b||!b.trim())return;D.brandLib[type]=uniq([...(D.brandLib[type]||[]),b]);D.brands=uniq([...(D.brands||[]),b]);save();openBrandLib()}
+function delBrand(type,idx){D.brandLib[type]=(D.brandLib[type]||[]).filter((b,i)=>i!==idx);save();openBrandLib()}
+
+// INVENTORY
+function renderInventory(){
+  D.stock=D.stock||[];D.canLog=D.canLog||[];
+  const total=D.stock.reduce((s,r)=>s+(parseFloat(r.qty)||0),0),low=D.stock.filter(r=>(parseFloat(r.qty)||0)<=1).length,open=D.canLog.filter(r=>!r.finishDate).length;
+  $('invStats').innerHTML=`<div class="dash-i"><div class="d-l">库存总量</div><div class="d-v">${total}</div></div><div class="dash-i"><div class="d-l">低库存</div><div class="d-v">${low}</div></div><div class="dash-i"><div class="d-l">开封中</div><div class="d-v">${open}</div></div><div class="dash-i"><div class="d-l">重点类型</div><div class="d-v">罐/冻干/肉</div></div>`;
+  if(D.stock.length){$('stockEm').style.display='none';$('stockList').innerHTML=[...D.stock].sort((a,b)=>(a.type||'').localeCompare(b.type||'')).map(r=>{const i=D.stock.indexOf(r),q=parseFloat(r.qty)||0,spec=r.grams?`${r.grams}g/份`:'';return`<div class="inv-card"><div class="inv-top"><div><div class="inv-name">${esc(r.brand)} ${esc(r.product||'')}</div><div class="inv-sub">${esc(r.type)} · ${esc(r.flavor||'未填口味')}${spec?' · '+spec:''}</div></div><div class="wi-v">${q}${r.unit||'份'}</div></div><div class="inv-meta"><span class="tag ${q<=1?'tag-pink':'tag-mint'}">${q<=1?'快补货':'库存OK'}</span>${spec?`<span class="tag tag-lav">${spec}</span>`:''}${r.expire?`<span class="tag tag-yellow">到期 ${fmtD(r.expire)}</span>`:''}<button class="btn btn-ghost btn-sm" onclick="openStock(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('stock',${i})">删除</button></div></div>`}).join('')}else{$('stockList').innerHTML='';$('stockEm').style.display='block'}
+  if(D.canLog.length){$('canEm').style.display='none';$('canList').innerHTML=[...D.canLog].sort((a,b)=>b.openDate.localeCompare(a.openDate)).slice(0,20).map(r=>{const i=D.canLog.indexOf(r),d=daysBetween(td(),r.openDate);return`<div class="rec"><div class="rec-top"><div><div class="rec-t">${esc(r.brand)} ${esc(r.product||'')}</div><div class="rec-s">开封 ${fmtD(r.openDate)}${r.finishDate?' · 吃完 '+fmtD(r.finishDate):''}</div></div><span class="tag ${!r.finishDate&&d>=2?'tag-pink':'tag-yellow'}">${r.finishDate?'已吃完':d+'天'}</span></div><div class="rec-bm"><span style="font-size:12px;color:var(--ts)">${esc(r.note||'')}</span><div class="rec-act">${!r.finishDate?`<button class="btn btn-ghost btn-sm" onclick="finishCan(${i})">吃完</button>`:''}<button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('canLog',${i})">删除</button></div></div></div>`}).join('')}else{$('canList').innerHTML='';$('canEm').style.display='block'}
+}
+function openStock(idx=-1){const e=idx>=0,r=e?D.stock[idx]:{type:'主食罐',brand:'',product:'',flavor:'',qty:'',unit:'罐',grams:'',expire:''};setM(`<h3>${e?'编辑':'添加'}库存</h3><div class="frow"><div class="fg"><label>类型</label><select id="fs-t">${['主食罐','零食罐','冻干','生骨肉','少量干粮'].map(t=>`<option ${r.type===t?'selected':''}>${t}</option>`).join('')}</select></div><div class="fg"><label>品牌</label><input id="fs-b" value="${esc(r.brand)}" list="brandListStock"><datalist id="brandListStock">${brandOptions(r.type)}</datalist></div></div><div class="frow"><div class="fg"><label>产品</label><input id="fs-p" value="${esc(r.product||'')}"></div><div class="fg"><label>口味/肉源</label><input id="fs-f" value="${esc(r.flavor||'')}" placeholder="鸡/兔/牛"></div></div><div class="frow"><div class="fg"><label>数量</label><input type="number" step="0.1" id="fs-q" value="${r.qty||''}" placeholder="如 1 / 6"></div><div class="fg"><label>单位</label><select id="fs-u"><option ${r.unit==='罐'?'selected':''}>罐</option><option ${r.unit==='包'?'selected':''}>包</option><option ${r.unit==='袋'?'selected':''}>袋</option><option ${r.unit==='盒'?'selected':''}>盒</option><option ${r.unit==='份'?'selected':''}>份</option></select></div></div><div class="frow"><div class="fg"><label>规格(g/份)</label><input type="number" step="1" id="fs-g" value="${r.grams||''}" placeholder="如 80 / 500"></div><div class="fg"><label>到期日期</label><input type="date" id="fs-e" value="${r.expire||''}"></div></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveStock(${idx})">保存</button></div>`)}
+function saveStock(idx){const r={type:gi('fs-t'),brand:gi('fs-b'),product:gi('fs-p'),flavor:gi('fs-f'),qty:gi('fs-q'),unit:gi('fs-u'),grams:gi('fs-g'),expire:gi('fs-e')};if(!r.brand){alert('请填写品牌');return}if(idx>=0)D.stock[idx]=r;else D.stock.push(r);save();renderInventory();closeM()}
+function openCan(){setM(`<h3>开罐/开封记录</h3><div class="frow"><div class="fg"><label>日期</label><input type="date" id="fc-d" value="${td()}"></div><div class="fg"><label>类型</label><select id="fc-t">${['主食罐','零食罐','冻干','生骨肉'].map(t=>`<option>${t}</option>`).join('')}</select></div></div><div class="frow"><div class="fg"><label>品牌</label><input id="fc-b" list="brandListCan"><datalist id="brandListCan">${brandOptions('主食罐')}</datalist></div><div class="fg"><label>产品/口味</label><input id="fc-p"></div></div><div class="fg"><label>备注</label><input id="fc-n" placeholder="冷藏位置、分装情况"></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveCan()">保存</button></div>`)}
+function saveCan(){const r={openDate:gi('fc-d'),type:gi('fc-t'),brand:gi('fc-b'),product:gi('fc-p'),note:gi('fc-n'),finishDate:''};if(!r.brand){alert('请填写品牌');return}D.canLog.push(r);save();renderInventory();closeM()}
+function finishCan(i){D.canLog[i].finishDate=td();save();renderInventory()}
+
+// REMINDER & TIMELINE
+function collectReminders(){
+  const items=[];
+  const add=(date,title,desc,type)=>{if(!date)return;const d=daysBetween(date);if(d<=30)items.push({date,title,desc,type,d})};
+  D.vaccine.forEach(r=>add(r.nextDate,'疫苗到期',r.name||'疫苗','medical'));
+  D.deworm.forEach(r=>add(r.nextDate,'驱虫到期',(r.type||'驱虫')+(r.brand?' · '+r.brand:''),'medical'));
+  D.medical.forEach(r=>add(r.appointDate,'就诊预约',r.diagnosis||'就诊','medical'));
+  (D.stock||[]).forEach(r=>add(r.expire,'库存临期',(r.brand||'')+' '+(r.product||''),'stock'));
+  (D.canLog||[]).filter(r=>!r.finishDate).forEach(r=>{const d=daysBetween(td(),r.openDate);if(d>=2)items.push({date:r.openDate,title:'开封已久',desc:(r.brand||'')+' '+(r.product||'')+' 已开封 '+d+' 天',type:'open',d:-d})});
+  (D.stock||[]).filter(r=>(parseFloat(r.qty)||0)<=1).forEach(r=>items.push({date:td(),title:'库存偏低',desc:(r.brand||'')+' '+(r.product||'')+' 剩余 '+(r.qty||0)+(r.unit||'份'),type:'stock',d:0}));
+  return items.sort((a,b)=>a.d-b.d);
+}
+function renderReminder(){
+  const items=collectReminders();
+  if(!items.length){$('remList').innerHTML='';$('remEm').style.display='block';return}
+  $('remEm').style.display='none';
+  $('remList').innerHTML=items.map(r=>`<div class="warn ${r.d<=3?'urgent':''}"><div style="display:flex;justify-content:space-between;gap:12px"><div><div class="rec-t">${esc(r.title)}</div><div class="rec-s">${esc(r.desc)}</div></div><span class="tag ${r.d<0||r.d<=3?'tag-pink':'tag-yellow'}">${r.d<0?'已超时':r.d===0?'今天':r.d+'天'}</span></div></div>`).join('');
+}
+function renderTimeline(){
+  const ev=[];
+  D.weight.forEach(r=>ev.push({date:r.date,title:'体重 '+r.value+'kg',sub:r.note||'',kind:'体重'}));
+  D.vaccine.forEach(r=>ev.push({date:r.date,title:'疫苗 '+r.name,sub:r.dose?'第'+r.dose+'针':'',kind:'医疗'}));
+  D.deworm.forEach(r=>ev.push({date:r.date,title:'驱虫 '+(r.type||''),sub:r.brand||'',kind:'医疗'}));
+  D.medical.forEach(r=>ev.push({date:r.date,title:(r.type||'就诊')+' '+r.diagnosis,sub:r.hospital||r.note||'',kind:'医疗'}));
+  D.diary.forEach(r=>ev.push({date:r.datetime.slice(0,10),title:'日记 '+(r.tags&&r.tags.length?'#'+r.tags[0]:'日常'),sub:r.text?r.text.slice(0,28):'照片记录',kind:'日记'}));
+  (D.observe||[]).forEach(r=>ev.push({date:r.date,title:'症状观察',sub:obsSummary(r),kind:'观察'}));
+  ev.sort((a,b)=>b.date.localeCompare(a.date));
+  if(!ev.length){$('timeList').innerHTML='';$('timeEm').style.display='block';return}
+  $('timeEm').style.display='none';
+  $('timeList').innerHTML=ev.slice(0,60).map(e=>`<div class="time-i"><div class="time-d">${fmtD(e.date)} · ${e.kind}</div><div class="time-t">${esc(e.title)}</div>${e.sub?`<div class="time-s">${esc(e.sub)}</div>`:''}</div>`).join('');
+}
+
+// OBSERVE
+const OBS_ITEMS=[['appetite','食欲'],['spirit','精神'],['poop','便便'],['vomit','呕吐'],['sneeze','咳嗽/喷嚏'],['skin','皮肤']];
+const OBS_GUIDE={
+  appetite:['正常进食','少吃一点或挑食','吃不到平时一半','几乎不吃或拒食'],
+  spirit:['活跃互动正常','比平时安静','明显嗜睡/不爱动','虚弱、躲藏或反应差'],
+  poop:['成形正常','偏软或次数略变','腹泻/便秘/很臭','带血、黑便或持续异常'],
+  vomit:['没有呕吐','吐毛球或偶发一次','一天多次或吐食物','持续呕吐/吐黄水'],
+  sneeze:['无咳嗽喷嚏','偶尔喷嚏/轻咳','频繁喷嚏/咳嗽','呼吸费力或张口呼吸'],
+  skin:['皮肤毛发正常','轻微抓挠/掉毛','红肿皮屑/局部秃毛','破溃渗液或严重瘙痒']
+};
+const OBS_VIS={
+  appetite:{icon:'appetite',fb:'cat2.png',title:'吃饭'},
+  spirit:{icon:'spirit',fb:'cat1.png',title:'精神'},
+  poop:{icon:'poop',fb:'cat5.png',title:'便便'},
+  vomit:{icon:'vomit',fb:'cat6.png',title:'呕吐'},
+  sneeze:{icon:'sneeze',fb:'cat4.png',title:'呼吸'},
+  skin:{icon:'skin',fb:'cat3.png',title:'皮肤'}
+};
+function obsHint(k,v){return (OBS_GUIDE[k]||[])[parseInt(v)||0]||'正常'}
+function obsScore(r){return OBS_ITEMS.reduce((s,[k])=>s+(parseInt(r[k])||0),0)}
+function obsSummary(r){const bad=OBS_ITEMS.filter(([k])=>(parseInt(r[k])||0)>0).map(([k,n])=>n+': '+obsHint(k,r[k]));return bad.length?bad.join('，'):'全部正常'}
+function obsMood(sc){return sc>=6?{icon:'report-alert',fb:'cat6.png',title:'今天要重点观察',sub:'有几项分数偏高，建议缩短观察间隔'}:sc>=3?{icon:'report-watch',fb:'cat2.png',title:'有一点小信号',sub:'整体还可以，但这些变化值得记下来'}:{icon:'report-good',fb:'cat1.png',title:'今天状态很安稳',sub:'各项看起来不错，可以放心夸夸'}}
+function obsLevel(v){v=parseInt(v)||0;return v>=2?'bad':v===1?'watch':'ok'}
+function obsStatus(v){v=parseInt(v)||0;return v>=2?'明显异常':v===1?'需要留意':'正常'}
+function obsCards(r){return `<div class="obs-grid">${OBS_ITEMS.map(([k,n])=>{const v=parseInt(r[k])||0,vis=OBS_VIS[k]||{};return`<div class="obs-card ${obsLevel(v)}"><div class="obs-card-top">${iconImg(vis.icon||k,vis.fb||'cat1.png',n)}<div><div class="obs-name">${n}</div><div class="obs-v">${v} 分</div></div></div><span class="tag ${v>=2?'tag-pink':v===1?'tag-yellow':'tag-mint'}">${obsStatus(v)}</span><div class="obs-desc">${obsHint(k,v)}</div></div>`}).join('')}</div>`}
+function renderObserve(){
+  D.observe=D.observe||[];
+  const today=D.observe.filter(r=>r.date===td()).sort((a,b)=>(b.time||'').localeCompare(a.time||''))[0];
+  if(today){const sc=obsScore(today),m=obsMood(sc);$('obsToday').innerHTML=`<div class="sec-hd" style="margin-top:0"><span class="cute" style="font-size:15px;color:var(--td)">今日观察</span><button class="btn btn-ghost btn-sm" onclick="openObs(${D.observe.indexOf(today)})">编辑</button></div><div class="obs-hero ${sc>=3?'warn':''}"><div><div class="obs-title">${m.title}</div><div class="obs-sub">${m.sub}${today.note?' · '+esc(today.note):''}</div></div>${iconImg(m.icon,m.fb,'')}</div>${obsCards(today)}`}else $('obsToday').innerHTML='<div class="empty" style="padding:12px">今天还没有观察记录</div>';
+  if(!D.observe.length){$('obsList').innerHTML='';$('obsEm').style.display='block';return}
+  $('obsEm').style.display='none';
+  $('obsList').innerHTML=[...D.observe].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,30).map(r=>{const i=D.observe.indexOf(r),sc=obsScore(r);return`<div class="rec"><div class="rec-top"><div><div class="rec-t">${fmtD(r.date)} ${r.time||''}</div><div class="rec-s">${esc(obsSummary(r))}</div></div><span class="tag ${sc>=4?'tag-pink':sc?'tag-yellow':'tag-mint'}">${sc} 分</span></div><div class="rec-bm"><span style="font-size:12px;color:var(--ts)">${esc(r.note||'')}</span><div class="rec-act"><button class="btn btn-ghost btn-sm" onclick="openObs(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('observe',${i})">删除</button></div></div></div>`}).join('');
+}
+function openObs(idx=-1){const e=idx>=0,r=e?D.observe[idx]:{date:td(),time:'',appetite:0,spirit:0,poop:0,vomit:0,sneeze:0,skin:0,note:''};const rows=OBS_ITEMS.map(([k,n])=>`<div class="fg"><label>${n}</label><input type="range" min="0" max="3" id="fo-${k}" value="${r[k]||0}" oninput="this.nextElementSibling.innerHTML=this.value+' 分 · '+obsHint('${k}',this.value)"><div class="rec-s">${r[k]||0} 分 · ${obsHint(k,r[k])}</div></div>`).join('');setM(`<h3>${e?'编辑':'记录'}症状观察</h3><div class="frow"><div class="fg"><label>日期</label><input type="date" id="fo-d" value="${r.date}"></div><div class="fg"><label>时间</label><input type="time" id="fo-t" value="${r.time||''}"></div></div><div class="dd" style="margin-bottom:12px"><div class="dd-e" style="padding:6px">滑动时会显示具体含义：0 正常，1 需要留意，2 明显异常，3 建议尽快处理</div></div>${rows}<div class="fg"><label>备注</label><textarea id="fo-n">${esc(r.note||'')}</textarea></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveObs(${idx})">保存</button></div>`)}
+function saveObs(idx){const r={date:gi('fo-d'),time:gi('fo-t'),note:gi('fo-n')};OBS_ITEMS.forEach(([k])=>r[k]=gi('fo-'+k));if(idx>=0)D.observe[idx]=r;else D.observe.push(r);const sc=obsScore(r);if(sc>=4)D.health.push({date:r.date,type:'观察异常',severity:sc>=8?'严重':'中等',note:obsSummary(r)+(r.note?' · '+r.note:'')});save();renderObserve();renderHealth();renderHome();closeM()}
+
+// WEEKLY REPORT
+function weekData(){
+  const start=new Date(Date.now()-6*864e5).toISOString().slice(0,10);
+  const inWeek=r=>(r.date||r.openDate||r.datetime||'').slice(0,10)>=start;
+  const feed=D.feeding.filter(inWeek), water=feed.filter(r=>r.type==='水').reduce((s,r)=>s+(parseInt(r.amount)||0),0);
+  const poop=D.poop.filter(inWeek), poopBad=poop.filter(r=>r.status==='异常').length;
+  const health=D.health.filter(inWeek), obs=(D.observe||[]).filter(inWeek), obsTotal=obs.reduce((s,r)=>s+obsScore(r),0);
+  const weight=D.weight.filter(inWeek).sort((a,b)=>a.date.localeCompare(b.date));
+  const reminders=collectReminders().filter(r=>r.d<=7);
+  let score=100;
+  score-=health.length*8+poopBad*6+Math.min(obsTotal*3,30)+reminders.filter(r=>r.d<0).length*10;
+  if(feed.length<5)score-=8;
+  if(water<300)score-=5;
+  score=Math.max(0,Math.min(100,score));
+  return {start,feed,water,poop,poopBad,health,obs,obsTotal,weight,reminders,score};
+}
+function reportLine(label,val,max,color='var(--mint-deep)'){const pct=Math.max(0,Math.min(100,(val/max)*100));return`<div class="score-i"><div class="s-v">${val}</div><div class="s-l">${label}</div><div class="bar"><span style="width:${pct}%;background:${color}"></span></div></div>`}
+function renderReport(){
+  const w=weekData(), good=w.score>=82, ok=w.score>=65;
+  const mark=good?{icon:'report-good',fb:'cat1.png'}:ok?{icon:'report-watch',fb:'cat2.png'}:{icon:'report-alert',fb:'cat6.png'};
+  const title=good?'本周状态很棒':'本周需要多留意';
+  const msg=good?'布丁这周表现不错，饮食和记录都比较稳定，值得认真夸夸。':ok?'整体还可以，但有几项信号值得继续观察，先把记录保持住。':'这周出现了比较多需要关注的信号，建议缩短观察间隔，必要时联系医生。';
+  const praise=[];
+  if(w.feed.length>=7)praise.push('喂养记录很勤快，照护节奏稳定');
+  if(!w.health.length&&!w.poopBad)praise.push('没有明显异常记录，状态很争气');
+  if(w.weight.length>=2)praise.push('体重有连续记录，趋势更容易判断');
+  if(!praise.length)praise.push('已经开始积累数据了，这就是变好的第一步');
+  const alerts=[];
+  if(w.health.length)alerts.push('本周有 '+w.health.length+' 条异常记录，请结合精神和食欲继续观察');
+  if(w.poopBad)alerts.push('有 '+w.poopBad+' 次排泄异常，注意饮食变化和补水');
+  if(w.obsTotal>=6)alerts.push('症状观察分偏高，建议每天固定时间复查');
+  if(w.reminders.some(r=>r.d<0))alerts.push('有事项已过期，请尽快处理');
+  if(!alerts.length)alerts.push('暂无明显风险，继续保持当前照护节奏');
+  $('reportBody').innerHTML=`<div class="report-hero ${good?'':'bad'}"><div><div class="rec-s">${fmtD(w.start)} - ${fmtD(td())}</div><div class="cute" style="font-size:26px;color:var(--td);line-height:1.2">${title}</div><div style="font-size:13px;color:var(--ts);margin-top:8px">${msg}</div></div><div class="report-mark">${iconImg(mark.icon,mark.fb,'')}</div></div><div class="card"><div class="sec-hd" style="margin-top:0"><span class="cute" style="font-size:15px;color:var(--td)">健康分 ${w.score}</span><span class="tag ${good?'tag-mint':ok?'tag-yellow':'tag-pink'}">${good?'夸夸模式':ok?'观察模式':'提醒模式'}</span></div><div class="score-row">${reportLine('喂养',w.feed.length,14)}${reportLine('饮水ml',w.water,700,'var(--mint-deep)')}${reportLine('异常',w.health.length+w.poopBad,5,'var(--pink-deep)')}</div></div><div class="card"><div class="cute" style="font-size:15px;color:var(--td);margin-bottom:10px">本周夸夸</div>${praise.map(t=>`<div class="dd-i"><span class="dd-dot" style="background:#45b692"></span><span class="dd-tx">${t}</span></div>`).join('')}</div><div class="card"><div class="cute" style="font-size:15px;color:var(--td);margin-bottom:10px">照护提醒</div>${alerts.map(t=>`<div class="dd-i"><span class="dd-dot" style="background:#f2849e"></span><span class="dd-tx">${t}</span></div>`).join('')}</div><div class="card"><div class="cute" style="font-size:15px;color:var(--td);margin-bottom:10px">数据摘要</div><div class="care-grid"><div class="care-i"><div class="care-l">排泄记录</div><div class="care-v">${w.poop.length}</div><div class="care-s">异常 ${w.poopBad}</div></div><div class="care-i"><div class="care-l">观察记录</div><div class="care-v">${w.obs.length}</div><div class="care-s">总分 ${w.obsTotal}</div></div><div class="care-i"><div class="care-l">体重记录</div><div class="care-v">${w.weight.length}</div><div class="care-s">${w.weight.length?w.weight[w.weight.length-1].value+' kg':'暂无'}</div></div><div class="care-i"><div class="care-l">近期提醒</div><div class="care-v">${w.reminders.length}</div><div class="care-s">7天内/过期</div></div></div></div>`;
+}
 
 // EXPENSE
 function renderExp(){
@@ -468,19 +767,14 @@ function saveDiary(){const text=gi('fdi-t').trim();const tags=gi('fdi-tag').spli
 
 // CALENDAR
 let calY,calMo,calSel=td();(()=>{const d=new Date();calY=d.getFullYear();calMo=d.getMonth()})();
-function renderCal(){$('calTitle').textContent=`${calY}年${calMo+1}月`;const g=$('calGrid');const dows=['日','一','二','三','四','五','六'];let h=dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');const first=new Date(calY,calMo,1).getDay(),days=new Date(calY,calMo+1,0).getDate(),prev=new Date(calY,calMo,0).getDate();const ms=`${calY}-${String(calMo+1).padStart(2,'0')}`;const em=calEvts(ms);for(let i=0;i<first;i++)h+=`<div class="cal-d other">${prev-first+1+i}</div>`;for(let d=1;d<=days;d++){const ds=`${ms}-${String(d).padStart(2,'0')}`;const dots=em[ds]||[];let dH=dots.length?`<div class="dots">${dots.slice(0,3).map(c=>`<span style="background:${c}"></span>`).join('')}</div>`:'';h+=`<div class="cal-d${ds===td()?' today':''}${ds===calSel?' sel':''}" onclick="calPick('${ds}')">${d}${dH}</div>`}const totalCells = Math.ceil((first + days) / 7) * 7;
-const tailDays = totalCells - (first + days);
-for(let i = 1; i <= tailDays; i++) {
-  h += `<div class="cal-d other">${i}</div>`;
-}
-g.innerHTML=h;calDetail(calSel)}
-function calEvts(m){const map={};const ad=(d,c)=>{if(d&&d.startsWith(m))(map[d]=map[d]||[]).push(c)};D.vaccine.forEach(r=>{ad(r.date,'#45b692');ad(r.nextDate,'#45b692')});D.deworm.forEach(r=>{ad(r.date,'#9262d1');ad(r.nextDate,'#9262d1')});D.medical.forEach(r=>{ad(r.date,'#e0a82e');ad(r.appointDate,'#e0a82e')});D.health.forEach(r=>ad(r.date,'#f2849e'));D.poop.forEach(r=>ad(r.date,'#fda6ba'));D.weight.forEach(r=>ad(r.date,'#c9546e'));return map}
+function renderCal(){$('calTitle').textContent=`${calY}年${calMo+1}月`;const g=$('calGrid');const dows=['日','一','二','三','四','五','六'];let h=dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');const first=new Date(calY,calMo,1).getDay(),days=new Date(calY,calMo+1,0).getDate(),prev=new Date(calY,calMo,0).getDate();const ms=`${calY}-${String(calMo+1).padStart(2,'0')}`;const em=calEvts(ms);for(let i=0;i<first;i++)h+=`<div class="cal-d other">${prev-first+1+i}</div>`;for(let d=1;d<=days;d++){const ds=`${ms}-${String(d).padStart(2,'0')}`;const dots=em[ds]||[];let dH=dots.length?`<div class="dots">${dots.slice(0,3).map(c=>`<span style="background:${c}"></span>`).join('')}</div>`:'';h+=`<div class="cal-d${ds===td()?' today':''}${ds===calSel?' sel':''}" onclick="calPick('${ds}')">${d}${dH}</div>`}for(let i=1;i<=42-first-days;i++)h+=`<div class="cal-d other">${i}</div>`;g.innerHTML=h;calDetail(calSel)}
+function calEvts(m){const map={};const ad=(d,c)=>{if(d&&d.startsWith(m))(map[d]=map[d]||[]).push(c)};D.vaccine.forEach(r=>{ad(r.date,'#45b692');ad(r.nextDate,'#45b692')});D.deworm.forEach(r=>{ad(r.date,'#9262d1');ad(r.nextDate,'#9262d1')});D.medical.forEach(r=>{ad(r.date,'#e0a82e');ad(r.appointDate,'#e0a82e')});D.health.forEach(r=>ad(r.date,'#f2849e'));D.poop.forEach(r=>ad(r.date,'#fda6ba'));D.weight.forEach(r=>ad(r.date,'#c9546e'));(D.stock||[]).forEach(r=>ad(r.expire,'#e0a82e'));(D.canLog||[]).forEach(r=>ad(r.openDate,'#f2849e'));(D.observe||[]).forEach(r=>ad(r.date,'#f2849e'));return map}
 function calPick(ds){calSel=ds;renderCal()}
 function chgMo(dir){calMo+=dir;if(calMo>11){calMo=0;calY++}if(calMo<0){calMo=11;calY--}renderCal()}
-function calDetail(ds){const el=$('dayDet');const evs=[];D.vaccine.forEach(r=>{if(r.date===ds)evs.push({c:'#45b692',t:'疫苗: '+r.name});if(r.nextDate===ds)evs.push({c:'#45b692',t:'[预定] '+r.name})});D.deworm.forEach(r=>{if(r.date===ds)evs.push({c:'#9262d1',t:'驱虫: '+(r.type||'')});if(r.nextDate===ds)evs.push({c:'#9262d1',t:'[预定] 驱虫'})});D.medical.forEach(r=>{if(r.date===ds)evs.push({c:'#e0a82e',t:'就诊: '+r.diagnosis});if(r.appointDate===ds)evs.push({c:'#e0a82e',t:'[预约] '+r.diagnosis})});D.health.forEach(r=>{if(r.date===ds)evs.push({c:'#f2849e',t:'异常: '+r.type})});D.poop.forEach(r=>{if(r.date===ds)evs.push({c:'#fda6ba',t:'排泄: '+r.status+(r.type?' '+r.type:'')})});D.weight.forEach(r=>{if(r.date===ds)evs.push({c:'#c9546e',t:'体重: '+r.value+'kg'})});if(!evs.length){el.innerHTML='<div class="dd-e">'+ds+' 无事项</div>';return}el.innerHTML=evs.map(e=>`<div class="dd-i"><span class="dd-dot" style="background:${e.c}"></span><span class="dd-tx">${e.t}</span></div>`).join('')}
+function calDetail(ds){const el=$('dayDet');const evs=[];D.vaccine.forEach(r=>{if(r.date===ds)evs.push({c:'#45b692',t:'疫苗: '+r.name});if(r.nextDate===ds)evs.push({c:'#45b692',t:'[预定] '+r.name})});D.deworm.forEach(r=>{if(r.date===ds)evs.push({c:'#9262d1',t:'驱虫: '+(r.type||'')});if(r.nextDate===ds)evs.push({c:'#9262d1',t:'[预定] 驱虫'})});D.medical.forEach(r=>{if(r.date===ds)evs.push({c:'#e0a82e',t:'就诊: '+r.diagnosis});if(r.appointDate===ds)evs.push({c:'#e0a82e',t:'[预约] '+r.diagnosis})});D.health.forEach(r=>{if(r.date===ds)evs.push({c:'#f2849e',t:'异常: '+r.type})});D.poop.forEach(r=>{if(r.date===ds)evs.push({c:'#fda6ba',t:'排泄: '+r.status+(r.type?' '+r.type:'')})});D.weight.forEach(r=>{if(r.date===ds)evs.push({c:'#c9546e',t:'体重: '+r.value+'kg'})});(D.stock||[]).forEach(r=>{if(r.expire===ds)evs.push({c:'#e0a82e',t:'库存到期: '+(r.brand||'')+' '+(r.product||'')})});(D.canLog||[]).forEach(r=>{if(r.openDate===ds)evs.push({c:'#f2849e',t:'开封: '+(r.brand||'')+' '+(r.product||'')})});(D.observe||[]).forEach(r=>{if(r.date===ds)evs.push({c:'#f2849e',t:'观察: '+obsSummary(r)})});if(!evs.length){el.innerHTML='<div class="dd-e">'+ds+' 无事项</div>';return}el.innerHTML=evs.map(e=>`<div class="dd-i"><span class="dd-dot" style="background:${e.c}"></span><span class="dd-tx">${e.t}</span></div>`).join('')}
 
 // DELETE
-function del(k,i){if(!confirm('确认删除？'))return;D[k].splice(i,1);save();renderHome();renderHealth();renderFeed();renderExp();renderMed();renderDiary()}
+function del(k,i){if(!confirm('确认删除？'))return;D[k].splice(i,1);save();renderHome();renderHealth();renderFeed();renderExp();renderMed();renderDiary();if($('p-inventory')?.classList.contains('active'))renderInventory();if($('p-observe')?.classList.contains('active'))renderObserve();if($('p-reminder')?.classList.contains('active'))renderReminder();if($('p-timeline')?.classList.contains('active'))renderTimeline();if($('p-report')?.classList.contains('active'))renderReport()}
 
 // INIT
 renderHome();
@@ -488,3 +782,4 @@ if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(
 </script>
 </body>
 </html>
+

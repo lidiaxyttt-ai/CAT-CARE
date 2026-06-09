@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
-<meta name="theme-color" content="#eef6fb"/>
+<meta name="theme-color" content="#ffffff"/>
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icon-192.png"/>
 <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet"/>
@@ -13,21 +13,22 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
---bg:#eef6fb;--card:rgba(255,255,255,.94);
---pink-soft:#fde8ef;--pink-deep:#f2849e;--pink-text:#c9546e;
---yellow-soft:#fff4d8;--yellow-deep:#e0a82e;
---mint-soft:#def5eb;--mint-deep:#45b692;
---lav-soft:#f0eaf8;--lav-deep:#9262d1;
---cream:#fef9f3;
---td:#2c1810;--tm:#4a3728;--ts:#9a8576;--tl:#c4b5a6;
---border:rgba(221,228,235,.82);--dash:rgba(208,216,224,.72);
---sh:0 18px 48px rgba(103,119,140,.12);
---rx:34px;--rl:26px;--rm:20px;--rs:14px;
---fc:'ZCOOL KuaiLe',cursive;--fm:-apple-system,'PingFang SC',sans-serif;
+--bg:#fff;--card:#fff;
+--pink-soft:#fff2f4;--pink-deep:#d96f82;--pink-text:#a85666;
+--yellow-soft:#fff7e5;--yellow-deep:#b98128;
+--mint-soft:#eff8f3;--mint-deep:#4f9478;
+--lav-soft:#f3f0fa;--lav-deep:#7d709d;
+--blue-soft:#eef6fb;--blue-deep:#668da8;
+--cream:#faf7f2;
+--td:#29201e;--tm:#665d58;--ts:#978e87;--tl:#c8c0b8;
+--border:#edf0f4;--dash:#e5e8ec;
+--sh:0 18px 42px rgba(33,38,48,.075);
+--rx:32px;--rl:24px;--rm:18px;--rs:13px;
+--fh:"Songti SC","STSong","Noto Serif SC",serif;--fc:-apple-system,'PingFang SC',sans-serif;--fm:-apple-system,'PingFang SC',sans-serif;
 --th:62px;--sb:env(safe-area-inset-bottom,0px);
 }
-html{min-height:100%;background:#eef6fb}
-body{font-family:var(--fm);background:radial-gradient(circle at 16% 0%,rgba(255,219,232,.72),transparent 32%),radial-gradient(circle at 88% 4%,rgba(212,239,247,.78),transparent 30%),radial-gradient(circle at 72% 46%,rgba(232,223,250,.58),transparent 36%),linear-gradient(180deg,#f7fbff 0%,#f7edf5 46%,#f4f8ef 100%);background-attachment:fixed;color:var(--tm);font-size:14px;line-height:1.6;min-height:100vh}
+html{min-height:100%;background:#fff}
+body{font-family:var(--fm);background:#fff;color:var(--tm);font-size:14px;line-height:1.6;min-height:100vh;overscroll-behavior-y:none}
 .app{max-width:520px;margin:0 auto;padding:calc(20px + env(safe-area-inset-top,0px)) clamp(20px,5vw,26px) calc(var(--th) + var(--sb) + 26px)}
 .cute{font-family:var(--fc)}
 .tab-bar{position:fixed;bottom:0;left:0;right:0;height:calc(var(--th)+var(--sb));padding-bottom:var(--sb);background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(26px);-webkit-backdrop-filter:saturate(180%) blur(26px);border-top:1px solid rgba(221,228,235,.62);box-shadow:0 -10px 34px rgba(103,119,140,.08);display:flex;align-items:center;justify-content:space-around;z-index:200}
@@ -273,16 +274,141 @@ body{font-family:var(--fm);background:radial-gradient(circle at 16% 0%,rgba(255,
 .lb.show{display:flex}
 .lb img{max-width:95%;max-height:90%;border-radius:8px}
 .sec-hd{display:flex;justify-content:space-between;align-items:center;margin:6px 0 12px;font-size:12px;color:var(--ts)}
+
+/* refined layout */
+.app{background:#fff}
+.tab-bar{background:rgba(255,255,255,.94);border-top:1px solid var(--border);box-shadow:0 -14px 36px rgba(36,27,25,.055)}
+.tab-item{font-family:var(--fm);font-weight:700;color:#b8b2ad}
+.tab-item.active{color:var(--pink-text)}
+.ptop{margin-bottom:24px}
+.ptop h1,.sec-t,.dm,.modal h3{font-family:var(--fm);font-weight:850;letter-spacing:0;color:var(--td)}
+.ptop h1{font-size:30px}
+.back{font-family:var(--fm);font-weight:800;color:#8d8580}
+.btn{font-family:var(--fm);font-weight:800;background:var(--pink-deep);box-shadow:0 12px 24px rgba(232,95,138,.18)}
+.btn-soft{background:#fff1f5;color:var(--pink-text);box-shadow:none}
+.btn-ghost{color:#8d8580}
+.ico-btn{background:#fff;border:1px solid var(--border);box-shadow:0 12px 28px rgba(36,27,25,.055)}
+.block,.card,.today,.sch,.rec,.more-i,.dash-i,.inv-card,.time-i,.diary{background:#fff;border:1px solid var(--border);box-shadow:var(--sh)}
+.block{padding:28px;margin-bottom:22px}
+.block.pink,.block.yellow,.block.mint{background:#fff}
+.block.pink{border-top:8px solid #fff0f4}
+.block .b-age,.mini .m-v,.pill .p-v,.care-v,.sch-cd,.hstat .h-v,.fst .f-v,.rec-v,.exp-hero .e-v,.dash-i .d-v,.score-i .s-v{font-family:var(--fm);font-weight:850;letter-spacing:0}
+.mini{background:#f8f9fb;border:1px solid #f0f2f5;box-shadow:none}
+.mini .m-l,.care-l,.hstat .h-l,.fst .f-l,.dash-i .d-l,.score-i .s-l{color:#98918c;font-weight:750;letter-spacing:0}
+.pill,.fst{border:2px solid var(--border);border-radius:24px;box-shadow:none;background:#fff}
+.pill:nth-child(1),.pill:nth-child(2),.pill:nth-child(3),.fst:nth-child(1),.fst:nth-child(2),.fst:nth-child(3){box-shadow:none}
+.pill:nth-child(1),.fst:nth-child(1){border-color:#ffdbe5}
+.pill:nth-child(2),.fst:nth-child(2){border-color:#dff3ea}
+.pill:nth-child(3),.fst:nth-child(3){border-color:#ffecc0}
+.care-grid,.obs-grid,.dash-grid{gap:12px}
+.care-i,.hstat,.dash-i,.score-i{background:#f8f9fb;border:1px solid #f0f2f5;box-shadow:none}
+.care-i:nth-child(1),.care-i:nth-child(2),.care-i:nth-child(3),.care-i:nth-child(4),
+.hstat.pink,.hstat.mint,.hstat.yellow,
+.dash-i:nth-child(1),.dash-i:nth-child(2),.dash-i:nth-child(3),.dash-i:nth-child(4),
+.score-i:nth-child(1),.score-i:nth-child(2),.score-i:nth-child(3){background:#f8f9fb}
+.care-i:nth-child(1),.dash-i:nth-child(1),.score-i:nth-child(1){border-left:5px solid #ffdbe5}
+.care-i:nth-child(2),.dash-i:nth-child(2),.score-i:nth-child(2){border-left:5px solid #dff3ea}
+.care-i:nth-child(3),.dash-i:nth-child(3),.score-i:nth-child(3){border-left:5px solid #ffecc0}
+.care-i:nth-child(4),.dash-i:nth-child(4){border-left:5px solid #e8e2fb}
+.today,.obs-hero,.report-hero,.report-hero.bad,.exp-hero{background:#fff;border:1px solid var(--border)}
+.today{border-left:8px solid #ffecc0}
+.sch-ic,.report-mark,.more-i .mi-ic{background:#f8f9fb;border:1px solid var(--border)}
+.tag{border:1px solid transparent;font-weight:750}
+.tag-pink{background:#fff1f5;color:#bf486d;border-color:#ffdbe5}
+.tag-mint{background:#f0fbf6;color:#2f9f7c;border-color:#dff3ea}
+.tag-yellow{background:#fff8e7;color:#a97920;border-color:#ffecc0}
+.tag-lav{background:#f3f5f7;color:#69727c;border-color:#e4e8ed}
+.rec-bm,.sch-bm,.diary-ft{border-top-color:var(--dash)}
+.exp-hero{padding:30px 26px;margin-bottom:18px}
+.pie-row{background:#fff;border:1px solid var(--border);border-radius:var(--rx);padding:22px;box-shadow:var(--sh)}
+.more-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.more-i{align-items:flex-start;padding:24px;gap:14px}
+.more-i .mi-ic{width:46px;height:46px}
+.more-i:nth-child(1) .mi-ic,.more-i:nth-child(2) .mi-ic,.more-i:nth-child(3) .mi-ic,.more-i:nth-child(4) .mi-ic,
+.more-i:nth-child(5) .mi-ic,.more-i:nth-child(6) .mi-ic,.more-i:nth-child(7) .mi-ic,.more-i:nth-child(8) .mi-ic{background:#f8f9fb}
+.more-i .mi-t{font-family:var(--fm);font-weight:850;font-size:15px}
+.more-i .mi-s{color:#a7a19c}
+.brand-cat,.dd,.seg-bar{background:#f8f9fb;border:1px solid #f0f2f5}
+.brand-tag,.tp,.chip{background:#fff;border:1px solid var(--border);color:#7c746f}
+.tp.active,.seg-b.active{background:var(--td);border-color:var(--td);color:#fff;box-shadow:none}
+.chip.active{background:#fff1f5;border-color:#ffdbe5;color:var(--pink-text)}
+.warn{background:#fff8e7;border-color:#ffecc0}
+.warn.urgent{background:#fff1f5;border-color:#ffdbe5}
+.timeline::before,.tl::before{background:#eceff3}
+.time-i::before,.tli::before,.dm::before{background:var(--pink-deep)}
+.report-mark{border-radius:22px;background:#f8f9fb}
+.obs-hero{padding:18px;border-radius:var(--rx)}
+.obs-grid{grid-template-columns:1fr}
+.obs-card{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;background:#fff;border:1px solid var(--border);border-radius:22px;padding:14px 16px}
+.obs-card:nth-child(1),.obs-card:nth-child(2),.obs-card:nth-child(3),.obs-card:nth-child(4),.obs-card:nth-child(5),.obs-card:nth-child(6){background:#fff}
+.obs-card::before{content:'';width:5px;height:42px;border-radius:5px;background:#e8e2fb;grid-row:1 / span 2}
+.obs-card:nth-child(1)::before{background:#ffdbe5}
+.obs-card:nth-child(2)::before{background:#dff3ea}
+.obs-card:nth-child(3)::before{background:#ffecc0}
+.obs-card:nth-child(5)::before{background:#dcecff}
+.obs-card:nth-child(6)::before{background:#ffe3d3}
+.obs-card.watch{border-color:#ffecc0}
+.obs-card.bad{border-color:#ffdbe5;box-shadow:none}
+.obs-card-top{margin:0}
+.obs-v{font-family:var(--fm);font-weight:850;color:var(--pink-text)}
+.obs-desc{grid-column:2 / 4}
+.cal-arrows button,.cal-d,.cal-leg{background:#fff;border-color:var(--border)}
+.cal-d.today{background:#fff1f5;color:var(--pink-text);border-color:#ffdbe5}
+.cal-d.sel{background:var(--td);color:#fff;box-shadow:none}
+.modal-ov{background:rgba(36,27,25,.28)}
+.modal{background:#fff;border:1px solid var(--border);box-shadow:0 -20px 54px rgba(36,27,25,.12)}
+.fg input,.fg select,.fg textarea{background:#f8f9fb;border-color:#edf0f4}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:#ffd0dd;background:#fff}
+
+/* warmer premium pass */
+body{background:linear-gradient(180deg,#fff 0%,#fff 42%,#fffaf6 100%)}
+.app{padding-top:calc(28px + env(safe-area-inset-top,0px))}
+.ptop{position:relative;justify-content:center;min-height:56px;margin:4px 0 28px;text-align:center}
+.ptop h1{font-family:var(--fh);font-size:31px;font-weight:700;line-height:1.55;letter-spacing:.02em;text-align:center;width:100%;padding:0 88px}
+.ptop .ico-btns,.ptop>.btn{position:absolute;right:0;top:50%;transform:translateY(-50%)}
+.ptop .ico-btns .btn{position:static;transform:none}
+#p-home .ptop .ico-btns{right:0}
+.btn{background:linear-gradient(135deg,#dc7b8b,#c86878);color:#fff;border:1px solid rgba(255,255,255,.5);box-shadow:0 12px 26px rgba(196,104,120,.18)}
+.btn-soft{background:#fff7e5;color:#9b6d25;border:1px solid #ffe7b6;box-shadow:0 8px 18px rgba(185,129,40,.08)}
+.btn-ghost{background:#fbf2ee;color:#a56b64;border:1px solid #f4dfd8;box-shadow:none}
+.ico-btn{color:#8d746d;background:#fffaf6;border-color:#f1e7df}
+.tab-item.active{color:#a85666}
+.tab-item.active svg{filter:drop-shadow(0 4px 8px rgba(217,111,130,.16))}
+.block.pink{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:28px 24px 24px;border:1px solid #f2e9e2;border-top:none;background:linear-gradient(180deg,#fff7f8 0%,#fff 58%);box-shadow:0 24px 52px rgba(118,88,74,.10)}
+.block .b-img{order:1;width:136px;height:136px;border-radius:34px;object-fit:cover;background:#fff;box-shadow:0 18px 34px rgba(118,88,74,.14);border:8px solid #fff;justify-self:center}
+.block .b-age{order:2;margin-top:8px;font-family:var(--fh);font-size:34px;font-weight:700;line-height:1.35}
+.block .b-sub{order:3;font-size:14px;color:#8c7d75;margin-top:0;line-height:1.8}
+.mini-row{order:4;width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+.mini{background:#fffaf6;border-color:#f2e9e2;border-radius:22px;text-align:left}
+.pill-row,.feed-stats,.hstat-row{gap:12px}
+.pill,.fst,.hstat{border-radius:24px;background:#fffaf8;border-width:2px}
+.pill:nth-child(1),.fst:nth-child(1){border-color:#f2cbd3;background:#fff8fa}
+.pill:nth-child(2),.fst:nth-child(2){border-color:#cfe8dc;background:#f8fffb}
+.pill:nth-child(3),.fst:nth-child(3){border-color:#f2ddad;background:#fffdf6}
+.card,.today,.sch,.rec,.more-i,.dash-i,.inv-card,.time-i,.diary{border-color:#f0e8e1;box-shadow:0 18px 42px rgba(118,88,74,.075)}
+.care-i,.dash-i,.score-i{background:#fffaf6;border-color:#f0e8e1}
+.more-i{background:linear-gradient(180deg,#fff 0%,#fffaf7 100%)}
+.more-i .mi-ic{background:#fff7e5;border-color:#f3e4c9}
+.sec-hd{margin:10px 0 16px;justify-content:center;text-align:center;color:#9a8f88;letter-spacing:.04em}
+.sec-hd .btn{position:static;transform:none}
+.tag{border-radius:999px;padding:5px 11px}
+.tag-pink{background:#fff2f4;color:#a85666;border-color:#f2cbd3}
+.tag-mint{background:#eff8f3;color:#4f9478;border-color:#cfe8dc}
+.tag-yellow{background:#fff7e5;color:#9b6d25;border-color:#f2ddad}
+.tag-lav{background:#eef6fb;color:#668da8;border-color:#d7e7f0}
+.exp-hero{background:linear-gradient(135deg,#fff7e5,#fff2f4);border-color:#f0e8e1}
+.obs-card::before{background:#d7e7f0}
 @media (max-width:430px){
   .app{padding:calc(18px + env(safe-area-inset-top,0px)) 20px calc(var(--th) + var(--sb) + 24px)}
-  .ptop{margin-bottom:20px}
-  .ptop h1{font-size:26px;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ptop{margin:4px 0 24px;min-height:54px}
+  .ptop h1{font-size:28px;max-width:none;padding:0 82px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.55}
   .block{border-radius:30px;padding:22px}
   .block.pink{grid-template-columns:minmax(0,1fr) 78px;column-gap:8px}
-  .block .b-age{font-size:27px;line-height:1.15}
-  .block .b-sub{font-size:12px;line-height:1.45;margin-top:4px}
-  .block .b-img{width:76px;height:76px}
-  .mini-row{gap:8px;margin-top:14px}
+  .block.pink{padding:26px 22px 22px;gap:8px}
+  .block .b-age{font-size:31px;line-height:1.35}
+  .block .b-sub{font-size:13px;line-height:1.7;margin-top:0}
+  .block .b-img{width:128px;height:128px;border-radius:32px}
+  .mini-row{gap:10px;margin-top:14px}
   .mini{padding:11px 12px;border-radius:18px}
   .mini .m-v{font-size:16px}
   .pill-row,.feed-stats,.hstat-row{gap:10px}
@@ -295,10 +421,9 @@ body{font-family:var(--fm);background:radial-gradient(circle at 16% 0%,rgba(255,
 }
 @media (max-width:360px){
   .app{padding-left:16px;padding-right:16px}
-  .block.pink{grid-template-columns:1fr;grid-template-areas:"img" "age" "sub" "mini";justify-items:center;text-align:center}
-  .block .b-img{justify-self:center;width:82px;height:82px;margin-bottom:4px}
+  .ptop h1{font-size:25px;padding:0 70px}
+  .block .b-img{justify-self:center;width:116px;height:116px;margin-bottom:4px}
   .mini-row,.care-grid{grid-template-columns:1fr}
-  .ptop h1{max-width:180px}
 }
 </style>
 </head>
@@ -363,13 +488,13 @@ body{font-family:var(--fm);background:radial-gradient(circle at 16% 0%,rgba(255,
 
 <!-- MORE -->
 <section id="p-more" class="module">
-  <h1 class="cute" style="font-size:24px;color:var(--td);margin-bottom:20px">更多</h1>
+  <div class="ptop psolo"><h1>更多</h1></div>
   <div class="more-grid">
     <div class="more-i" onclick="go('medical')"><div class="mi-ic"><img src="icons/medical.png" onerror="this.onerror=null;this.src='cat4.png'" alt=""></div><span class="mi-t">医疗</span><span class="mi-s">疫苗·驱虫·就诊</span></div>
     <div class="more-i" onclick="go('diary')"><div class="mi-ic"><img src="icons/diary.png" onerror="this.onerror=null;this.src='cat3.png'" alt=""></div><span class="mi-t">日记</span><span class="mi-s">记录日常</span></div>
     <div class="more-i" onclick="showCal()"><div class="mi-ic"><img src="icons/calendar.png" onerror="this.onerror=null;this.src='cat2.png'" alt=""></div><span class="mi-t">月历</span><span class="mi-s">事项总览</span></div>
-    <div class="more-i" onclick="go('inventory')"><div class="mi-ic"><img src="icons/inventory.png" onerror="this.onerror=null;this.src='cat5.png'" alt=""></div><span class="mi-t">库存</span><span class="mi-s">罐头·冻干·生骨肉</span></div>
-    <div class="more-i" onclick="go('reminder')"><div class="mi-ic"><img src="icons/reminder.png" onerror="this.onerror=null;this.src='cat6.png'" alt=""></div><span class="mi-t">提醒</span><span class="mi-s">到期与开封</span></div>
+    <div class="more-i" onclick="go('inventory')"><div class="mi-ic"><img src="icons/inventory.png" onerror="this.onerror=null;this.src='cat5.png'" alt=""></div><span class="mi-t">库存</span><span class="mi-s">食物·补剂·用品</span></div>
+    <div class="more-i" onclick="go('reminder')"><div class="mi-ic"><img src="icons/reminder.png" onerror="this.onerror=null;this.src='cat6.png'" alt=""></div><span class="mi-t">提醒</span><span class="mi-s">到期与补货</span></div>
     <div class="more-i" onclick="go('timeline')"><div class="mi-ic"><img src="icons/timeline.png" onerror="this.onerror=null;this.src='cat1.png'" alt=""></div><span class="mi-t">时间线</span><span class="mi-s">成长事件</span></div>
     <div class="more-i" onclick="go('observe')"><div class="mi-ic"><img src="icons/observe.png" onerror="this.onerror=null;this.src='cat2.png'" alt=""></div><span class="mi-t">观察</span><span class="mi-s">症状打分表</span></div>
     <div class="more-i" onclick="go('report')"><div class="mi-ic"><img src="icons/report.png" onerror="this.onerror=null;this.src='cat1.png'" alt=""></div><span class="mi-t">周报</span><span class="mi-s">夸夸与提醒</span></div>
@@ -379,12 +504,10 @@ body{font-family:var(--fm);background:radial-gradient(circle at 16% 0%,rgba(255,
 <!-- INVENTORY -->
 <section id="p-inventory" class="module">
   <button class="back" onclick="go('more')">‹ 返回</button>
-  <div class="ptop"><h1>库存</h1><div class="ico-btns"><button class="btn btn-soft btn-sm" onclick="openCan()">开罐</button><button class="btn btn-sm" onclick="openStock()">+ 入库</button></div></div>
+  <div class="ptop"><h1>库存</h1><div class="ico-btns"><button class="btn btn-sm" onclick="openStock()">+ 入库</button></div></div>
   <div class="dash-grid" id="invStats"></div>
   <div class="sec-hd"><span>库存清单</span></div>
-  <div id="stockList"></div><div class="empty" id="stockEm">暂无库存，先添加常吃的罐头或冻干吧</div>
-  <div class="sec-hd"><span>开罐记录</span></div>
-  <div id="canList"></div><div class="empty" id="canEm">暂无开罐记录</div>
+  <div id="stockList"></div><div class="empty" id="stockEm">暂无库存，先添加常用的食物、补剂或用品吧</div>
 </section>
 
 <!-- REMINDER -->
@@ -439,7 +562,7 @@ body{font-family:var(--fm);background:radial-gradient(circle at 16% 0%,rgba(255,
   <h1 class="cute" style="font-size:22px;color:var(--td);margin-bottom:16px">月历</h1>
   <div class="card">
     <div class="cal-head"><span class="cute" style="font-size:16px" id="calTitle"></span><div class="cal-arrows"><button onclick="chgMo(-1)">‹</button><button onclick="chgMo(1)">›</button></div></div>
-    <div class="cal-legend"><div class="cal-leg"><span style="background:#45b692"></span>疫苗</div><div class="cal-leg"><span style="background:#9262d1"></span>驱虫</div><div class="cal-leg"><span style="background:#e0a82e"></span>就诊</div><div class="cal-leg"><span style="background:#f2849e"></span>健康</div><div class="cal-leg"><span style="background:#c9546e"></span>体重</div></div><div class="cal-grid" id="calGrid"></div>
+    <div class="cal-legend"><div class="cal-leg"><span style="background:#2f9f7c"></span>疫苗</div><div class="cal-leg"><span style="background:#73a8a5"></span>驱虫</div><div class="cal-leg"><span style="background:#c58b24"></span>就诊</div><div class="cal-leg"><span style="background:#e85f8a"></span>健康</div><div class="cal-leg"><span style="background:#7f8b98"></span>体重</div></div><div class="cal-grid" id="calGrid"></div>
   </div>
   <div class="dd" id="dayDet"><div class="dd-e">选择日期查看事项</div></div>
 </section>
@@ -462,6 +585,10 @@ body{font-family:var(--fm);background:radial-gradient(circle at 16% 0%,rgba(255,
 <script>
 const KEY='catcare_v9';
 const FEED_TYPES=['主食罐','零食罐','冻干','生骨肉','少量干粮','营养膏','水','其他'];
+const STOCK_TYPES=['主食罐','零食罐','冻干','生骨肉','少量干粮','营养补剂','猫砂','驱虫药','清洁用品','护理用品','玩具','其他'];
+const EXPENSE_CATS=['主食/罐头','冻干/生骨肉','营养补剂','猫砂','医疗/疫苗','驱虫药','清洁护理','玩具用品','设备器具','其他'];
+const EXP_COLORS={'主食/罐头':'#e85f8a','冻干/生骨肉':'#d9a441','营养补剂':'#5ea783','猫砂':'#8aa0b8','医疗/疫苗':'#d4776e','驱虫药':'#73a8a5','清洁护理':'#8dadd0','玩具用品':'#e2b765','设备器具':'#9c958e','其他':'#b9b2aa','粮食':'#e85f8a','用品':'#9c958e','医疗':'#d4776e','玩具':'#e2b765','洗护':'#8dadd0'};
+function expTag(cat){const i=EXPENSE_CATS.indexOf(cat);return ['tag-pink','tag-yellow','tag-mint','tag-lav'][i<0?3:i%4]}
 const DEFAULT_BRANDS={
   '主食罐':['巅峰','K9','Feline Natural','Tiki Cat','Wellness','Instinct','汪喵星球'],
   '零食罐':['希宝','珍致','猫恋','喵达','Tiki Cat'],
@@ -516,7 +643,7 @@ function renderHome(){
   const month=td().slice(0,7);
   const monthCost=D.expense.filter(r=>r.date&&r.date.startsWith(month)).reduce((s,r)=>s+(parseFloat(r.amount)||0),0);
   const lastDiary=D.diary.length?[...D.diary].sort((a,b)=>b.datetime.localeCompare(a.datetime))[0]:null;
-  $('homeInsight').innerHTML=`<div class="sec-hd" style="margin-top:0"><span class="cute" style="font-size:15px;color:var(--td)">今日照护概览</span><button class="btn btn-ghost btn-sm" onclick="go('feed')">去记录</button></div><div class="care-grid"><div class="care-i"><div class="care-l">今日喂养</div><div class="care-v">${todayFeed.length} 次</div><div class="care-s">含饮水 ${water||0}ml</div></div><div class="care-i"><div class="care-l">最近体重</div><div class="care-v">${cw}</div><div class="care-s">${D.weightGoal?'目标 '+D.weightGoal+' kg':'可设置目标体重'}</div></div><div class="care-i"><div class="care-l">本月花费</div><div class="care-v">¥${monthCost.toFixed(0)}</div><div class="care-s">粮食、医疗、用品汇总</div></div><div class="care-i"><div class="care-l">最近日记</div><div class="care-v">${lastDiary?fmtD(lastDiary.datetime.slice(0,10)):'暂无'}</div><div class="care-s">${lastDiary?'有新的陪伴记录':'可以记录照片和趣事'}</div></div></div>`;
+  $('homeInsight').innerHTML=`<div class="sec-hd" style="margin-top:0"><span class="cute" style="font-size:15px;color:var(--td)">今日照护概览</span><button class="btn btn-ghost btn-sm" onclick="go('feed')">去记录</button></div><div class="care-grid"><div class="care-i"><div class="care-l">今日喂养</div><div class="care-v">${todayFeed.length} 次</div><div class="care-s">含饮水 ${water||0}ml</div></div><div class="care-i"><div class="care-l">最近体重</div><div class="care-v">${cw}</div><div class="care-s">${D.weightGoal?'目标 '+D.weightGoal+' kg':'可设置目标体重'}</div></div><div class="care-i"><div class="care-l">本月花费</div><div class="care-v">¥${monthCost.toFixed(0)}</div><div class="care-s">饮食、医疗、用品汇总</div></div><div class="care-i"><div class="care-l">最近日记</div><div class="care-v">${lastDiary?fmtD(lastDiary.datetime.slice(0,10)):'暂无'}</div><div class="care-s">${lastDiary?'有新的陪伴记录':'可以记录照片和趣事'}</div></div></div>`;
   // schedules
   const t=td(),sch=[];
   D.vaccine.forEach(r=>{if(r.nextDate){const d=Math.ceil((new Date(r.nextDate)-new Date())/864e5);sch.push({nm:r.name,dt:r.nextDate,de:'疫苗'+(r.hospital?' · '+r.hospital:''),d,img:'cat2.png'})}});
@@ -568,7 +695,7 @@ function drawW(){
   const pad={t:24,r:12,b:24,l:36},cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
   ctx.strokeStyle='#f0e8df';ctx.lineWidth=1;
   for(let i=0;i<=4;i++){const y=pad.t+(cH/4)*i;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();ctx.fillStyle='#c4b5a6';ctx.font='10px sans-serif';ctx.textAlign='right';ctx.fillText((mx-(mx-mn)*i/4).toFixed(1),pad.l-5,y+3)}
-  if(D.weightGoal){const gy=pad.t+cH-((D.weightGoal-mn)/(mx-mn))*cH;ctx.save();ctx.setLineDash([7,5]);ctx.lineWidth=1.6;ctx.strokeStyle='#9262d1';ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(W-pad.r,gy);ctx.stroke();ctx.restore();ctx.fillStyle='#9262d1';ctx.font='700 11px sans-serif';ctx.textAlign='left';ctx.fillText('目标 '+D.weightGoal+'kg',pad.l+4,Math.max(pad.t+10,gy-6))}
+  if(D.weightGoal){const gy=pad.t+cH-((D.weightGoal-mn)/(mx-mn))*cH;ctx.save();ctx.setLineDash([7,5]);ctx.lineWidth=1.6;ctx.strokeStyle='#9aa6b2';ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(W-pad.r,gy);ctx.stroke();ctx.restore();ctx.fillStyle='#7f8b98';ctx.font='700 11px sans-serif';ctx.textAlign='left';ctx.fillText('目标 '+D.weightGoal+'kg',pad.l+4,Math.max(pad.t+10,gy-6))}
   if(sorted.length<2){ctx.fillStyle='#c4b5a6';ctx.font='500 13px sans-serif';ctx.textAlign='center';ctx.fillText('体重记录不足，已显示目标线',W/2,H/2+18);return}
   const pts=sorted.map((r,i)=>({x:pad.l+(cW/(sorted.length-1))*i,y:pad.t+cH-((r.value-mn)/(mx-mn))*cH,v:r.value}));
   const g=ctx.createLinearGradient(0,pad.t,0,H-pad.b);g.addColorStop(0,'rgba(242,132,158,.18)');g.addColorStop(1,'rgba(242,132,158,0)');
@@ -609,17 +736,12 @@ function delBrand(type,idx){D.brandLib[type]=(D.brandLib[type]||[]).filter((b,i)
 // INVENTORY
 function renderInventory(){
   D.stock=D.stock||[];D.canLog=D.canLog||[];
-  const total=D.stock.reduce((s,r)=>s+(parseFloat(r.qty)||0),0),low=D.stock.filter(r=>(parseFloat(r.qty)||0)<=1).length,open=D.canLog.filter(r=>!r.finishDate).length;
-  $('invStats').innerHTML=`<div class="dash-i"><div class="d-l">库存总量</div><div class="d-v">${total}</div></div><div class="dash-i"><div class="d-l">低库存</div><div class="d-v">${low}</div></div><div class="dash-i"><div class="d-l">开封中</div><div class="d-v">${open}</div></div><div class="dash-i"><div class="d-l">重点类型</div><div class="d-v">罐/冻干/肉</div></div>`;
+  const total=D.stock.reduce((s,r)=>s+(parseFloat(r.qty)||0),0),low=D.stock.filter(r=>(parseFloat(r.qty)||0)<=1).length,soon=D.stock.filter(r=>r.expire&&daysBetween(r.expire)<=30).length,types=new Set(D.stock.map(r=>r.type).filter(Boolean)).size;
+  $('invStats').innerHTML=`<div class="dash-i"><div class="d-l">库存总量</div><div class="d-v">${total}</div></div><div class="dash-i"><div class="d-l">低库存</div><div class="d-v">${low}</div></div><div class="dash-i"><div class="d-l">临期</div><div class="d-v">${soon}</div></div><div class="dash-i"><div class="d-l">类型数</div><div class="d-v">${types}</div></div>`;
   if(D.stock.length){$('stockEm').style.display='none';$('stockList').innerHTML=[...D.stock].sort((a,b)=>(a.type||'').localeCompare(b.type||'')).map(r=>{const i=D.stock.indexOf(r),q=parseFloat(r.qty)||0,spec=r.grams?`${r.grams}g/份`:'';return`<div class="inv-card"><div class="inv-top"><div><div class="inv-name">${esc(r.brand)} ${esc(r.product||'')}</div><div class="inv-sub">${esc(r.type)} · ${esc(r.flavor||'未填口味')}${spec?' · '+spec:''}</div></div><div class="wi-v">${q}${r.unit||'份'}</div></div><div class="inv-meta"><span class="tag ${q<=1?'tag-pink':'tag-mint'}">${q<=1?'快补货':'库存OK'}</span>${spec?`<span class="tag tag-lav">${spec}</span>`:''}${r.expire?`<span class="tag tag-yellow">到期 ${fmtD(r.expire)}</span>`:''}<button class="btn btn-ghost btn-sm" onclick="openStock(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('stock',${i})">删除</button></div></div>`}).join('')}else{$('stockList').innerHTML='';$('stockEm').style.display='block'}
-  if(D.canLog.length){$('canEm').style.display='none';$('canList').innerHTML=[...D.canLog].sort((a,b)=>b.openDate.localeCompare(a.openDate)).slice(0,20).map(r=>{const i=D.canLog.indexOf(r),d=daysBetween(td(),r.openDate);return`<div class="rec"><div class="rec-top"><div><div class="rec-t">${esc(r.brand)} ${esc(r.product||'')}</div><div class="rec-s">开封 ${fmtD(r.openDate)}${r.finishDate?' · 吃完 '+fmtD(r.finishDate):''}</div></div><span class="tag ${!r.finishDate&&d>=2?'tag-pink':'tag-yellow'}">${r.finishDate?'已吃完':d+'天'}</span></div><div class="rec-bm"><span style="font-size:12px;color:var(--ts)">${esc(r.note||'')}</span><div class="rec-act">${!r.finishDate?`<button class="btn btn-ghost btn-sm" onclick="finishCan(${i})">吃完</button>`:''}<button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('canLog',${i})">删除</button></div></div></div>`}).join('')}else{$('canList').innerHTML='';$('canEm').style.display='block'}
 }
-function openStock(idx=-1){const e=idx>=0,r=e?D.stock[idx]:{type:'主食罐',brand:'',product:'',flavor:'',qty:'',unit:'罐',grams:'',expire:''};setM(`<h3>${e?'编辑':'添加'}库存</h3><div class="frow"><div class="fg"><label>类型</label><select id="fs-t">${['主食罐','零食罐','冻干','生骨肉','少量干粮'].map(t=>`<option ${r.type===t?'selected':''}>${t}</option>`).join('')}</select></div><div class="fg"><label>品牌</label><input id="fs-b" value="${esc(r.brand)}" list="brandListStock"><datalist id="brandListStock">${brandOptions(r.type)}</datalist></div></div><div class="frow"><div class="fg"><label>产品</label><input id="fs-p" value="${esc(r.product||'')}"></div><div class="fg"><label>口味/肉源</label><input id="fs-f" value="${esc(r.flavor||'')}" placeholder="鸡/兔/牛"></div></div><div class="frow"><div class="fg"><label>数量</label><input type="number" step="0.1" id="fs-q" value="${r.qty||''}" placeholder="如 1 / 6"></div><div class="fg"><label>单位</label><select id="fs-u"><option ${r.unit==='罐'?'selected':''}>罐</option><option ${r.unit==='包'?'selected':''}>包</option><option ${r.unit==='袋'?'selected':''}>袋</option><option ${r.unit==='盒'?'selected':''}>盒</option><option ${r.unit==='份'?'selected':''}>份</option></select></div></div><div class="frow"><div class="fg"><label>规格(g/份)</label><input type="number" step="1" id="fs-g" value="${r.grams||''}" placeholder="如 80 / 500"></div><div class="fg"><label>到期日期</label><input type="date" id="fs-e" value="${r.expire||''}"></div></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveStock(${idx})">保存</button></div>`)}
+function openStock(idx=-1){const e=idx>=0,r=e?D.stock[idx]:{type:'主食罐',brand:'',product:'',flavor:'',qty:'',unit:'罐',grams:'',expire:''};setM(`<h3>${e?'编辑':'添加'}库存</h3><div class="frow"><div class="fg"><label>类型</label><select id="fs-t">${STOCK_TYPES.map(t=>`<option ${r.type===t?'selected':''}>${t}</option>`).join('')}</select></div><div class="fg"><label>品牌</label><input id="fs-b" value="${esc(r.brand)}" list="brandListStock"><datalist id="brandListStock">${brandOptions(r.type)}</datalist></div></div><div class="frow"><div class="fg"><label>产品</label><input id="fs-p" value="${esc(r.product||'')}"></div><div class="fg"><label>口味/型号</label><input id="fs-f" value="${esc(r.flavor||'')}" placeholder="鸡/兔/膨润土/滴剂"></div></div><div class="frow"><div class="fg"><label>数量</label><input type="number" step="0.1" id="fs-q" value="${r.qty||''}" placeholder="如 1 / 6"></div><div class="fg"><label>单位</label><select id="fs-u"><option ${r.unit==='罐'?'selected':''}>罐</option><option ${r.unit==='包'?'selected':''}>包</option><option ${r.unit==='袋'?'selected':''}>袋</option><option ${r.unit==='盒'?'selected':''}>盒</option><option ${r.unit==='瓶'?'selected':''}>瓶</option><option ${r.unit==='支'?'selected':''}>支</option><option ${r.unit==='份'?'selected':''}>份</option></select></div></div><div class="frow"><div class="fg"><label>规格(g/份)</label><input type="number" step="1" id="fs-g" value="${r.grams||''}" placeholder="如 80 / 500"></div><div class="fg"><label>到期日期</label><input type="date" id="fs-e" value="${r.expire||''}"></div></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveStock(${idx})">保存</button></div>`)}
 function saveStock(idx){const r={type:gi('fs-t'),brand:gi('fs-b'),product:gi('fs-p'),flavor:gi('fs-f'),qty:gi('fs-q'),unit:gi('fs-u'),grams:gi('fs-g'),expire:gi('fs-e')};if(!r.brand){alert('请填写品牌');return}if(idx>=0)D.stock[idx]=r;else D.stock.push(r);save();renderInventory();closeM()}
-function openCan(){setM(`<h3>开罐/开封记录</h3><div class="frow"><div class="fg"><label>日期</label><input type="date" id="fc-d" value="${td()}"></div><div class="fg"><label>类型</label><select id="fc-t">${['主食罐','零食罐','冻干','生骨肉'].map(t=>`<option>${t}</option>`).join('')}</select></div></div><div class="frow"><div class="fg"><label>品牌</label><input id="fc-b" list="brandListCan"><datalist id="brandListCan">${brandOptions('主食罐')}</datalist></div><div class="fg"><label>产品/口味</label><input id="fc-p"></div></div><div class="fg"><label>备注</label><input id="fc-n" placeholder="冷藏位置、分装情况"></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveCan()">保存</button></div>`)}
-function saveCan(){const r={openDate:gi('fc-d'),type:gi('fc-t'),brand:gi('fc-b'),product:gi('fc-p'),note:gi('fc-n'),finishDate:''};if(!r.brand){alert('请填写品牌');return}D.canLog.push(r);save();renderInventory();closeM()}
-function finishCan(i){D.canLog[i].finishDate=td();save();renderInventory()}
-
 // REMINDER & TIMELINE
 function collectReminders(){
   const items=[];
@@ -628,7 +750,6 @@ function collectReminders(){
   D.deworm.forEach(r=>add(r.nextDate,'驱虫到期',(r.type||'驱虫')+(r.brand?' · '+r.brand:''),'medical'));
   D.medical.forEach(r=>add(r.appointDate,'就诊预约',r.diagnosis||'就诊','medical'));
   (D.stock||[]).forEach(r=>add(r.expire,'库存临期',(r.brand||'')+' '+(r.product||''),'stock'));
-  (D.canLog||[]).filter(r=>!r.finishDate).forEach(r=>{const d=daysBetween(td(),r.openDate);if(d>=2)items.push({date:r.openDate,title:'开封已久',desc:(r.brand||'')+' '+(r.product||'')+' 已开封 '+d+' 天',type:'open',d:-d})});
   (D.stock||[]).filter(r=>(parseFloat(r.qty)||0)<=1).forEach(r=>items.push({date:td(),title:'库存偏低',desc:(r.brand||'')+' '+(r.product||'')+' 剩余 '+(r.qty||0)+(r.unit||'份'),type:'stock',d:0}));
   return items.sort((a,b)=>a.d-b.d);
 }
@@ -730,11 +851,11 @@ function renderExp(){
   $('eTot').textContent='¥'+D.expense.reduce((s,r)=>s+(parseFloat(r.amount)||0),0).toFixed(2);
   if(!sorted.length){$('eList').innerHTML='';$('eEm').style.display='block';return}$('eEm').style.display='none';
   const grp={};sorted.forEach(r=>{(grp[r.date]=grp[r.date]||[]).push(r)});let h='';
-  Object.entries(grp).forEach(([date,recs])=>{const dt=recs.reduce((s,r)=>s+(parseFloat(r.amount)||0),0);const wd=['周日','周一','周二','周三','周四','周五','周六'][new Date(date).getDay()];h+=`<div class="exp-day"><span class="cute" style="font-size:14px;color:var(--td)">${fmtD(date)} ${wd}</span><span style="font-size:12px;color:var(--ts)">支出 ¥${dt.toFixed(2)}</span></div>`;recs.forEach(r=>{const i=D.expense.indexOf(r);h+=`<div class="rec"><div class="rec-top"><div class="rec-t">${r.item}</div><div class="rec-v">-¥${parseFloat(r.amount).toFixed(2)}</div></div><div class="rec-bm"><span class="tag tag-lav">${r.category}</span><div class="rec-act"><button class="btn btn-ghost btn-sm" onclick="openExp(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('expense',${i})">删除</button></div></div></div>`})});
+  Object.entries(grp).forEach(([date,recs])=>{const dt=recs.reduce((s,r)=>s+(parseFloat(r.amount)||0),0);const wd=['周日','周一','周二','周三','周四','周五','周六'][new Date(date).getDay()];h+=`<div class="exp-day"><span class="cute" style="font-size:14px;color:var(--td)">${fmtD(date)} ${wd}</span><span style="font-size:12px;color:var(--ts)">支出 ¥${dt.toFixed(2)}</span></div>`;recs.forEach(r=>{const i=D.expense.indexOf(r);h+=`<div class="rec"><div class="rec-top"><div class="rec-t">${r.item}</div><div class="rec-v">-¥${parseFloat(r.amount).toFixed(2)}</div></div><div class="rec-bm"><span class="tag ${expTag(r.category)}">${r.category}</span><div class="rec-act"><button class="btn btn-ghost btn-sm" onclick="openExp(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('expense',${i})">删除</button></div></div></div>`})});
   $('eList').innerHTML=h;
 }
-function drawPie(){const c=$('pieC');if(!c)return;const ctx=c.getContext('2d');c.width=180;c.height=180;const cm={};D.expense.forEach(r=>{cm[r.category]=(cm[r.category]||0)+(parseFloat(r.amount)||0)});const cats=Object.entries(cm).sort((a,b)=>b[1]-a[1]);const tot=cats.reduce((s,c)=>s+c[1],0);const col={'粮食':'#f2849e','用品':'#9262d1','医疗':'#45b692','玩具':'#fbd282','洗护':'#fda6ba','其他':'#c4b5a6'};ctx.clearRect(0,0,180,180);if(!cats.length){ctx.beginPath();ctx.arc(90,90,36,0,7);ctx.strokeStyle='#f0e8df';ctx.lineWidth=18;ctx.stroke();$('pieLeg').innerHTML='<span style="font-size:12px;color:var(--ts)">暂无数据</span>';return}let st=-Math.PI/2;cats.forEach(([c2,v])=>{const a=(v/tot)*Math.PI*2;ctx.beginPath();ctx.arc(90,90,36,st,st+a);ctx.strokeStyle=col[c2]||'#c4b5a6';ctx.lineWidth=18;ctx.stroke();st+=a});$('pieLeg').innerHTML=cats.map(([c2,v])=>`<div class="leg-i"><span class="leg-d" style="background:${col[c2]||'#c4b5a6'}"></span>${c2}<span class="l-v">¥${v.toFixed(0)}</span></div>`).join('')}
-function openExp(idx=-1){const e=idx>=0,r=e?D.expense[idx]:{date:td(),category:'',item:'',amount:''};setM(`<h3>${e?'编辑':'记录'}消费</h3><div class="frow"><div class="fg"><label>日期</label><input type="date" id="fe-d" value="${r.date}"></div><div class="fg"><label>分类</label><select id="fe-c"><option value="">选择</option>${['粮食','用品','医疗','玩具','洗护','其他'].map(t=>`<option ${r.category===t?'selected':''}>${t}</option>`).join('')}</select></div></div><div class="frow"><div class="fg"><label>项目</label><input id="fe-i" value="${r.item||''}"></div><div class="fg"><label>金额</label><input type="number" step="0.01" id="fe-a" value="${r.amount||''}"></div></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveExp(${idx})">保存</button></div>`)}
+function drawPie(){const c=$('pieC');if(!c)return;const ctx=c.getContext('2d');c.width=180;c.height=180;const cm={};D.expense.forEach(r=>{cm[r.category]=(cm[r.category]||0)+(parseFloat(r.amount)||0)});const cats=Object.entries(cm).sort((a,b)=>b[1]-a[1]);const tot=cats.reduce((s,c)=>s+c[1],0);ctx.clearRect(0,0,180,180);if(!cats.length){ctx.beginPath();ctx.arc(90,90,36,0,7);ctx.strokeStyle='#edf0f4';ctx.lineWidth=18;ctx.stroke();$('pieLeg').innerHTML='<span style="font-size:12px;color:var(--ts)">暂无数据</span>';return}let st=-Math.PI/2;cats.forEach(([c2,v])=>{const a=(v/tot)*Math.PI*2;ctx.beginPath();ctx.arc(90,90,36,st,st+a);ctx.strokeStyle=EXP_COLORS[c2]||'#b9b2aa';ctx.lineWidth=18;ctx.stroke();st+=a});$('pieLeg').innerHTML=cats.map(([c2,v])=>`<div class="leg-i"><span class="leg-d" style="background:${EXP_COLORS[c2]||'#b9b2aa'}"></span>${c2}<span class="l-v">¥${v.toFixed(0)}</span></div>`).join('')}
+function openExp(idx=-1){const e=idx>=0,r=e?D.expense[idx]:{date:td(),category:'',item:'',amount:''};const cats=[...EXPENSE_CATS,...(!EXPENSE_CATS.includes(r.category)&&r.category?[r.category]:[])];setM(`<h3>${e?'编辑':'记录'}消费</h3><div class="frow"><div class="fg"><label>日期</label><input type="date" id="fe-d" value="${r.date}"></div><div class="fg"><label>分类</label><select id="fe-c"><option value="">选择</option>${cats.map(t=>`<option ${r.category===t?'selected':''}>${t}</option>`).join('')}</select></div></div><div class="frow"><div class="fg"><label>项目</label><input id="fe-i" value="${r.item||''}" placeholder="如猫砂/补剂/罐头"></div><div class="fg"><label>金额</label><input type="number" step="0.01" id="fe-a" value="${r.amount||''}"></div></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveExp(${idx})">保存</button></div>`)}
 function saveExp(idx){const r={date:gi('fe-d'),category:gi('fe-c'),item:gi('fe-i'),amount:gi('fe-a')};if(!r.category||!r.item||!r.amount){alert('请填写完整');return}if(idx>=0)D.expense[idx]=r;else D.expense.push(r);save();renderExp();drawPie();renderHome();closeM()}
 
 // MEDICAL
@@ -770,10 +891,10 @@ function saveDiary(){const text=gi('fdi-t').trim();const tags=gi('fdi-tag').spli
 // CALENDAR
 let calY,calMo,calSel=td();(()=>{const d=new Date();calY=d.getFullYear();calMo=d.getMonth()})();
 function renderCal(){$('calTitle').textContent=`${calY}年${calMo+1}月`;const g=$('calGrid');const dows=['日','一','二','三','四','五','六'];let h=dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');const first=new Date(calY,calMo,1).getDay(),days=new Date(calY,calMo+1,0).getDate(),prev=new Date(calY,calMo,0).getDate();const ms=`${calY}-${String(calMo+1).padStart(2,'0')}`;const em=calEvts(ms);for(let i=0;i<first;i++)h+=`<div class="cal-d other">${prev-first+1+i}</div>`;for(let d=1;d<=days;d++){const ds=`${ms}-${String(d).padStart(2,'0')}`;const dots=em[ds]||[];let dH=dots.length?`<div class="dots">${dots.slice(0,3).map(c=>`<span style="background:${c}"></span>`).join('')}</div>`:'';h+=`<div class="cal-d${ds===td()?' today':''}${ds===calSel?' sel':''}" onclick="calPick('${ds}')">${d}${dH}</div>`}for(let i=1;i<=42-first-days;i++)h+=`<div class="cal-d other">${i}</div>`;g.innerHTML=h;calDetail(calSel)}
-function calEvts(m){const map={};const ad=(d,c)=>{if(d&&d.startsWith(m))(map[d]=map[d]||[]).push(c)};D.vaccine.forEach(r=>{ad(r.date,'#45b692');ad(r.nextDate,'#45b692')});D.deworm.forEach(r=>{ad(r.date,'#9262d1');ad(r.nextDate,'#9262d1')});D.medical.forEach(r=>{ad(r.date,'#e0a82e');ad(r.appointDate,'#e0a82e')});D.health.forEach(r=>ad(r.date,'#f2849e'));D.poop.forEach(r=>ad(r.date,'#fda6ba'));D.weight.forEach(r=>ad(r.date,'#c9546e'));(D.stock||[]).forEach(r=>ad(r.expire,'#e0a82e'));(D.canLog||[]).forEach(r=>ad(r.openDate,'#f2849e'));(D.observe||[]).forEach(r=>ad(r.date,'#f2849e'));return map}
+function calEvts(m){const map={};const ad=(d,c)=>{if(d&&d.startsWith(m))(map[d]=map[d]||[]).push(c)};D.vaccine.forEach(r=>{ad(r.date,'#2f9f7c');ad(r.nextDate,'#2f9f7c')});D.deworm.forEach(r=>{ad(r.date,'#73a8a5');ad(r.nextDate,'#73a8a5')});D.medical.forEach(r=>{ad(r.date,'#c58b24');ad(r.appointDate,'#c58b24')});D.health.forEach(r=>ad(r.date,'#e85f8a'));D.poop.forEach(r=>ad(r.date,'#d4776e'));D.weight.forEach(r=>ad(r.date,'#7f8b98'));(D.stock||[]).forEach(r=>ad(r.expire,'#c58b24'));(D.observe||[]).forEach(r=>ad(r.date,'#e85f8a'));return map}
 function calPick(ds){calSel=ds;renderCal()}
 function chgMo(dir){calMo+=dir;if(calMo>11){calMo=0;calY++}if(calMo<0){calMo=11;calY--}renderCal()}
-function calDetail(ds){const el=$('dayDet');const evs=[];D.vaccine.forEach(r=>{if(r.date===ds)evs.push({c:'#45b692',t:'疫苗: '+r.name});if(r.nextDate===ds)evs.push({c:'#45b692',t:'[预定] '+r.name})});D.deworm.forEach(r=>{if(r.date===ds)evs.push({c:'#9262d1',t:'驱虫: '+(r.type||'')});if(r.nextDate===ds)evs.push({c:'#9262d1',t:'[预定] 驱虫'})});D.medical.forEach(r=>{if(r.date===ds)evs.push({c:'#e0a82e',t:'就诊: '+r.diagnosis});if(r.appointDate===ds)evs.push({c:'#e0a82e',t:'[预约] '+r.diagnosis})});D.health.forEach(r=>{if(r.date===ds)evs.push({c:'#f2849e',t:'异常: '+r.type})});D.poop.forEach(r=>{if(r.date===ds)evs.push({c:'#fda6ba',t:'排泄: '+r.status+(r.type?' '+r.type:'')})});D.weight.forEach(r=>{if(r.date===ds)evs.push({c:'#c9546e',t:'体重: '+r.value+'kg'})});(D.stock||[]).forEach(r=>{if(r.expire===ds)evs.push({c:'#e0a82e',t:'库存到期: '+(r.brand||'')+' '+(r.product||'')})});(D.canLog||[]).forEach(r=>{if(r.openDate===ds)evs.push({c:'#f2849e',t:'开封: '+(r.brand||'')+' '+(r.product||'')})});(D.observe||[]).forEach(r=>{if(r.date===ds)evs.push({c:'#f2849e',t:'观察: '+obsSummary(r)})});if(!evs.length){el.innerHTML='<div class="dd-e">'+ds+' 无事项</div>';return}el.innerHTML=evs.map(e=>`<div class="dd-i"><span class="dd-dot" style="background:${e.c}"></span><span class="dd-tx">${e.t}</span></div>`).join('')}
+function calDetail(ds){const el=$('dayDet');const evs=[];D.vaccine.forEach(r=>{if(r.date===ds)evs.push({c:'#2f9f7c',t:'疫苗: '+r.name});if(r.nextDate===ds)evs.push({c:'#2f9f7c',t:'[预定] '+r.name})});D.deworm.forEach(r=>{if(r.date===ds)evs.push({c:'#73a8a5',t:'驱虫: '+(r.type||'')});if(r.nextDate===ds)evs.push({c:'#73a8a5',t:'[预定] 驱虫'})});D.medical.forEach(r=>{if(r.date===ds)evs.push({c:'#c58b24',t:'就诊: '+r.diagnosis});if(r.appointDate===ds)evs.push({c:'#c58b24',t:'[预约] '+r.diagnosis})});D.health.forEach(r=>{if(r.date===ds)evs.push({c:'#e85f8a',t:'异常: '+r.type})});D.poop.forEach(r=>{if(r.date===ds)evs.push({c:'#d4776e',t:'排泄: '+r.status+(r.type?' '+r.type:'')})});D.weight.forEach(r=>{if(r.date===ds)evs.push({c:'#7f8b98',t:'体重: '+r.value+'kg'})});(D.stock||[]).forEach(r=>{if(r.expire===ds)evs.push({c:'#c58b24',t:'库存到期: '+(r.brand||'')+' '+(r.product||'')})});(D.observe||[]).forEach(r=>{if(r.date===ds)evs.push({c:'#e85f8a',t:'观察: '+obsSummary(r)})});if(!evs.length){el.innerHTML='<div class="dd-e">'+ds+' 无事项</div>';return}el.innerHTML=evs.map(e=>`<div class="dd-i"><span class="dd-dot" style="background:${e.c}"></span><span class="dd-tx">${e.t}</span></div>`).join('')}
 
 // DELETE
 function del(k,i){if(!confirm('确认删除？'))return;D[k].splice(i,1);save();renderHome();renderHealth();renderFeed();renderExp();renderMed();renderDiary();if($('p-inventory')?.classList.contains('active'))renderInventory();if($('p-observe')?.classList.contains('active'))renderObserve();if($('p-reminder')?.classList.contains('active'))renderReminder();if($('p-timeline')?.classList.contains('active'))renderTimeline();if($('p-report')?.classList.contains('active'))renderReport()}

@@ -1,451 +1,483 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="theme-color" content="#fdf8f4">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
-    <title>Cat Care</title>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-        :root{
-            --bg:#fdf8f4;--card:#ffffff;
-            --pink-soft:#fff2f5;--pink-light:#ffe8ee;--pink:#ffc4d6;--pink-deep:#f2849e;--pink-text:#c9546e;
-            --cream:#fef9f3;--cream-deep:#f7edd8;
-            --warm-light:#fdf5ec;--warm:#f5e6d3;--warm-deep:#e8d5bd;
-            --brown-light:#f5ebe0;--brown:#c8a882;--brown-text:#8b6914;
-            --text-dark:#2c1810;--text-main:#4a3728;--text-sub:#9a8576;--text-light:#c4b5a6;
-            --border:#f0e8df;--border-dash:#e8ddd0;
-            --shadow:0 4px 20px rgba(160,120,80,0.06);
-            --r-xl:28px;--r-lg:22px;--r-md:16px;--r-sm:12px;--r-xs:8px;
-            --bottom-h:62px;--safe-b:env(safe-area-inset-bottom,0px);
-            --font-cute:'ZCOOL KuaiLe','PingFang SC',sans-serif;
-            --font-sys:-apple-system,BlinkMacSystemFont,'SF Pro Display','PingFang SC',sans-serif;
-        }
-        body{
-            font-family:var(--font-sys);
-            background:var(--bg);color:var(--text-main);font-size:14px;line-height:1.6;
-            min-height:100vh;min-height:100dvh;
-        }
-        .app{padding:0 0 calc(var(--bottom-h) + var(--safe-b) + 16px)}
-
-        /* Cute font for titles */
-        .cute{font-family:var(--font-cute)}
-
-        /* Tab Bar */
-        .tab-bar{position:fixed;bottom:0;left:0;right:0;height:calc(var(--bottom-h) + var(--safe-b));padding-bottom:var(--safe-b);background:rgba(255,255,255,0.95);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;z-index:200}
-        .tab-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;border:none;background:none;cursor:pointer;color:var(--text-light);font-size:10px;font-weight:500;font-family:inherit;min-width:54px;transition:color 0.2s}
-        .tab-item.active{color:var(--pink-text)}
-        .tab-item svg{width:23px;height:23px;stroke-width:1.6}
-
-        /* Main */
-        .main{padding:24px 20px 8px;max-width:500px;margin:0 auto}
-        .module{display:none;animation:fadeIn 0.3s ease}
-        .module.active{display:block}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-        /* Typography */
-        .t-hero{font-size:22px;font-weight:800;color:var(--text-dark);letter-spacing:-0.3px;line-height:1.4}
-        .t-large{font-size:18px;font-weight:700;color:var(--text-dark)}
-        .t-title{font-size:15px;font-weight:700;color:var(--text-dark)}
-        .t-sub{font-size:12px;color:var(--text-sub)}
-        .t-light{font-size:11px;color:var(--text-light)}
-
-        /* Card */
-        .card{background:var(--card);border-radius:var(--r-xl);padding:22px;margin-bottom:16px;box-shadow:var(--shadow)}
-
-        /* Buttons */
-        .btn{padding:10px 18px;border-radius:22px;border:none;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;transition:all 0.15s;display:inline-flex;align-items:center;gap:5px}
-        .btn-primary{background:var(--pink-deep);color:#fff;box-shadow:0 4px 14px rgba(242,132,158,0.3)}
-        .btn-primary:active{transform:scale(0.96)}
-        .btn-soft{background:var(--pink-soft);color:var(--pink-text)}
-        .btn-ghost{background:none;color:var(--text-sub);padding:6px 10px}
-        .btn-sm{padding:8px 14px;font-size:12px}
-
-        /* Today Card */
-        .today-card{background:var(--card);border-radius:var(--r-xl);padding:24px;margin-bottom:20px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:16px}
-        .today-card .tc-text{font-family:var(--font-cute);font-size:18px;color:var(--text-main);line-height:1.6}
-        .today-card .tc-img{width:64px;height:64px;flex-shrink:0}
-        .today-card .tc-img img{width:100%;height:100%;object-fit:contain}
-
-        /* Schedule Cards */
-        .schedule-title{font-family:var(--font-cute);font-size:16px;color:var(--text-dark);margin-bottom:14px}
-        .sch-card{background:var(--card);border-radius:var(--r-xl);padding:20px 22px;margin-bottom:14px;box-shadow:var(--shadow)}
-        .sch-top{display:flex;align-items:center;justify-content:space-between}
-        .sch-left{display:flex;align-items:center;gap:14px}
-        .sch-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
-        .sch-icon img{width:34px;height:34px;object-fit:contain}
-        .sch-icon.pink{background:var(--pink-soft)}
-        .sch-icon.cream{background:var(--cream-deep)}
-        .sch-icon.warm{background:var(--warm-light)}
-        .sch-name{font-size:16px;font-weight:700;color:var(--text-dark)}
-        .sch-date{font-size:12px;color:var(--text-sub);margin-top:2px}
-        .sch-countdown{font-family:var(--font-cute);font-size:18px;color:var(--text-dark)}
-        .sch-bottom{margin-top:14px;padding-top:14px;border-top:1.5px dashed var(--border-dash);display:flex;justify-content:space-between;align-items:center}
-        .sch-detail{font-size:13px;color:var(--text-sub)}
-
-        /* ID Card */
-        .id-card{background:var(--card);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow);margin-bottom:18px}
-        .id-header{background:linear-gradient(135deg,var(--pink-soft),var(--cream-deep));padding:13px 22px;display:flex;align-items:center;justify-content:space-between}
-        .id-header .badge{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--pink-text)}
-        .id-header .info{font-size:12px;color:var(--text-sub);font-weight:500}
-        .id-body{padding:26px 22px 22px}
-        .id-top{display:flex;align-items:center;gap:18px;margin-bottom:26px}
-        .id-avatar{width:78px;height:78px;border-radius:50%;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;border:3px solid var(--card);box-shadow:0 4px 16px rgba(242,132,158,0.15);flex-shrink:0}
-        .id-avatar img{width:100%;height:100%;object-fit:cover}
-        .id-name-block .id-name{font-family:var(--font-cute);font-size:28px;color:var(--text-dark)}
-        .id-name-block .id-gender{font-size:13px;color:var(--text-sub);margin-top:5px}
-        .id-fields{display:flex;flex-direction:column;gap:20px}
-        .id-field{display:flex;align-items:center;gap:12px}
-        .id-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-        .id-label{font-size:13px;color:var(--text-sub);min-width:55px}
-        .id-value{font-size:16px;font-weight:700;color:var(--text-dark)}
-        .id-footer{display:flex;justify-content:space-around;padding:18px 22px;border-top:1.5px dashed var(--border-dash)}
-        .id-stat{text-align:center}
-        .id-stat .sv{font-family:var(--font-cute);font-size:20px;color:var(--text-dark)}
-        .id-stat .sl{font-size:11px;color:var(--text-light);margin-top:3px}
-
-        /* Calendar */
-        .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-        .cal-arrows{display:flex;gap:8px}
-        .cal-arrows button{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--card);cursor:pointer;font-size:16px;color:var(--text-sub);display:flex;align-items:center;justify-content:center}
-        .cal-arrows button:active{background:var(--pink-soft)}
-        .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:16px}
-        .cal-dow{text-align:center;font-size:11px;font-weight:600;color:var(--text-light);padding:6px 0}
-        .cal-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:50%;font-size:14px;font-weight:500;color:var(--text-main);cursor:pointer;position:relative;transition:all 0.15s}
-        .cal-day:active{transform:scale(0.88)}
-        .cal-day.today{background:var(--pink-soft);color:var(--pink-text);font-weight:700}
-        .cal-day.selected{background:var(--pink-deep);color:#fff;font-weight:700;box-shadow:0 4px 12px rgba(242,132,158,0.3)}
-        .cal-day.other{color:var(--text-light);opacity:0.35}
-        .cal-day .dots{display:flex;gap:2px;position:absolute;bottom:3px}
-        .cal-day .dots span{width:4px;height:4px;border-radius:50%}
-        .day-detail{background:var(--cream);border-radius:var(--r-lg);padding:18px;margin-top:4px}
-        .dd-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1.5px dashed var(--border-dash)}
-        .dd-item:last-child{border-bottom:none}
-        .dd-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-        .dd-text{font-size:13px;font-weight:500;color:var(--text-main)}
-        .dd-empty{text-align:center;padding:14px;font-size:13px;color:var(--text-light)}
-
-        /* Weight */
-        .w-summary{display:flex;gap:10px;margin-bottom:16px}
-        .w-scard{flex:1;background:var(--card);border-radius:var(--r-lg);padding:18px 14px;text-align:center;box-shadow:var(--shadow)}
-        .w-scard .wv{font-family:var(--font-cute);font-size:22px;color:var(--text-dark)}
-        .w-scard .wl{font-size:11px;color:var(--text-light);margin-top:4px}
-        .chart-area{position:relative;width:100%;height:180px;margin:8px 0}
-        .chart-area canvas{width:100%!important;height:100%!important}
-        .w-list-item{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1.5px dashed var(--border-dash)}
-        .w-list-item:last-child{border-bottom:none}
-        .w-list-item .wl-date{font-size:15px;font-weight:600;color:var(--text-dark)}
-        .w-list-item .wl-val{font-family:var(--font-cute);font-size:18px;color:var(--text-dark)}
-        .w-list-item .wl-actions{display:flex;align-items:center;gap:4px}
-
-        /* Record Cards */
-        .rec{background:var(--card);border-radius:var(--r-xl);padding:20px 22px;margin-bottom:14px;box-shadow:var(--shadow)}
-        .rec-top{display:flex;justify-content:space-between;align-items:flex-start}
-        .rec-title{font-size:15px;font-weight:700;color:var(--text-dark)}
-        .rec-value{font-family:var(--font-cute);font-size:18px;color:var(--text-dark)}
-        .rec-sub{font-size:11px;color:var(--text-light);margin-top:3px}
-        .rec-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:1.5px dashed var(--border-dash)}
-        .rec-actions{display:flex;gap:2px}
-
-        /* Tags */
-        .tag{display:inline-flex;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600}
-        .tag-pink{background:var(--pink-soft);color:var(--pink-text)}
-        .tag-warm{background:var(--cream-deep);color:var(--brown-text)}
-
-        /* Feeding */
-        .feed-hero{background:var(--card);border-radius:var(--r-xl);padding:22px;margin-bottom:16px;box-shadow:var(--shadow);border-left:4px solid var(--pink)}
-        .feed-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1.5px dashed var(--border-dash)}
-
-        /* More Grid */
-        .more-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-        .more-item{background:var(--card);border-radius:var(--r-xl);padding:30px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;transition:transform 0.15s}
-        .more-item:active{transform:scale(0.97)}
-        .more-item .mi-icon{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--pink-soft)}
-        .more-item .mi-icon img{width:34px;height:34px;object-fit:contain}
-        .more-item:nth-child(2) .mi-icon{background:var(--cream-deep)}
-        .more-item:nth-child(3) .mi-icon{background:var(--warm-light)}
-        .more-item:nth-child(4) .mi-icon{background:var(--brown-light)}
-        .more-item .mi-title{font-family:var(--font-cute);font-size:15px;color:var(--text-dark)}
-        .more-item .mi-sub{font-size:11px;color:var(--text-light)}
-
-        /* Expense */
-        .exp-hero{background:linear-gradient(135deg,var(--pink),var(--pink-deep));border-radius:var(--r-xl);padding:28px;margin-bottom:16px;text-align:center}
-        .exp-hero .el{font-size:13px;color:rgba(255,255,255,0.75)}
-        .exp-hero .ev{font-family:var(--font-cute);font-size:36px;color:#fff;margin-top:4px}
-        .pie-row{display:flex;align-items:center;gap:20px;padding:8px 0}
-        .pie-box{width:90px;height:90px;flex-shrink:0}
-        .pie-box canvas{width:100%!important;height:100%!important}
-        .leg-list{display:flex;flex-direction:column;gap:8px}
-        .leg-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-main)}
-        .leg-dot{width:10px;height:10px;border-radius:3px}
-        .leg-item .lv{margin-left:auto;font-weight:700}
-        .exp-day-hd{display:flex;justify-content:space-between;padding:12px 0 6px}
-
-        /* Segments */
-        .seg-bar{display:flex;background:var(--cream);border-radius:var(--r-sm);padding:4px;margin-bottom:18px}
-        .seg-btn{flex:1;padding:10px 0;text-align:center;border-radius:var(--r-xs);font-size:13px;font-weight:600;color:var(--text-light);cursor:pointer;border:none;background:none;font-family:inherit;transition:all 0.2s}
-        .seg-btn.active{background:var(--card);color:var(--text-dark);box-shadow:var(--shadow)}
-
-        /* Timeline */
-        .timeline{padding-left:22px;position:relative}
-        .timeline::before{content:'';position:absolute;left:6px;top:8px;bottom:8px;width:2px;background:var(--border);border-radius:1px}
-        .tl-item{position:relative;padding:0 0 22px 20px}
-        .tl-item:last-child{padding-bottom:0}
-        .tl-item::before{content:'';position:absolute;left:-19px;top:6px;width:10px;height:10px;border-radius:50%;border:2.5px solid var(--card);background:var(--pink-deep)}
-        .tl-date{font-size:11px;color:var(--text-light)}
-        .tl-title{font-size:14px;font-weight:700;color:var(--text-dark);margin-top:3px}
-        .tl-sub{font-size:12px;color:var(--text-sub);margin-top:2px}
-        .tl-actions{margin-top:8px}
-
-        /* Photos */
-        .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-        .photo-item{aspect-ratio:1;border-radius:var(--r-md);overflow:hidden;position:relative;cursor:pointer}
-        .photo-item img{width:100%;height:100%;object-fit:cover}
-        .photo-item .pm{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));color:#fff;padding:14px 8px 6px;font-size:10px}
-        .photo-item .pd{position:absolute;top:5px;right:5px;width:22px;height:22px;background:rgba(255,255,255,0.9);border:none;border-radius:50%;font-size:10px;color:#e53935;cursor:pointer;display:none;align-items:center;justify-content:center}
-        .photo-item:active .pd{display:flex}
-        .photo-add{aspect-ratio:1;border-radius:var(--r-md);border:2px dashed var(--border-dash);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:6px;color:var(--text-light);font-size:11px;background:var(--cream)}
-        .photo-add:active{border-color:var(--pink);background:var(--pink-soft)}
-
-        /* Modal */
-        .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(44,24,16,0.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:500;align-items:flex-end;justify-content:center}
-        .modal-overlay.show{display:flex}
-        .modal{background:var(--card);border-radius:var(--r-xl) var(--r-xl) 0 0;padding:8px 22px calc(22px + var(--safe-b));width:100%;max-width:500px;max-height:88vh;overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,0.1);animation:sheetUp 0.35s cubic-bezier(0.32,0.72,0,1)}
-        @keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-        .modal-handle{width:40px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 22px}
-        .modal h3{font-family:var(--font-cute);font-size:18px;color:var(--text-dark);margin-bottom:22px}
-        .form-group{margin-bottom:16px}
-        .form-group label{display:block;font-size:12px;font-weight:600;color:var(--text-sub);margin-bottom:6px}
-        .form-group input,.form-group select,.form-group textarea{width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:var(--r-md);font-size:15px;font-family:inherit;outline:none;background:var(--cream);color:var(--text-dark);transition:all 0.2s;-webkit-appearance:none}
-        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--pink);background:var(--card);box-shadow:0 0 0 4px rgba(242,132,158,0.06)}
-        .form-group textarea{resize:vertical;min-height:70px}
-        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-        .form-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:22px}
-        .chip-group{display:flex;flex-wrap:wrap;gap:8px}
-        .chip{padding:9px 16px;border-radius:22px;font-size:12px;font-weight:600;border:1.5px solid var(--border);background:var(--card);cursor:pointer;color:var(--text-sub);transition:all 0.15s}
-        .chip.active{background:var(--pink-soft);border-color:var(--pink);color:var(--pink-text)}
-
-        .back-row{display:flex;align-items:center;gap:5px;margin-bottom:18px;cursor:pointer;font-size:13px;color:var(--text-sub);font-weight:500;border:none;background:none;font-family:inherit}
-        .section-hd{display:flex;justify-content:space-between;align-items:center;margin:6px 0 14px}
-
-        .lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:600;justify-content:center;align-items:center;cursor:pointer}
-        .lightbox.show{display:flex}
-        .lightbox img{max-width:95%;max-height:90%;border-radius:8px}
-        .empty{text-align:center;padding:36px 16px;color:var(--text-light);font-size:13px}
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="theme-color" content="#fdf6f0"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet"/>
+<title>Cat Care</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+--bg:#fdf6f0;--card:#fff;
+--pink-soft:#fde8ef;--pink-deep:#f2849e;--pink-text:#c9546e;
+--yellow-soft:#fff4d8;--yellow-deep:#e0a82e;
+--mint-soft:#def5eb;--mint-deep:#45b692;
+--lav-soft:#f0eaf8;--lav-deep:#9262d1;
+--cream:#fef9f3;
+--td:#2c1810;--tm:#4a3728;--ts:#9a8576;--tl:#c4b5a6;
+--border:#f0e8df;--dash:#e8ddd0;
+--sh:0 4px 20px rgba(160,120,80,.06);
+--rx:28px;--rl:22px;--rm:16px;--rs:12px;
+--fc:'ZCOOL KuaiLe',cursive;--fm:-apple-system,'PingFang SC',sans-serif;
+--th:62px;--sb:env(safe-area-inset-bottom,0px);
+}
+body{font-family:var(--fm);background:var(--bg);color:var(--tm);font-size:14px;line-height:1.6;min-height:100vh}
+.app{max-width:500px;margin:0 auto;padding:20px 18px calc(var(--th) + var(--sb) + 20px)}
+.cute{font-family:var(--fc)}
+.tab-bar{position:fixed;bottom:0;left:0;right:0;height:calc(var(--th)+var(--sb));padding-bottom:var(--sb);background:rgba(255,255,255,.96);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;z-index:200}
+.tab-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;border:none;background:none;cursor:pointer;color:var(--tl);font-size:10px;font-weight:600;font-family:var(--fc);min-width:50px;transition:color .2s}
+.tab-item.active{color:var(--pink-text)}
+.tab-item svg{width:22px;height:22px;stroke-width:1.7}
+.module{display:none;animation:fu .3s ease}
+.module.active{display:block}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ptop{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.ptop h1{font-family:var(--fc);font-size:24px;color:var(--td)}
+.ico-btns{display:flex;gap:8px}
+.ico-btn{width:38px;height:38px;border-radius:50%;border:none;background:var(--card);box-shadow:var(--sh);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ts)}
+.ico-btn svg{width:18px;height:18px}
+.btn{padding:10px 18px;border-radius:22px;border:none;cursor:pointer;font-size:13px;font-weight:600;font-family:var(--fc);background:var(--pink-deep);color:#fff;box-shadow:0 4px 14px rgba(242,132,158,.28);transition:transform .15s}
+.btn:active{transform:scale(.96)}
+.btn-soft{background:var(--pink-soft);color:var(--pink-text);box-shadow:none}
+.btn-ghost{background:none;color:var(--ts);box-shadow:none;padding:6px 10px}
+.btn-sm{padding:8px 14px;font-size:12px}
+/* block cards */
+.block{border-radius:var(--rx);padding:22px;margin-bottom:16px;position:relative;overflow:hidden}
+.block.pink{background:var(--pink-soft)}
+.block.yellow{background:var(--yellow-soft)}
+.block.mint{background:var(--mint-soft)}
+.block .b-label{font-size:11px;font-weight:700;color:var(--ts);letter-spacing:.5px;margin-bottom:6px}
+.block .b-age{font-family:var(--fc);font-size:30px;color:var(--td);line-height:1.1}
+.block .b-sub{font-size:13px;color:var(--ts);margin-top:6px}
+.block .b-img{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:90px;height:90px;object-fit:contain}
+.mini-row{display:flex;gap:10px;margin-top:16px}
+.mini{flex:1;background:rgba(255,255,255,.65);border-radius:var(--rm);padding:12px 14px}
+.mini .m-l{font-size:10px;color:var(--ts);font-weight:600;margin-bottom:3px}
+.mini .m-v{font-family:var(--fc);font-size:18px;color:var(--td)}
+.card{background:var(--card);border-radius:var(--rx);padding:20px;margin-bottom:16px;box-shadow:var(--sh)}
+.pill-row{display:flex;gap:10px;margin-bottom:16px}
+.pill{flex:1;background:var(--card);border-radius:var(--rl);padding:16px 10px;text-align:center;box-shadow:var(--sh)}
+.pill .p-v{font-family:var(--fc);font-size:22px;color:var(--td)}
+.pill .p-l{font-size:11px;color:var(--ts);margin-top:2px}
+.pill:nth-child(1){border-top:3px solid var(--pink-deep)}
+.pill:nth-child(2){border-top:3px solid var(--mint-deep)}
+.pill:nth-child(3){border-top:3px solid var(--yellow-deep)}
+.today{border-radius:var(--rx);padding:22px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;background:var(--yellow-soft)}
+.today .t-txt{font-family:var(--fc);font-size:18px;color:var(--td);line-height:1.5}
+.today img{width:60px;height:60px;object-fit:contain}
+.sec-t{font-family:var(--fc);font-size:16px;color:var(--td);margin:8px 0 14px}
+.sch{background:var(--card);border-radius:var(--rx);padding:18px 20px;margin-bottom:12px;box-shadow:var(--sh)}
+.sch-top{display:flex;align-items:center;justify-content:space-between}
+.sch-l{display:flex;align-items:center;gap:14px}
+.sch-ic{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background:var(--pink-soft)}
+.sch-ic img{width:32px;height:32px;object-fit:contain}
+.sch-nm{font-size:15px;font-weight:700;color:var(--td)}
+.sch-dt{font-size:12px;color:var(--ts);margin-top:2px}
+.sch-cd{font-family:var(--fc);font-size:18px;color:var(--pink-deep)}
+.sch-bm{margin-top:12px;padding-top:12px;border-top:1.5px dashed var(--dash);font-size:13px;color:var(--ts)}
+.time-pills{display:flex;gap:8px}
+.tp{padding:7px 14px;border-radius:18px;font-size:12px;font-weight:600;background:var(--card);border:1.5px solid var(--border);cursor:pointer;color:var(--ts)}
+.tp.active{background:var(--td);color:#fff;border-color:var(--td)}
+.chart-box{position:relative;width:100%;height:170px;margin-top:12px}
+.chart-box canvas{width:100%!important;height:100%!important}
+.hstat-row{display:flex;gap:10px;margin-bottom:16px}
+.hstat{flex:1;padding:14px;border-radius:var(--rl);text-align:center}
+.hstat.pink{background:var(--pink-soft)}.hstat.mint{background:var(--mint-soft)}.hstat.yellow{background:var(--yellow-soft)}
+.hstat .h-v{font-family:var(--fc);font-size:20px;color:var(--td)}
+.hstat .h-l{font-size:11px;color:var(--ts);margin-top:3px}
+.feed-stats{display:flex;gap:10px;margin-bottom:16px}
+.fst{flex:1;background:var(--card);border-radius:var(--rl);padding:16px 8px;text-align:center;box-shadow:var(--sh)}
+.fst .f-v{font-family:var(--fc);font-size:20px;color:var(--td)}
+.fst .f-l{font-size:10px;color:var(--ts);margin-top:3px}
+.fst:nth-child(1){border-top:3px solid var(--pink-deep)}
+.fst:nth-child(2){border-top:3px solid var(--mint-deep)}
+.fst:nth-child(3){border-top:3px solid var(--yellow-deep)}
+.rec{background:var(--card);border-radius:var(--rx);padding:18px 20px;margin-bottom:12px;box-shadow:var(--sh)}
+.rec-top{display:flex;justify-content:space-between;align-items:flex-start}
+.rec-t{font-size:15px;font-weight:700;color:var(--td)}
+.rec-v{font-family:var(--fc);font-size:17px;color:var(--td)}
+.rec-s{font-size:11px;color:var(--tl);margin-top:3px}
+.rec-bm{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1.5px dashed var(--dash)}
+.rec-act{display:flex;gap:2px}
+.tag{display:inline-flex;padding:3px 10px;border-radius:16px;font-size:11px;font-weight:600}
+.tag-pink{background:var(--pink-soft);color:var(--pink-text)}
+.tag-mint{background:var(--mint-soft);color:var(--mint-deep)}
+.tag-yellow{background:var(--yellow-soft);color:var(--yellow-deep)}
+.tag-lav{background:var(--lav-soft);color:var(--lav-deep)}
+.wi{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1.5px dashed var(--dash)}
+.wi:last-child{border-bottom:none}
+.wi-d{font-size:14px;font-weight:600;color:var(--td)}
+.wi-v{font-family:var(--fc);font-size:17px;color:var(--td)}
+.exp-hero{background:linear-gradient(135deg,var(--pink-soft),var(--lav-soft));border-radius:var(--rx);padding:26px;margin-bottom:16px;text-align:center}
+.exp-hero .e-l{font-size:12px;color:var(--ts)}
+.exp-hero .e-v{font-family:var(--fc);font-size:34px;color:var(--td);margin-top:4px}
+.pie-row{display:flex;align-items:center;gap:20px}
+.pie-box{width:90px;height:90px;flex-shrink:0}
+.pie-box canvas{width:100%!important;height:100%!important}
+.leg{display:flex;flex-direction:column;gap:8px}
+.leg-i{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--tm)}
+.leg-d{width:10px;height:10px;border-radius:3px}
+.leg-i .l-v{margin-left:auto;font-weight:700}
+.exp-day{display:flex;justify-content:space-between;padding:10px 0 6px}
+.more-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.more-i{background:var(--card);border-radius:var(--rx);padding:28px 20px;box-shadow:var(--sh);display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;transition:transform .15s}
+.more-i:active{transform:scale(.97)}
+.more-i .mi-ic{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.more-i:nth-child(1) .mi-ic{background:var(--mint-soft)}
+.more-i:nth-child(2) .mi-ic{background:var(--lav-soft)}
+.more-i:nth-child(3) .mi-ic{background:var(--yellow-soft)}
+.more-i .mi-ic svg{width:24px;height:24px;stroke-width:1.7}
+.more-i .mi-t{font-family:var(--fc);font-size:15px;color:var(--td)}
+.more-i .mi-s{font-size:11px;color:var(--tl)}
+.back{display:flex;align-items:center;gap:5px;margin-bottom:16px;cursor:pointer;font-size:13px;color:var(--ts);font-weight:600;border:none;background:none;font-family:var(--fc)}
+.seg-bar{display:flex;background:var(--cream);border-radius:var(--rs);padding:4px;margin-bottom:18px}
+.seg-b{flex:1;padding:10px 0;text-align:center;border-radius:8px;font-size:13px;font-weight:600;color:var(--tl);cursor:pointer;border:none;background:none;font-family:var(--fc)}
+.seg-b.active{background:var(--card);color:var(--td);box-shadow:var(--sh)}
+.tl{padding-left:22px;position:relative}
+.tl::before{content:'';position:absolute;left:6px;top:8px;bottom:8px;width:2px;background:var(--border)}
+.tli{position:relative;padding:0 0 20px 18px}
+.tli:last-child{padding-bottom:0}
+.tli::before{content:'';position:absolute;left:-19px;top:6px;width:10px;height:10px;border-radius:50%;border:2.5px solid var(--card);background:var(--pink-deep)}
+.tl-dt{font-size:11px;color:var(--tl)}
+.tl-t{font-size:14px;font-weight:700;color:var(--td);margin-top:3px}
+.tl-s{font-size:12px;color:var(--ts);margin-top:2px}
+.diary{background:var(--card);border-radius:var(--rx);padding:18px;margin-bottom:14px;box-shadow:var(--sh)}
+.diary-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.diary-tx{font-size:14px;color:var(--tm);margin-bottom:10px;line-height:1.6}
+.diary-ph{display:flex;gap:6px;flex-wrap:wrap}
+.diary-ph img{width:80px;height:80px;border-radius:var(--rs);object-fit:cover;cursor:pointer}
+.diary-ft{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px dashed var(--dash);font-size:11px;color:var(--tl)}
+.dm{font-family:var(--fc);font-size:16px;color:var(--td);margin:16px 0 12px;display:flex;align-items:center;gap:8px}
+.dm::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--pink-deep)}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-arrows{display:flex;gap:8px}
+.cal-arrows button{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--card);cursor:pointer;font-size:16px;color:var(--ts);font-family:var(--fc)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:16px}
+.cal-dow{text-align:center;font-size:11px;font-weight:600;color:var(--tl);padding:6px 0}
+.cal-d{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:50%;font-size:14px;color:var(--tm);cursor:pointer;position:relative}
+.cal-d.today{background:var(--pink-soft);color:var(--pink-text);font-weight:700}
+.cal-d.sel{background:var(--pink-deep);color:#fff;font-weight:700}
+.cal-d.other{opacity:.3}
+.cal-d .dots{display:flex;gap:2px;position:absolute;bottom:3px}
+.cal-d .dots span{width:4px;height:4px;border-radius:50%}
+.dd{background:var(--cream);border-radius:var(--rl);padding:16px}
+.dd-i{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1.5px dashed var(--dash)}
+.dd-i:last-child{border-bottom:none}
+.dd-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dd-tx{font-size:13px;font-weight:500;color:var(--tm)}
+.dd-e{text-align:center;padding:14px;font-size:13px;color:var(--tl)}
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(44,24,16,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:500;align-items:flex-end;justify-content:center}
+.modal-ov.show{display:flex}
+.modal{background:var(--card);border-radius:var(--rx) var(--rx) 0 0;padding:8px 22px calc(22px + var(--sb));width:100%;max-width:500px;max-height:88vh;overflow-y:auto;animation:su .35s cubic-bezier(.32,.72,0,1)}
+@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.mh{width:40px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 20px}
+.modal h3{font-family:var(--fc);font-size:18px;color:var(--td);margin-bottom:18px}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--ts);margin-bottom:5px}
+.fg input,.fg select,.fg textarea{width:100%;padding:13px 15px;border:1.5px solid var(--border);border-radius:var(--rm);font-size:15px;font-family:var(--fm);outline:none;background:var(--cream);color:var(--td);-webkit-appearance:none}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--pink-deep);background:var(--card)}
+.fg textarea{resize:vertical;min-height:70px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.facts{display:flex;gap:12px;justify-content:flex-end;margin-top:20px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1.5px solid var(--border);background:var(--card);cursor:pointer;color:var(--ts)}
+.chip.active{background:var(--pink-soft);border-color:var(--pink-deep);color:var(--pink-text)}
+.empty{text-align:center;padding:30px 16px;color:var(--tl);font-size:13px}
+.lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:600;justify-content:center;align-items:center;cursor:pointer}
+.lb.show{display:flex}
+.lb img{max-width:95%;max-height:90%;border-radius:8px}
+.sec-hd{display:flex;justify-content:space-between;align-items:center;margin:6px 0 12px;font-size:12px;color:var(--ts)}
+</style>
 </head>
 <body>
 <div class="app">
-<main class="main">
-    <!-- HOME -->
-    <div id="p-home" class="module active">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
-            <div><p class="t-sub" id="greet"></p><h1 class="t-hero cute" id="hHello">这是你今天要做的事~</h1></div>
-            <button class="btn btn-soft btn-sm" onclick="editProfile()">编辑</button>
-        </div>
-        <div class="today-card" id="todayCard"></div>
-        <div id="schSection"></div>
-        <div class="id-card">
-            <div class="id-header"><span class="badge">IDENTITY CARD</span><span class="info" id="idInfo"></span></div>
-            <div class="id-body">
-                <div class="id-top">
-                    <div class="id-avatar" id="avatarEl" onclick="document.getElementById('avInput').click()"><img src="cat3.png" alt=""></div>
-                    <div class="id-name-block"><div class="id-name" id="idName">未命名</div><div class="id-gender" id="idGender"></div></div>
-                </div>
-                <div class="id-fields" id="idFields"></div>
-            </div>
-            <div class="id-footer" id="idFooter" style="display:none"></div>
-        </div>
+<main>
+<!-- HOME -->
+<section id="p-home" class="module active">
+  <div class="ptop">
+    <h1 id="homeName">布丁</h1>
+    <div class="ico-btns">
+      <button class="ico-btn" onclick="showCal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></button>
+      <button class="ico-btn" onclick="editProfile()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
     </div>
+  </div>
+  <div class="block pink">
+    <div class="b-age" id="hAge">-</div>
+    <div class="b-sub" id="hSub"></div>
+    <img class="b-img" id="hImg" src="cat1.png" alt="">
+    <div class="mini-row" id="hMini"></div>
+  </div>
+  <div class="pill-row" id="hPills"></div>
+  <div class="today" id="todayCard"><div class="t-txt">今日无事<br>保持开心~</div><img src="cat1.png" alt=""></div>
+  <div id="schSec"></div>
+  <div class="card" id="hWCard" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span class="cute" style="font-size:15px;color:var(--td)">体重变化</span><button class="btn btn-ghost btn-sm" onclick="go('health')">查看</button></div>
+    <div id="hWPrev"></div>
+  </div>
+</section>
 
-    <!-- CALENDAR -->
-    <div id="p-cal" class="module">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px"><h1 class="t-hero cute">月历</h1><button class="btn btn-primary btn-sm" onclick="openHealthForm()">+ 异常</button></div>
-        <div class="card"><div class="cal-head"><span class="t-large cute" id="calTitle"></span><div class="cal-arrows"><button onclick="chgMo(-1)">‹</button><button onclick="chgMo(1)">›</button></div></div><div class="cal-grid" id="calGrid"></div></div>
-        <div class="day-detail" id="dayDet"><div class="dd-empty">选择日期查看事项</div></div>
-    </div>
+<!-- HEALTH -->
+<section id="p-health" class="module">
+  <div class="ptop"><h1>健康</h1><button class="btn btn-sm" onclick="openHealthPick()">+ 记录</button></div>
+  <div class="hstat-row" id="hStats"></div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span class="cute" style="font-size:15px">体重趋势</span>
+    <div class="time-pills"><span class="tp" onclick="setRange(7,this)">7天</span><span class="tp active" onclick="setRange(30,this)">30天</span><span class="tp" onclick="setRange(90,this)">90天</span></div></div>
+    <div id="wSummary"></div>
+    <div class="chart-box"><canvas id="wChart"></canvas></div>
+  </div>
+  <div class="card"><div class="cute" style="font-size:15px;margin-bottom:10px">排泄记录</div><div id="poopList"></div></div>
+  <div class="card"><div class="cute" style="font-size:15px;margin-bottom:10px">异常记录</div><div id="anoList"></div></div>
+</section>
 
-    <!-- WEIGHT -->
-    <div id="p-weight" class="module">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px"><h1 class="t-hero cute">体重</h1><button class="btn btn-primary btn-sm" onclick="openWForm()">+ 记录</button></div>
-        <div class="w-summary" id="wSum"></div>
-        <div class="card"><div class="chart-area"><canvas id="wChart"></canvas></div></div>
-        <div class="section-hd"><span class="t-sub">历史记录</span><button class="btn btn-ghost btn-sm" onclick="setGoal()">设目标</button></div>
-        <div class="card" id="wListCard" style="display:none"><div id="wList"></div></div>
-        <div class="empty" id="wEm">暂无体重记录</div>
-    </div>
+<!-- FEED -->
+<section id="p-feed" class="module">
+  <div class="ptop"><h1>喂养</h1><button class="btn btn-sm" onclick="openFeed()">+ 记录</button></div>
+  <div class="feed-stats" id="feedStats"></div>
+  <div class="sec-hd"><span>历史记录</span></div>
+  <div id="fList"></div><div class="empty" id="fEm">暂无喂养记录</div>
+</section>
 
-    <!-- FEEDING -->
-    <div id="p-feed" class="module">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px"><h1 class="t-hero cute">喂养</h1><button class="btn btn-primary btn-sm" onclick="openFForm()">+ 记录</button></div>
-        <div class="feed-hero"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span class="t-title">今日喂养</span><span class="tag tag-pink" id="fCnt">0 次</span></div><div id="fToday"><p class="t-sub">还没有记录~</p></div></div>
-        <div class="section-hd"><span class="t-sub">历史记录</span></div>
-        <div id="fList"></div><div class="empty" id="fEm">暂无喂养记录</div>
-    </div>
+<!-- EXPENSE -->
+<section id="p-expense" class="module">
+  <div class="ptop"><h1>消费</h1><button class="btn btn-sm" onclick="openExp()">+ 记录</button></div>
+  <div class="exp-hero"><div class="e-l">总支出</div><div class="e-v" id="eTot">¥0</div></div>
+  <div class="card"><div class="pie-row"><div class="pie-box"><canvas id="pieC"></canvas></div><div class="leg" id="pieLeg"></div></div></div>
+  <div class="sec-hd"><span>消费记录</span></div>
+  <div id="eList"></div><div class="empty" id="eEm">暂无消费记录</div>
+</section>
 
-    <!-- MORE -->
-    <div id="p-more" class="module">
-        <h1 class="t-hero cute" style="margin-bottom:22px">更多</h1>
-    <div class="more-grid">
-        <div class="more-item" onclick="goSub('immune')"><div class="mi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="26" height="26"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg></div><span class="mi-title">免疫</span><span class="mi-sub">疫苗 · 驱虫</span></div>
-        <div class="more-item" onclick="goSub('expense')"><div class="mi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="26" height="26"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><span class="mi-title">消费</span><span class="mi-sub">统计 · 记账</span></div>
-        <div class="more-item" onclick="goSub('medical')"><div class="mi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="26" height="26"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8m-4-4h8"/></svg></div><span class="mi-title">医疗</span><span class="mi-sub">就诊记录</span></div>
-        <div class="more-item" onclick="goSub('photos')"><div class="mi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="26" height="26"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><span class="mi-title">照片</span><span class="mi-sub">成长相册</span></div>
-    </div>
-    </div>
+<!-- MORE -->
+<section id="p-more" class="module">
+  <h1 class="cute" style="font-size:24px;color:var(--td);margin-bottom:20px">更多</h1>
+  <div class="more-grid">
+    <div class="more-i" onclick="go('medical')"><div class="mi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1d7a4e"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8m-4-4h8"/></svg></div><span class="mi-t">医疗</span><span class="mi-s">疫苗·驱虫·就诊</span></div>
+    <div class="more-i" onclick="go('diary')"><div class="mi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#5e35b1"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M8 7h8M8 11h6"/></svg></div><span class="mi-t">日记</span><span class="mi-s">记录日常</span></div>
+    <div class="more-i" onclick="showCal()"><div class="mi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#b8860b"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><span class="mi-t">月历</span><span class="mi-s">事项总览</span></div>
+  </div>
+</section>
 
-    <!-- SUB PAGES -->
-    <div id="p-immune" class="module"><button class="back-row" onclick="goSub('more')">‹ 返回</button><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><h1 class="t-hero cute">免疫</h1><button class="btn btn-primary btn-sm" id="imBtn" onclick="openVForm()">+ 添加</button></div><div id="imAl"></div><div class="seg-bar"><button class="seg-btn active" onclick="swSeg('vacc',this)">疫苗</button><button class="seg-btn" onclick="swSeg('dew',this)">驱虫</button></div><div id="seg-vacc"><div class="card"><div class="timeline" id="vTL"></div><div class="empty" id="vEm">暂无记录</div></div></div><div id="seg-dew" style="display:none"><div class="card"><div class="timeline" id="dTL"></div><div class="empty" id="dEm">暂无记录</div></div></div></div>
+<!-- MEDICAL -->
+<section id="p-medical" class="module">
+  <button class="back" onclick="go('more')">‹ 返回</button>
+  <div class="ptop"><h1>医疗</h1><button class="btn btn-sm" id="medBtn" onclick="openVacc()">+ 添加</button></div>
+  <div class="seg-bar"><button class="seg-b active" onclick="medSeg('v',this)">疫苗</button><button class="seg-b" onclick="medSeg('d',this)">驱虫</button><button class="seg-b" onclick="medSeg('m',this)">就诊</button></div>
+  <div id="seg-v"><div class="card"><div class="tl" id="vTL"></div><div class="empty" id="vEm">暂无记录</div></div></div>
+  <div id="seg-d" style="display:none"><div class="card"><div class="tl" id="dTL"></div><div class="empty" id="dEm">暂无记录</div></div></div>
+  <div id="seg-m" style="display:none"><div id="mList"></div><div class="empty" id="mEm">暂无记录</div></div>
+</section>
 
-    <div id="p-expense" class="module"><button class="back-row" onclick="goSub('more')">‹ 返回</button><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><h1 class="t-hero cute">消费</h1><button class="btn btn-primary btn-sm" onclick="openEForm()">+ 记录</button></div><div class="exp-hero"><div class="el">总支出</div><div class="ev" id="eTot">¥0</div></div><div class="card"><div class="pie-row"><div class="pie-box"><canvas id="pieC"></canvas></div><div class="leg-list" id="pieLeg"></div></div></div><div class="section-hd"><span class="t-sub">消费记录</span></div><div id="eList"></div><div class="empty" id="eEm">暂无记录</div></div>
+<!-- DIARY -->
+<section id="p-diary" class="module">
+  <button class="back" onclick="go('more')">‹ 返回</button>
+  <div class="ptop"><h1>日记</h1><button class="btn btn-sm" onclick="openDiary()">+ 写日记</button></div>
+  <div id="diaryList"></div><div class="empty" id="diaryEm">还没有日记，记录第一篇吧~</div>
+</section>
 
-    <div id="p-medical" class="module"><button class="back-row" onclick="goSub('more')">‹ 返回</button><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><h1 class="t-hero cute">医疗</h1><button class="btn btn-primary btn-sm" onclick="openMForm()">+ 记录</button></div><div id="mList"></div><div class="empty" id="mEm">暂无记录</div></div>
-
-    <div id="p-photos" class="module"><button class="back-row" onclick="goSub('more')">‹ 返回</button><h1 class="t-hero cute" style="margin-bottom:18px">照片</h1><div class="photo-grid" id="pGrid"></div></div>
+<!-- CALENDAR -->
+<section id="p-calendar" class="module">
+  <button class="back" onclick="go('home')">‹ 返回</button>
+  <h1 class="cute" style="font-size:22px;color:var(--td);margin-bottom:16px">月历</h1>
+  <div class="card">
+    <div class="cal-head"><span class="cute" style="font-size:16px" id="calTitle"></span><div class="cal-arrows"><button onclick="chgMo(-1)">‹</button><button onclick="chgMo(1)">›</button></div></div>
+    <div class="cal-grid" id="calGrid"></div>
+  </div>
+  <div class="dd" id="dayDet"><div class="dd-e">选择日期查看事项</div></div>
+</section>
 </main>
 
 <nav class="tab-bar">
-    <button class="tab-item active" data-t="home" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V10.5z"/><path d="M9 21V12h6v9"/></svg><span>首页</span></button>
-    <button class="tab-item" data-t="cal" onclick="go('cal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>月历</span></button>
-    <button class="tab-item" data-t="weight" onclick="go('weight')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 2 6-6"/></svg><span>体重</span></button>
-    <button class="tab-item" data-t="feed" onclick="go('feed')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/></svg><span>喂养</span></button>
-    <button class="tab-item" data-t="more" onclick="go('more')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg><span>更多</span></button>
+  <button class="tab-item active" data-t="home" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V10.5z"/><path d="M9 21V12h6v9"/></svg><span>首页</span></button>
+  <button class="tab-item" data-t="health" onclick="go('health')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>健康</span></button>
+  <button class="tab-item" data-t="feed" onclick="go('feed')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/></svg><span>喂养</span></button>
+  <button class="tab-item" data-t="expense" onclick="go('expense')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg><span>消费</span></button>
+  <button class="tab-item" data-t="more" onclick="go('more')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg><span>更多</span></button>
 </nav>
 </div>
 
-<div class="modal-overlay" id="mOv" onclick="if(event.target===this)closeM()"><div class="modal" id="mBd"></div></div>
-<div class="lightbox" id="lb" onclick="this.classList.remove('show')"><img id="lbI" src="" alt=""></div>
+<div class="modal-ov" id="mOv" onclick="if(event.target===this)closeM()"><div class="modal" id="mBd"></div></div>
+<div class="lb" id="lb" onclick="this.classList.remove('show')"><img id="lbI" src="" alt=""></div>
 <input type="file" id="avInput" accept="image/*" style="display:none" onchange="handleAv(event)">
-<input type="file" id="phInput" accept="image/*" style="display:none" onchange="handlePh(event)">
+<input type="file" id="phInput" accept="image/*" multiple style="display:none" onchange="handleDiaryPh(event)">
 
 <script>
-const KEY='catcare_v8';
-const INIT=()=>({profile:{name:'',breed:'',gender:'',birthday:'',adoptDate:'',sterilizeDate:'',color:'',chip:'',notes:'',avatar:''},weight:[],weightGoal:null,vaccine:[],deworm:[],medical:[],feeding:[],expense:[],photos:[],health:[]});
-let D=(()=>{try{const d=JSON.parse(localStorage.getItem(KEY));return d&&d.profile?d:INIT()}catch(e){return INIT()}})();
+const KEY='catcare_v9';
+const INIT=()=>({profile:{name:'布丁',breed:'英长',gender:'公',color:'金渐层',birthday:'2026-03-25',adoptDate:'',sterilizeDate:'',avatar:''},weight:[],weightGoal:null,vaccine:[],deworm:[],medical:[],feeding:[],expense:[],diary:[],health:[],poop:[],brands:[]});
+let D=(()=>{try{const d=JSON.parse(localStorage.getItem(KEY));return d&&d.profile?Object.assign(INIT(),d):INIT()}catch(e){return INIT()}})();
 const save=()=>localStorage.setItem(KEY,JSON.stringify(D));
 const td=()=>new Date().toISOString().slice(0,10);
 const $=id=>document.getElementById(id);
 const gi=id=>$(id).value;
+let range=30,diaryPhotos=[];
 
-function go(p){document.querySelectorAll('.module').forEach(e=>e.classList.remove('active'));$('p-'+p).classList.add('active');document.querySelectorAll('.tab-item').forEach(e=>e.classList.remove('active'));document.querySelector(`[data-t="${p}"]`)?.classList.add('active');if(p==='weight')setTimeout(drawChart,80);if(p==='cal')renderCal();if(p==='feed')renderFeed()}
-function goSub(p){document.querySelectorAll('.module').forEach(e=>e.classList.remove('active'));$('p-'+p).classList.add('active');if(p==='expense')setTimeout(drawPie,80);if(p==='immune')renderImm();if(p==='more'){document.querySelectorAll('.tab-item').forEach(e=>e.classList.remove('active'));document.querySelector('[data-t="more"]').classList.add('active')}}
+function go(p){document.querySelectorAll('.module').forEach(e=>e.classList.remove('active'));$('p-'+p).classList.add('active');document.querySelectorAll('.tab-item').forEach(e=>e.classList.remove('active'));const t=document.querySelector(`[data-t="${p}"]`);if(t)t.classList.add('active');window.scrollTo(0,0);if(p==='home')renderHome();if(p==='health'){renderHealth();setTimeout(drawW,60)}if(p==='feed')renderFeed();if(p==='expense'){renderExp();setTimeout(drawPie,60)}if(p==='medical')renderMed();if(p==='diary')renderDiary()}
+function showCal(){document.querySelectorAll('.module').forEach(e=>e.classList.remove('active'));$('p-calendar').classList.add('active');renderCal();window.scrollTo(0,0)}
 function openM(){$('mOv').classList.add('show')}
 function closeM(){$('mOv').classList.remove('show')}
-function setM(h){$('mBd').innerHTML='<div class="modal-handle"></div>'+h;openM()}
-
-// === HOME ===
-function renderHome(){
-    const p=D.profile;
-    const av=$('avatarEl');
-    av.innerHTML=p.avatar?`<img src="${p.avatar}" alt="">`:'<img src="cat3.png" alt="">';
-    const h=new Date().getHours();
-    $('greet').textContent=h<12?'早上好':h<18?'下午好':'晚上好';
-    $('hHello').textContent=p.name?'这是'+p.name+'今天要做的事~':'这是你今天要做的事~';
-    $('idName').textContent=p.name||'未命名';
-    $('idInfo').textContent=[p.breed,p.color,p.gender==='公'?'弟弟':'妹妹'].filter(Boolean).join(' · ');
-    $('idGender').textContent=p.gender?(p.gender==='公'?'弟弟':'妹妹'):'';
-    let fH='';
-    if(p.birthday)fH+=idF('#ffb3c6','年龄',calcAge(p.birthday));
-    if(p.birthday)fH+=idF('#ffa07a','生日',fmtD(p.birthday));
-    if(p.adoptDate){const d=Math.max(0,Math.ceil((new Date()-new Date(p.adoptDate))/864e5));fH+=idF('#f2849e','在一起',d+' 天')}
-    if(p.sterilizeDate)fH+=idF('#98d4a6','绝育',fmtD(p.sterilizeDate));
-    if(p.chip)fH+=idF('#a8c4e0','芯片',p.chip);
-    $('idFields').innerHTML=fH||'<p class="t-sub" style="text-align:center">编辑档案设置信息</p>';
-    let ftH='';
-    if(D.weight.length){const w=[...D.weight].sort((a,b)=>b.date.localeCompare(a.date))[0];ftH+=`<div class="id-stat"><div class="sv">${w.value} kg</div><div class="sl">体重</div></div>`}
-    if(D.expense.length){const t=D.expense.reduce((s,r)=>s+(parseFloat(r.amount)||0),0);ftH+=`<div class="id-stat"><div class="sv">¥${t.toFixed(0)}</div><div class="sl">花费</div></div>`}
-    $('idFooter').innerHTML=ftH;$('idFooter').style.display=ftH?'flex':'none';
-
-    // Schedules
-    const todayStr=td();const schedules=[];
-    D.vaccine.filter(r=>r.nextDate).forEach(r=>{const d=Math.ceil((new Date(r.nextDate)-new Date())/864e5);schedules.push({name:r.name,date:r.nextDate,detail:'疫苗'+(r.hospital?' · '+r.hospital:''),days:d,img:'cat2.png',cls:'pink'})});
-    D.deworm.filter(r=>r.nextDate).forEach(r=>{const d=Math.ceil((new Date(r.nextDate)-new Date())/864e5);schedules.push({name:'驱虫',date:r.nextDate,detail:(r.type||'')+(r.brand?' · '+r.brand:''),days:d,img:'cat5.png',cls:'cream'})});
-    D.medical.filter(r=>r.appointDate&&r.appointDate>=todayStr).forEach(r=>{const d=Math.ceil((new Date(r.appointDate)-new Date())/864e5);schedules.push({name:r.diagnosis||'就诊',date:r.appointDate,detail:r.type+(r.hospital?' · '+r.hospital:''),days:d,img:'cat4.png',cls:'warm'})});
-    schedules.sort((a,b)=>a.days-b.days);
-
-    // Today card logic
-    const todayHealth=D.health.filter(r=>r.date===todayStr);
-    const overdue=schedules.filter(s=>s.days<0);
-    const soon=schedules.filter(s=>s.days>=0&&s.days<=3);
-    let tcText,tcImg;
-    if(todayHealth.length){tcText='今天状态不太好<br>注意观察哦';tcImg='cat6.png'}
-    else if(overdue.length){tcText='有事项过期了<br>快去处理吧';tcImg='cat4.png'}
-    else if(soon.length){tcText='近期有安排<br>别忘了哦~';tcImg='cat2.png'}
-    else{tcText='今日无事<br>保持开心~';tcImg='cat1.png'}
-    $('todayCard').innerHTML=`<div class="tc-text cute">${tcText}</div><div class="tc-img"><img src="${tcImg}" alt=""></div>`;
-
-    // Schedule section
-    const validSch=schedules.filter(s=>s.days>=0||s.days>=-30);
-    let sH='';
-    if(validSch.length){
-        sH='<div class="schedule-title">未来的安排</div>';
-        validSch.forEach(s=>{
-            sH+=`<div class="sch-card"><div class="sch-top"><div class="sch-left"><div class="sch-icon ${s.cls}"><img src="${s.img}" alt=""></div><div><div class="sch-name">${s.name}</div><div class="sch-date">${s.date}</div></div></div><div class="sch-countdown">${s.days>=0?'倒计时'+s.days+'天':'已过期'}</div></div><div class="sch-bottom"><div class="sch-detail">${s.detail}</div></div></div>`;
-        });
-    }
-    $('schSection').innerHTML=sH;
-}
-function idF(c,l,v){return`<div class="id-field"><span class="id-dot" style="background:${c}"></span><span class="id-label">${l}</span><span class="id-value">${v}</span></div>`}
-function calcAge(b){const born=new Date(b),now=new Date();let months=(now.getFullYear()-born.getFullYear())*12+(now.getMonth()-born.getMonth());let days=now.getDate()-born.getDate();if(days<0){months--;const prev=new Date(now.getFullYear(),now.getMonth(),0).getDate();days+=prev}if(months<0){months=0;days=0}if(months>=12){const y=Math.floor(months/12),m=months%12;return y+'岁'+(m?m+'个月':'')+(days?days+'天':'')}return months+'个月'+days+'天'}
+function setM(h){$('mBd').innerHTML='<div class="mh"></div>'+h;openM()}
 function fmtD(d){if(!d)return'';const p=d.split('-');return parseInt(p[1])+'月'+parseInt(p[2])+'日'}
-function editProfile(){const p=D.profile;setM(`<h3>编辑档案</h3><div class="form-row"><div class="form-group"><label>名字</label><input id="fp-n" value="${p.name||''}"></div><div class="form-group"><label>品种</label><input id="fp-b" value="${p.breed||''}"></div></div><div class="form-row"><div class="form-group"><label>性别</label><select id="fp-g"><option value="">-</option><option value="公"${p.gender==='公'?' selected':''}>公</option><option value="母"${p.gender==='母'?' selected':''}>母</option></select></div><div class="form-group"><label>毛色</label><input id="fp-c" value="${p.color||''}"></div></div><div class="form-row"><div class="form-group"><label>出生日期</label><input type="date" id="fp-bd" value="${p.birthday||''}"></div><div class="form-group"><label>接回日期</label><input type="date" id="fp-ad" value="${p.adoptDate||''}"></div></div><div class="form-row"><div class="form-group"><label>绝育日期</label><input type="date" id="fp-sd" value="${p.sterilizeDate||''}"></div><div class="form-group"><label>芯片号</label><input id="fp-ch" value="${p.chip||''}"></div></div><div class="form-group"><label>备注</label><textarea id="fp-nt">${p.notes||''}</textarea></div><div class="form-actions"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn btn-primary" onclick="saveProf()">保存</button></div>`)}
-function saveProf(){Object.assign(D.profile,{name:gi('fp-n'),breed:gi('fp-b'),gender:gi('fp-g'),color:gi('fp-c'),birthday:gi('fp-bd'),adoptDate:gi('fp-ad'),sterilizeDate:gi('fp-sd'),chip:gi('fp-ch'),notes:gi('fp-nt')});save();renderHome();closeM()}
+function calcAge(b){if(!b)return'-';const bd=new Date(b),n=new Date();let m=(n.getFullYear()-bd.getFullYear())*12+(n.getMonth()-bd.getMonth());let dy=n.getDate()-bd.getDate();if(dy<0){m--;dy+=new Date(n.getFullYear(),n.getMonth(),0).getDate()}if(m<0)return'0天';if(m>=12){const y=Math.floor(m/12),mm=m%12;return y+'岁'+(mm?mm+'个月':'')+(dy?dy+'天':'')}return m+'个月'+(dy?dy+'天':'')}
+function daysToBday(b){if(!b)return'-';const n=new Date(),bd=new Date(b);let nx=new Date(n.getFullYear(),bd.getMonth(),bd.getDate());if(nx<n)nx.setFullYear(n.getFullYear()+1);return Math.ceil((nx-n)/864e5)}
+
+// HOME
+function renderHome(){
+  const p=D.profile;
+  $('homeName').textContent=p.name||'未命名';
+  $('hImg').src=p.avatar||'cat1.png';
+  $('hAge').textContent=calcAge(p.birthday);
+  const sub=[p.breed,p.gender==='公'?'公':'母',p.color].filter(Boolean);
+  if(p.adoptDate)sub.push('已陪伴'+Math.max(0,Math.ceil((new Date()-new Date(p.adoptDate))/864e5))+'天');
+  $('hSub').textContent=sub.join(' · ');
+  let mini='';
+  const cw=D.weight.length?[...D.weight].sort((a,b)=>b.date.localeCompare(a.date))[0].value+' kg':'-';
+  mini+=`<div class="mini"><div class="m-l">当前体重</div><div class="m-v">${cw}</div></div>`;
+  mini+=`<div class="mini"><div class="m-l">下次生日</div><div class="m-v">${daysToBday(p.birthday)} 天</div></div>`;
+  $('hMini').innerHTML=mini;
+  $('hPills').innerHTML=`<div class="pill"><div class="p-v">${D.vaccine.length}</div><div class="p-l">疫苗</div></div><div class="pill"><div class="p-v">${D.deworm.length}</div><div class="p-l">驱虫</div></div><div class="pill"><div class="p-v">${D.health.length}</div><div class="p-l">异常</div></div>`;
+  // schedules
+  const t=td(),sch=[];
+  D.vaccine.forEach(r=>{if(r.nextDate){const d=Math.ceil((new Date(r.nextDate)-new Date())/864e5);sch.push({nm:r.name,dt:r.nextDate,de:'疫苗'+(r.hospital?' · '+r.hospital:''),d,img:'cat2.png'})}});
+  D.deworm.forEach(r=>{if(r.nextDate){const d=Math.ceil((new Date(r.nextDate)-new Date())/864e5);sch.push({nm:'驱虫',dt:r.nextDate,de:(r.type||'')+(r.brand?' · '+r.brand:''),d,img:'cat5.png'})}});
+  D.medical.forEach(r=>{if(r.appointDate){const d=Math.ceil((new Date(r.appointDate)-new Date())/864e5);sch.push({nm:r.diagnosis||'就诊',dt:r.appointDate,de:r.type+(r.hospital?' · '+r.hospital:''),d,img:'cat4.png'})}});
+  sch.sort((a,b)=>a.d-b.d);
+  const ano=D.health.filter(h=>h.date===t);
+  const overdue=sch.filter(s=>s.d<0),soon=sch.filter(s=>s.d>=0&&s.d<=3);
+  let txt,im;
+  if(ano.length){txt='今天状态不太好<br>注意观察哦';im='cat6.png'}
+  else if(overdue.length){txt='有事项过期了<br>快去处理吧';im='cat4.png'}
+  else if(soon.length){txt='近期有安排<br>别忘了哦~';im='cat2.png'}
+  else{txt='今日无事<br>保持开心~';im='cat1.png'}
+  $('todayCard').innerHTML=`<div class="t-txt">${txt}</div><img src="${im}" alt="">`;
+  const valid=sch.filter(s=>s.d>=-30);
+  let sH='';
+  if(valid.length){sH='<div class="sec-t">未来的安排</div>';valid.forEach(s=>{sH+=`<div class="sch"><div class="sch-top"><div class="sch-l"><div class="sch-ic"><img src="${s.img}" alt=""></div><div><div class="sch-nm">${s.nm}</div><div class="sch-dt">${fmtD(s.dt)}</div></div></div><div class="sch-cd">${s.d>=0?'倒计时'+s.d+'天':'已过期'}</div></div><div class="sch-bm">${s.de}</div></div>`})}
+  $('schSec').innerHTML=sH;
+  // weight preview
+  if(D.weight.length){$('hWCard').style.display='block';const r=[...D.weight].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,5);$('hWPrev').innerHTML=r.map(w=>`<div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px"><span style="color:var(--ts)">${fmtD(w.date)}</span><span class="cute" style="color:var(--td)">${w.value} kg</span></div>`).join('')}else $('hWCard').style.display='none';
+}
+function editProfile(){const p=D.profile;setM(`<h3>编辑档案</h3><div class="frow"><div class="fg"><label>名字</label><input id="fp-n" value="${p.name||''}"></div><div class="fg"><label>品种</label><input id="fp-b" value="${p.breed||''}"></div></div><div class="frow"><div class="fg"><label>性别</label><select id="fp-g"><option value="">-</option><option ${p.gender==='公'?'selected':''}>公</option><option ${p.gender==='母'?'selected':''}>母</option></select></div><div class="fg"><label>毛色</label><input id="fp-c" value="${p.color||''}"></div></div><div class="frow"><div class="fg"><label>出生日期</label><input type="date" id="fp-bd" value="${p.birthday||''}"></div><div class="fg"><label>接回日期</label><input type="date" id="fp-ad" value="${p.adoptDate||''}"></div></div><div class="fg"><label>绝育日期</label><input type="date" id="fp-sd" value="${p.sterilizeDate||''}"></div><div class="fg"><label>头像</label><button class="btn btn-soft btn-sm" onclick="document.getElementById('avInput').click()">上传头像</button></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveProf()">保存</button></div>`)}
+function saveProf(){Object.assign(D.profile,{name:gi('fp-n'),breed:gi('fp-b'),gender:gi('fp-g'),color:gi('fp-c'),birthday:gi('fp-bd'),adoptDate:gi('fp-ad'),sterilizeDate:gi('fp-sd')});save();renderHome();closeM()}
 function handleAv(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{D.profile.avatar=ev.target.result;save();renderHome()};r.readAsDataURL(f)}
 
-// === CALENDAR ===
+// HEALTH
+function setRange(d,btn){range=d;document.querySelectorAll('.tp').forEach(e=>e.classList.remove('active'));btn.classList.add('active');drawW()}
+function renderHealth(){
+  const sorted=[...D.weight].sort((a,b)=>b.date.localeCompare(a.date));
+  const cur=sorted.length?sorted[0].value:'-';
+  let chg='-';if(sorted.length>=2){const d=(sorted[0].value-sorted[1].value).toFixed(2);chg=(d>0?'+':'')+d}
+  const pn=D.poop.filter(p=>p.status==='正常').length,pa=D.poop.filter(p=>p.status==='异常').length;
+  $('hStats').innerHTML=`<div class="hstat pink"><div class="h-v">${cur}${cur!=='-'?'kg':''}</div><div class="h-l">当前体重</div></div><div class="hstat mint"><div class="h-v">${chg}</div><div class="h-l">较上次</div></div><div class="hstat yellow"><div class="h-v">${D.health.length}</div><div class="h-l">异常</div></div>`;
+  // poop
+  if(D.poop.length){const ps=[...D.poop].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,10);$('poopList').innerHTML=ps.map(p=>{const i=D.poop.indexOf(p);return`<div class="wi"><div><span class="wi-d">${fmtD(p.date)}</span> <span class="tag ${p.status==='正常'?'tag-mint':'tag-pink'}">${p.status}${p.type?' · '+p.type:''}</span></div><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('poop',${i})">删</button></div>`}).join('')}else $('poopList').innerHTML='<div class="empty">暂无排泄记录</div>';
+  // anomaly
+  if(D.health.length){const hs=[...D.health].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,10);$('anoList').innerHTML=hs.map(h=>{const i=D.health.indexOf(h);return`<div class="wi"><div><span class="wi-d">${fmtD(h.date)}</span> <span class="tag tag-pink">${h.type}</span> <span style="font-size:11px;color:var(--ts)">${h.severity||''}</span></div><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('health',${i})">删</button></div>`}).join('')}else $('anoList').innerHTML='<div class="empty">暂无异常记录</div>';
+  const ws=[...D.weight].sort((a,b)=>b.date.localeCompare(a.date));
+  $('wSummary').innerHTML=ws.length?`<div style="font-family:var(--fc);font-size:24px;color:var(--td);margin:8px 0">${ws[0].value} kg <span style="font-size:13px;color:${chg.startsWith('+')?'var(--mint-deep)':'var(--pink-deep)'}">${chg!=='-'?chg+'kg':''}</span></div>`:'';
+}
+function drawW(){
+  const c=$('wChart');if(!c||!$('p-health').classList.contains('active'))return;
+  const ctx=c.getContext('2d');const rect=c.parentElement.getBoundingClientRect();
+  c.width=rect.width*2;c.height=rect.height*2;ctx.scale(2,2);const W=rect.width,H=rect.height;ctx.clearRect(0,0,W,H);
+  const cut=new Date(Date.now()-range*864e5).toISOString().slice(0,10);
+  const sorted=[...D.weight].filter(r=>r.date>=cut).sort((a,b)=>a.date.localeCompare(b.date));
+  if(sorted.length<2){ctx.fillStyle='#c4b5a6';ctx.font='500 13px sans-serif';ctx.textAlign='center';ctx.fillText('该时间段记录不足',W/2,H/2);return}
+  const vals=sorted.map(r=>r.value);let mn=Math.min(...vals)-0.3,mx=Math.max(...vals)+0.3;if(D.weightGoal){mn=Math.min(mn,D.weightGoal-0.3);mx=Math.max(mx,D.weightGoal+0.3)}
+  const pad={t:24,r:12,b:24,l:36},cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
+  ctx.strokeStyle='#f0e8df';ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){const y=pad.t+(cH/4)*i;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();ctx.fillStyle='#c4b5a6';ctx.font='10px sans-serif';ctx.textAlign='right';ctx.fillText((mx-(mx-mn)*i/4).toFixed(1),pad.l-5,y+3)}
+  const pts=sorted.map((r,i)=>({x:pad.l+(cW/(sorted.length-1))*i,y:pad.t+cH-((r.value-mn)/(mx-mn))*cH,v:r.value}));
+  const g=ctx.createLinearGradient(0,pad.t,0,H-pad.b);g.addColorStop(0,'rgba(242,132,158,.18)');g.addColorStop(1,'rgba(242,132,158,0)');
+  ctx.beginPath();ctx.moveTo(pts[0].x,H-pad.b);pts.forEach(p=>ctx.lineTo(p.x,p.y));ctx.lineTo(pts[pts.length-1].x,H-pad.b);ctx.closePath();ctx.fillStyle=g;ctx.fill();
+  ctx.beginPath();ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.lineCap='round';pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.strokeStyle='#f2849e';ctx.stroke();
+  pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,4,0,7);ctx.fillStyle='#f2849e';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#2c1810';ctx.font='700 11px sans-serif';ctx.textAlign='center';ctx.fillText(p.v,p.x,p.y-10)});
+  ctx.fillStyle='#c4b5a6';ctx.font='10px sans-serif';const st=Math.max(1,Math.floor(sorted.length/5));sorted.forEach((r,i)=>{if(i%st===0||i===sorted.length-1)ctx.fillText(r.date.slice(5),pts[i].x,H-pad.b+13)});
+}
+function openHealthPick(){setM(`<h3>记录什么？</h3><div style="display:flex;flex-direction:column;gap:10px"><button class="btn btn-soft" onclick="openWeight()">记录体重</button><button class="btn btn-soft" onclick="openPoop()">记录排泄</button><button class="btn btn-soft" onclick="openAno()">记录异常</button></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button></div>`)}
+function openWeight(){setM(`<h3>记录体重</h3><div class="frow"><div class="fg"><label>日期</label><input type="date" id="fw-d" value="${td()}"></div><div class="fg"><label>体重(kg)</label><input type="number" step="0.01" id="fw-v"></div></div><div class="fg"><label>备注</label><input id="fw-n"></div><div class="fg"><label>目标体重(可选)</label><input type="number" step="0.01" id="fw-g" value="${D.weightGoal||''}"></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveWeight()">保存</button></div>`)}
+function saveWeight(){const v=parseFloat(gi('fw-v'));if(isNaN(v)){alert('请填写体重');return}D.weight.push({date:gi('fw-d'),value:v,note:gi('fw-n')});const g=parseFloat(gi('fw-g'));D.weightGoal=isNaN(g)?null:g;save();renderHealth();drawW();renderHome();closeM()}
+function openPoop(){setM(`<h3>记录排泄</h3><div class="fg"><label>日期</label><input type="date" id="fpp-d" value="${td()}"></div><div class="fg"><label>状态</label><div class="chips"><div class="chip active" onclick="poopPick(this,'正常')" data-v="正常">正常</div><div class="chip" onclick="poopPick(this,'异常')" data-v="异常">异常</div></div><input type="hidden" id="fpp-s" value="正常"></div><div class="fg" id="fpp-typeWrap" style="display:none"><label>异常类型</label><div class="chips">${['软便','腹泻','便秘','带血','其他'].map(t=>`<div class="chip" onclick="poopType(this)" data-v="${t}">${t}</div>`).join('')}</div><input type="hidden" id="fpp-t"></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="savePoop()">保存</button></div>`)}
+function poopPick(el,v){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');$('fpp-s').value=v;$('fpp-typeWrap').style.display=v==='异常'?'block':'none'}
+function poopType(el){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');$('fpp-t').value=el.dataset.v}
+function savePoop(){const s=gi('fpp-s');const r={date:gi('fpp-d'),status:s,type:s==='异常'?gi('fpp-t'):''};D.poop.push(r);save();renderHealth();closeM()}
+function openAno(){setM(`<h3>记录异常</h3><div class="fg"><label>日期</label><input type="date" id="fa-d" value="${td()}"></div><div class="fg"><label>异常类型</label><div class="chips">${['软便','呕吐','食欲下降','咳嗽','打喷嚏','精神萎靡','皮肤异常','其他'].map(t=>`<div class="chip" onclick="anoPick(this)" data-v="${t}">${t}</div>`).join('')}</div><input type="hidden" id="fa-t"></div><div class="fg"><label>严重程度</label><select id="fa-s"><option>轻微</option><option>中等</option><option>严重</option></select></div><div class="fg"><label>备注</label><textarea id="fa-n"></textarea></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveAno()">保存</button></div>`)}
+function anoPick(el){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');$('fa-t').value=el.dataset.v}
+function saveAno(){if(!gi('fa-t')){alert('请选择类型');return}D.health.push({date:gi('fa-d'),type:gi('fa-t'),severity:gi('fa-s'),note:gi('fa-n')});save();renderHealth();renderHome();closeM()}
+
+// FEED
+function renderFeed(){
+  const t=td();const todayF=D.feeding.filter(r=>r.date===t);
+  const water=D.feeding.filter(r=>r.date===t&&r.type==='水').reduce((s,r)=>s+(parseInt(r.amount)||0),0);
+  $('feedStats').innerHTML=`<div class="fst"><div class="f-v">${todayF.length}</div><div class="f-l">今日喂食</div></div><div class="fst"><div class="f-v">${water}ml</div><div class="f-l">今日饮水</div></div><div class="fst"><div class="f-v">${D.feeding.length}</div><div class="f-l">总记录</div></div>`;
+  const sorted=[...D.feeding].sort((a,b)=>b.date!==a.date?b.date.localeCompare(a.date):(b.time||'').localeCompare(a.time||''));
+  if(!sorted.length){$('fList').innerHTML='';$('fEm').style.display='block';return}$('fEm').style.display='none';
+  $('fList').innerHTML=sorted.slice(0,40).map(r=>{const i=D.feeding.indexOf(r);return`<div class="rec"><div class="rec-top"><div><div class="rec-t">${r.type}${r.brand?' · '+r.brand:''}</div><div class="rec-s">${fmtD(r.date)} ${r.time||''}</div></div><div class="rec-v">${r.amount||''}</div></div><div class="rec-bm"><span class="tag tag-yellow">${r.product||r.type}</span><div class="rec-act"><button class="btn btn-ghost btn-sm" onclick="openFeed(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('feeding',${i})">删除</button></div></div></div>`}).join('');
+}
+function openFeed(idx=-1){const e=idx>=0,r=e?D.feeding[idx]:{date:td(),time:'',type:'',brand:'',product:'',amount:''};
+const brandOpts=D.brands.map(b=>`<option value="${b}">`).join('');
+setM(`<h3>${e?'编辑':'记录'}喂养</h3><div class="frow"><div class="fg"><label>日期</label><input type="date" id="ff-d" value="${r.date}"></div><div class="fg"><label>时间</label><input type="time" id="ff-t" value="${r.time||''}"></div></div><div class="fg"><label>类型</label><select id="ff-tp"><option value="">选择</option>${['主食罐','零食罐','冻干','干粮','生骨肉','营养膏','水','其他'].map(t=>`<option ${r.type===t?'selected':''}>${t}</option>`).join('')}</select></div><div class="fg"><label>品牌（输入后自动保存，下次可选）</label><input id="ff-b" list="brandList" value="${r.brand||''}" placeholder="如:K9/巅峰/希喂"><datalist id="brandList">${brandOpts}</datalist></div><div class="frow"><div class="fg"><label>产品</label><input id="ff-p" value="${r.product||''}"></div><div class="fg"><label>用量</label><input id="ff-a" value="${r.amount||''}" placeholder="80g/1罐/50ml"></div></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveFeed(${idx})">保存</button></div>`)}
+function saveFeed(idx){const b=gi('ff-b').trim();const r={date:gi('ff-d'),time:gi('ff-t'),type:gi('ff-tp'),brand:b,product:gi('ff-p'),amount:gi('ff-a')};if(!r.type){alert('请选择类型');return}if(b&&!D.brands.includes(b))D.brands.push(b);if(idx>=0)D.feeding[idx]=r;else D.feeding.push(r);save();renderFeed();closeM()}
+
+// EXPENSE
+function renderExp(){
+  const sorted=[...D.expense].sort((a,b)=>b.date.localeCompare(a.date));
+  $('eTot').textContent='¥'+D.expense.reduce((s,r)=>s+(parseFloat(r.amount)||0),0).toFixed(2);
+  if(!sorted.length){$('eList').innerHTML='';$('eEm').style.display='block';return}$('eEm').style.display='none';
+  const grp={};sorted.forEach(r=>{(grp[r.date]=grp[r.date]||[]).push(r)});let h='';
+  Object.entries(grp).forEach(([date,recs])=>{const dt=recs.reduce((s,r)=>s+(parseFloat(r.amount)||0),0);const wd=['周日','周一','周二','周三','周四','周五','周六'][new Date(date).getDay()];h+=`<div class="exp-day"><span class="cute" style="font-size:14px;color:var(--td)">${fmtD(date)} ${wd}</span><span style="font-size:12px;color:var(--ts)">支出 ¥${dt.toFixed(2)}</span></div>`;recs.forEach(r=>{const i=D.expense.indexOf(r);h+=`<div class="rec"><div class="rec-top"><div class="rec-t">${r.item}</div><div class="rec-v">-¥${parseFloat(r.amount).toFixed(2)}</div></div><div class="rec-bm"><span class="tag tag-lav">${r.category}</span><div class="rec-act"><button class="btn btn-ghost btn-sm" onclick="openExp(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('expense',${i})">删除</button></div></div></div>`})});
+  $('eList').innerHTML=h;
+}
+function drawPie(){const c=$('pieC');if(!c)return;const ctx=c.getContext('2d');c.width=180;c.height=180;const cm={};D.expense.forEach(r=>{cm[r.category]=(cm[r.category]||0)+(parseFloat(r.amount)||0)});const cats=Object.entries(cm).sort((a,b)=>b[1]-a[1]);const tot=cats.reduce((s,c)=>s+c[1],0);const col={'粮食':'#f2849e','用品':'#9262d1','医疗':'#45b692','玩具':'#fbd282','洗护':'#fda6ba','其他':'#c4b5a6'};ctx.clearRect(0,0,180,180);if(!cats.length){ctx.beginPath();ctx.arc(90,90,36,0,7);ctx.strokeStyle='#f0e8df';ctx.lineWidth=18;ctx.stroke();$('pieLeg').innerHTML='<span style="font-size:12px;color:var(--ts)">暂无数据</span>';return}let st=-Math.PI/2;cats.forEach(([c2,v])=>{const a=(v/tot)*Math.PI*2;ctx.beginPath();ctx.arc(90,90,36,st,st+a);ctx.strokeStyle=col[c2]||'#c4b5a6';ctx.lineWidth=18;ctx.stroke();st+=a});$('pieLeg').innerHTML=cats.map(([c2,v])=>`<div class="leg-i"><span class="leg-d" style="background:${col[c2]||'#c4b5a6'}"></span>${c2}<span class="l-v">¥${v.toFixed(0)}</span></div>`).join('')}
+function openExp(idx=-1){const e=idx>=0,r=e?D.expense[idx]:{date:td(),category:'',item:'',amount:''};setM(`<h3>${e?'编辑':'记录'}消费</h3><div class="frow"><div class="fg"><label>日期</label><input type="date" id="fe-d" value="${r.date}"></div><div class="fg"><label>分类</label><select id="fe-c"><option value="">选择</option>${['粮食','用品','医疗','玩具','洗护','其他'].map(t=>`<option ${r.category===t?'selected':''}>${t}</option>`).join('')}</select></div></div><div class="frow"><div class="fg"><label>项目</label><input id="fe-i" value="${r.item||''}"></div><div class="fg"><label>金额</label><input type="number" step="0.01" id="fe-a" value="${r.amount||''}"></div></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveExp(${idx})">保存</button></div>`)}
+function saveExp(idx){const r={date:gi('fe-d'),category:gi('fe-c'),item:gi('fe-i'),amount:gi('fe-a')};if(!r.category||!r.item||!r.amount){alert('请填写完整');return}if(idx>=0)D.expense[idx]=r;else D.expense.push(r);save();renderExp();drawPie();renderHome();closeM()}
+
+// MEDICAL
+function medSeg(s,btn){btn.parentElement.querySelectorAll('.seg-b').forEach(e=>e.classList.remove('active'));btn.classList.add('active');$('seg-v').style.display=s==='v'?'block':'none';$('seg-d').style.display=s==='d'?'block':'none';$('seg-m').style.display=s==='m'?'block':'none';$('medBtn').onclick=s==='v'?openVacc:s==='d'?openDew:openVisit}
+function renderMed(){
+  const vs=[...D.vaccine].sort((a,b)=>b.date.localeCompare(a.date));
+  if(!vs.length){$('vTL').innerHTML='';$('vEm').style.display='block'}else{$('vEm').style.display='none';$('vTL').innerHTML=[...vs].reverse().map(r=>{const i=D.vaccine.indexOf(r);return`<div class="tli"><div class="tl-dt">${r.date}</div><div class="tl-t">${r.name}${r.dose?' · 第'+r.dose+'针':''}</div>${r.nextDate?`<div class="tl-s">下次: ${r.nextDate}</div>`:''}<div style="margin-top:6px"><button class="btn btn-ghost btn-sm" onclick="openVacc(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('vaccine',${i})">删除</button></div></div>`}).join('')}
+  const ds=[...D.deworm].sort((a,b)=>b.date.localeCompare(a.date));
+  if(!ds.length){$('dTL').innerHTML='';$('dEm').style.display='block'}else{$('dEm').style.display='none';$('dTL').innerHTML=[...ds].reverse().map(r=>{const i=D.deworm.indexOf(r);return`<div class="tli"><div class="tl-dt">${r.date}</div><div class="tl-t">${r.type||'驱虫'}${r.brand?' · '+r.brand:''}</div>${r.nextDate?`<div class="tl-s">下次: ${r.nextDate}</div>`:''}<div style="margin-top:6px"><button class="btn btn-ghost btn-sm" onclick="openDew(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('deworm',${i})">删除</button></div></div>`}).join('')}
+  const ms=[...D.medical].sort((a,b)=>b.date.localeCompare(a.date));
+  if(!ms.length){$('mList').innerHTML='';$('mEm').style.display='block'}else{$('mEm').style.display='none';$('mList').innerHTML=ms.map(r=>{const i=D.medical.indexOf(r);return`<div class="rec"><div class="rec-top"><div><div class="rec-t">${r.diagnosis}</div><div class="rec-s">${r.date}${r.hospital?' · '+r.hospital:''}${r.appointDate?' · 预约:'+r.appointDate:''}</div></div><div>${r.cost?`<div class="rec-v">¥${r.cost}</div>`:''}<span class="tag tag-mint">${r.type}</span></div></div><div class="rec-bm"><span style="font-size:12px;color:var(--ts)">${r.note||''}</span><div class="rec-act"><button class="btn btn-ghost btn-sm" onclick="openVisit(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('medical',${i})">删除</button></div></div></div>`}).join('')}
+}
+function openVacc(idx=-1){const e=idx>=0,r=e?D.vaccine[idx]:{date:td(),name:'',dose:'',nextDate:'',hospital:''};setM(`<h3>${e?'编辑':'添加'}疫苗</h3><div class="frow"><div class="fg"><label>日期</label><input type="date" id="fv-d" value="${r.date}"></div><div class="fg"><label>名称</label><input id="fv-n" value="${r.name||''}" placeholder="猫三联"></div></div><div class="frow"><div class="fg"><label>第几针</label><input id="fv-ds" value="${r.dose||''}"></div><div class="fg"><label>下次日期</label><input type="date" id="fv-x" value="${r.nextDate||''}"></div></div><div class="fg"><label>医院</label><input id="fv-h" value="${r.hospital||''}"></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveVacc(${idx})">保存</button></div>`)}
+function saveVacc(idx){const r={date:gi('fv-d'),name:gi('fv-n'),dose:gi('fv-ds'),nextDate:gi('fv-x'),hospital:gi('fv-h')};if(!r.name){alert('请填写名称');return}if(idx>=0)D.vaccine[idx]=r;else D.vaccine.push(r);save();renderMed();renderHome();closeM()}
+function openDew(idx=-1){const e=idx>=0,r=e?D.deworm[idx]:{date:td(),type:'',brand:'',nextDate:''};setM(`<h3>${e?'编辑':'添加'}驱虫</h3><div class="frow"><div class="fg"><label>日期</label><input type="date" id="fd-d" value="${r.date}"></div><div class="fg"><label>类型</label><select id="fd-t"><option value="">选择</option><option ${r.type==='内驱'?'selected':''}>内驱</option><option ${r.type==='外驱'?'selected':''}>外驱</option><option ${r.type==='内外同驱'?'selected':''}>内外同驱</option></select></div></div><div class="frow"><div class="fg"><label>品牌</label><input id="fd-b" value="${r.brand||''}"></div><div class="fg"><label>下次日期</label><input type="date" id="fd-x" value="${r.nextDate||''}"></div></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveDew(${idx})">保存</button></div>`)}
+function saveDew(idx){const r={date:gi('fd-d'),type:gi('fd-t'),brand:gi('fd-b'),nextDate:gi('fd-x')};if(idx>=0)D.deworm[idx]=r;else D.deworm.push(r);save();renderMed();renderHome();closeM()}
+function openVisit(idx=-1){const e=idx>=0,r=e?D.medical[idx]:{date:td(),type:'',diagnosis:'',hospital:'',cost:'',appointDate:'',note:''};setM(`<h3>${e?'编辑':'添加'}就诊</h3><div class="frow"><div class="fg"><label>就诊日期</label><input type="date" id="fm-d" value="${r.date}"></div><div class="fg"><label>类型</label><select id="fm-t"><option value="">选择</option>${['体检','就诊','手术','绝育','其他'].map(t=>`<option ${r.type===t?'selected':''}>${t}</option>`).join('')}</select></div></div><div class="fg"><label>项目/诊断</label><input id="fm-dg" value="${r.diagnosis||''}"></div><div class="frow"><div class="fg"><label>医院</label><input id="fm-h" value="${r.hospital||''}"></div><div class="fg"><label>费用</label><input type="number" id="fm-c" value="${r.cost||''}"></div></div><div class="fg"><label>预约日期(将出现在首页未来安排)</label><input type="date" id="fm-ap" value="${r.appointDate||''}"></div><div class="fg"><label>备注</label><textarea id="fm-n">${r.note||''}</textarea></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveVisit(${idx})">保存</button></div>`)}
+function saveVisit(idx){const r={date:gi('fm-d'),type:gi('fm-t'),diagnosis:gi('fm-dg'),hospital:gi('fm-h'),cost:gi('fm-c'),appointDate:gi('fm-ap'),note:gi('fm-n')};if(!r.type||!r.diagnosis){alert('请填写类型和诊断');return}if(idx>=0)D.medical[idx]=r;else D.medical.push(r);save();renderMed();renderHome();closeM()}
+
+// DIARY
+function renderDiary(){
+  const sorted=[...D.diary].sort((a,b)=>b.datetime.localeCompare(a.datetime));
+  if(!sorted.length){$('diaryList').innerHTML='';$('diaryEm').style.display='block';return}$('diaryEm').style.display='none';
+  let h='',curMonth='';
+  sorted.forEach(d=>{const m=d.datetime.slice(0,7);if(m!==curMonth){curMonth=m;h+=`<div class="dm">${parseInt(m.slice(5))}月</div>`}const i=D.diary.indexOf(d);
+    h+=`<div class="diary">${d.tags&&d.tags.length?`<div class="diary-tags">${d.tags.map(t=>`<span class="tag tag-pink">#${t}</span>`).join('')}</div>`:''}${d.text?`<div class="diary-tx">${d.text}</div>`:''}${d.photos&&d.photos.length?`<div class="diary-ph">${d.photos.map(p=>`<img src="${p}" onclick="$('lbI').src='${p}';$('lb').classList.add('show')">`).join('')}</div>`:''}<div class="diary-ft"><span>${d.datetime.slice(5,16).replace('T',' ')}</span><button class="btn btn-ghost btn-sm" style="color:var(--pink-deep)" onclick="del('diary',${i})">删除</button></div></div>`});
+  $('diaryList').innerHTML=h;
+}
+function openDiary(){diaryPhotos=[];setM(`<h3>写日记</h3><div class="fg"><label>今天想记录什么~</label><textarea id="fdi-t" placeholder="写点什么..." style="min-height:90px"></textarea></div><div class="fg"><label>标签(逗号分隔)</label><input id="fdi-tag" placeholder="睡觉,搞笑,第一次洗澡"></div><div class="fg"><label>照片</label><button class="btn btn-soft btn-sm" onclick="document.getElementById('phInput').click()">+ 添加照片</button><div id="diaryPhPrev" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"></div></div><div class="facts"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn" onclick="saveDiary()">保存</button></div>`)}
+function handleDiaryPh(e){const fs=[...e.target.files];fs.forEach(f=>{const r=new FileReader();r.onload=ev=>{diaryPhotos.push(ev.target.result);$('diaryPhPrev').innerHTML=diaryPhotos.map(p=>`<img src="${p}" style="width:60px;height:60px;border-radius:8px;object-fit:cover">`).join('')};r.readAsDataURL(f)});e.target.value=''}
+function saveDiary(){const text=gi('fdi-t').trim();const tags=gi('fdi-tag').split(/[,，]/).map(s=>s.trim()).filter(Boolean);if(!text&&!diaryPhotos.length){alert('写点什么或加张照片吧');return}D.diary.push({datetime:new Date().toISOString().slice(0,16),text,tags,photos:diaryPhotos.slice()});diaryPhotos=[];save();renderDiary();closeM()}
+
+// CALENDAR
 let calY,calMo,calSel=td();(()=>{const d=new Date();calY=d.getFullYear();calMo=d.getMonth()})();
-function renderCal(){$('calTitle').textContent=`${calY}年${calMo+1}月`;const g=$('calGrid');const dows=['日','一','二','三','四','五','六'];let h=dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');const first=new Date(calY,calMo,1).getDay(),days=new Date(calY,calMo+1,0).getDate(),prev=new Date(calY,calMo,0).getDate();const ms=`${calY}-${String(calMo+1).padStart(2,'0')}`;const em=getEvts(ms);for(let i=0;i<first;i++)h+=`<div class="cal-day other">${prev-first+1+i}</div>`;for(let d=1;d<=days;d++){const ds=`${ms}-${String(d).padStart(2,'0')}`;const dots=em[ds]||[];let dH=dots.length?`<div class="dots">${dots.slice(0,3).map(c=>`<span style="background:${c}"></span>`).join('')}</div>`:'';h+=`<div class="cal-day${ds===td()?' today':''}${ds===calSel?' selected':''}" onclick="pickDay('${ds}')">${d}${dH}</div>`}for(let i=1;i<=42-first-days;i++)h+=`<div class="cal-day other">${i}</div>`;g.innerHTML=h;renderDD(calSel)}
-function getEvts(m){const map={};const add=(d,c)=>{if(d&&d.startsWith(m))(map[d]=map[d]||[]).push(c)};D.vaccine.forEach(r=>{add(r.date,'#98d4a6');add(r.nextDate,'#98d4a6')});D.deworm.forEach(r=>{add(r.date,'#a8c4e0');add(r.nextDate,'#a8c4e0')});D.medical.forEach(r=>{add(r.date,'#ffa07a');add(r.appointDate,'#ffa07a')});D.health.forEach(r=>add(r.date,'#f2849e'));D.weight.forEach(r=>add(r.date,'#ffb3c6'));return map}
-function pickDay(ds){calSel=ds;renderCal()}
+function renderCal(){$('calTitle').textContent=`${calY}年${calMo+1}月`;const g=$('calGrid');const dows=['日','一','二','三','四','五','六'];let h=dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');const first=new Date(calY,calMo,1).getDay(),days=new Date(calY,calMo+1,0).getDate(),prev=new Date(calY,calMo,0).getDate();const ms=`${calY}-${String(calMo+1).padStart(2,'0')}`;const em=calEvts(ms);for(let i=0;i<first;i++)h+=`<div class="cal-d other">${prev-first+1+i}</div>`;for(let d=1;d<=days;d++){const ds=`${ms}-${String(d).padStart(2,'0')}`;const dots=em[ds]||[];let dH=dots.length?`<div class="dots">${dots.slice(0,3).map(c=>`<span style="background:${c}"></span>`).join('')}</div>`:'';h+=`<div class="cal-d${ds===td()?' today':''}${ds===calSel?' sel':''}" onclick="calPick('${ds}')">${d}${dH}</div>`}for(let i=1;i<=42-first-days;i++)h+=`<div class="cal-d other">${i}</div>`;g.innerHTML=h;calDetail(calSel)}
+function calEvts(m){const map={};const ad=(d,c)=>{if(d&&d.startsWith(m))(map[d]=map[d]||[]).push(c)};D.vaccine.forEach(r=>{ad(r.date,'#45b692');ad(r.nextDate,'#45b692')});D.deworm.forEach(r=>{ad(r.date,'#9262d1');ad(r.nextDate,'#9262d1')});D.medical.forEach(r=>{ad(r.date,'#e0a82e');ad(r.appointDate,'#e0a82e')});D.health.forEach(r=>ad(r.date,'#f2849e'));D.poop.forEach(r=>ad(r.date,'#fda6ba'));D.weight.forEach(r=>ad(r.date,'#c9546e'));return map}
+function calPick(ds){calSel=ds;renderCal()}
 function chgMo(dir){calMo+=dir;if(calMo>11){calMo=0;calY++}if(calMo<0){calMo=11;calY--}renderCal()}
-function renderDD(ds){const el=$('dayDet');const evs=[];D.vaccine.forEach(r=>{if(r.date===ds)evs.push({c:'#98d4a6',t:'疫苗: '+r.name});if(r.nextDate===ds)evs.push({c:'#98d4a6',t:'[预定] '+r.name})});D.deworm.forEach(r=>{if(r.date===ds)evs.push({c:'#a8c4e0',t:'驱虫: '+(r.type||'')+(r.brand?' '+r.brand:'')});if(r.nextDate===ds)evs.push({c:'#a8c4e0',t:'[预定] 驱虫'})});D.medical.forEach(r=>{if(r.date===ds)evs.push({c:'#ffa07a',t:'就诊: '+r.diagnosis});if(r.appointDate===ds)evs.push({c:'#ffa07a',t:'[预约] '+r.diagnosis})});D.health.forEach(r=>{if(r.date===ds)evs.push({c:'#f2849e',t:r.type+(r.severity?' ('+r.severity+')':'')})});D.weight.forEach(r=>{if(r.date===ds)evs.push({c:'#ffb3c6',t:'体重: '+r.value+' kg'})});if(!evs.length){el.innerHTML='<div class="dd-empty">'+ds+' 无事项</div>';return}el.innerHTML=evs.map(e=>`<div class="dd-item"><span class="dd-dot" style="background:${e.c}"></span><span class="dd-text">${e.t}</span></div>`).join('')}
-function openHealthForm(){setM(`<h3>记录异常</h3><div class="form-group"><label>日期</label><input type="date" id="fh-d" value="${td()}"></div><div class="form-group"><label>异常类型</label><div class="chip-group">${['软便','腹泻','呕吐','食欲下降','咳嗽','打喷嚏','精神萎靡','皮肤异常','其他'].map(t=>`<div class="chip" onclick="pickChip(this)" data-v="${t}">${t}</div>`).join('')}</div><input type="hidden" id="fh-type"></div><div class="form-group"><label>严重程度</label><select id="fh-sev"><option>轻微</option><option>中等</option><option>严重</option></select></div><div class="form-group"><label>备注</label><textarea id="fh-n"></textarea></div><div class="form-actions"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn btn-primary" onclick="saveH()">保存</button></div>`)}
-function pickChip(el){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');$('fh-type').value=el.dataset.v}
-function saveH(){const r={date:gi('fh-d'),type:gi('fh-type'),severity:gi('fh-sev'),note:gi('fh-n')};if(!r.type){alert('请选择类型');return}D.health.push(r);save();renderCal();renderHome();closeM()}
+function calDetail(ds){const el=$('dayDet');const evs=[];D.vaccine.forEach(r=>{if(r.date===ds)evs.push({c:'#45b692',t:'疫苗: '+r.name});if(r.nextDate===ds)evs.push({c:'#45b692',t:'[预定] '+r.name})});D.deworm.forEach(r=>{if(r.date===ds)evs.push({c:'#9262d1',t:'驱虫: '+(r.type||'')});if(r.nextDate===ds)evs.push({c:'#9262d1',t:'[预定] 驱虫'})});D.medical.forEach(r=>{if(r.date===ds)evs.push({c:'#e0a82e',t:'就诊: '+r.diagnosis});if(r.appointDate===ds)evs.push({c:'#e0a82e',t:'[预约] '+r.diagnosis})});D.health.forEach(r=>{if(r.date===ds)evs.push({c:'#f2849e',t:'异常: '+r.type})});D.poop.forEach(r=>{if(r.date===ds)evs.push({c:'#fda6ba',t:'排泄: '+r.status+(r.type?' '+r.type:'')})});D.weight.forEach(r=>{if(r.date===ds)evs.push({c:'#c9546e',t:'体重: '+r.value+'kg'})});if(!evs.length){el.innerHTML='<div class="dd-e">'+ds+' 无事项</div>';return}el.innerHTML=evs.map(e=>`<div class="dd-i"><span class="dd-dot" style="background:${e.c}"></span><span class="dd-tx">${e.t}</span></div>`).join('')}
 
-// === WEIGHT ===
-function renderW(){const sorted=[...D.weight].sort((a,b)=>b.date.localeCompare(a.date));let sH='';if(sorted.length){sH+=`<div class="w-scard"><div class="wv">${sorted[0].value} kg</div><div class="wl">当前</div></div>`;if(sorted.length>=2){const diff=(sorted[0].value-sorted[1].value).toFixed(2);sH+=`<div class="w-scard"><div class="wv">${diff>0?'↑':'↓'} ${Math.abs(diff)}</div><div class="wl">较上次</div></div>`}if(D.weightGoal)sH+=`<div class="w-scard"><div class="wv">${D.weightGoal}</div><div class="wl">目标</div></div>`}$('wSum').innerHTML=sH;if(!sorted.length){$('wListCard').style.display='none';$('wEm').style.display='block';return}$('wEm').style.display='none';$('wListCard').style.display='block';$('wList').innerHTML=sorted.map((r,i)=>{const idx=D.weight.indexOf(r);return`<div class="w-list-item"><div><div class="wl-date">${r.date.slice(5)}</div>${r.note?`<div class="t-light">${r.note}</div>`:''}</div><div class="wl-actions"><span class="wl-val">${r.value} kg</span><button class="btn btn-ghost btn-sm" onclick="openWForm(${idx})">⋮</button></div></div>`}).join('')}
-function drawChart(){const c=$('wChart');if(!c)return;const ctx=c.getContext('2d');const rect=c.parentElement.getBoundingClientRect();c.width=rect.width*2;c.height=rect.height*2;ctx.scale(2,2);const W=rect.width,H=rect.height;ctx.clearRect(0,0,W,H);const sorted=[...D.weight].sort((a,b)=>a.date.localeCompare(b.date));if(sorted.length<2){ctx.fillStyle='#c4b5a6';ctx.font='500 13px sans-serif';ctx.textAlign='center';ctx.fillText('需要至少 2 条记录',W/2,H/2);return}const vals=sorted.map(r=>r.value);let mn=Math.min(...vals)-0.3,mx=Math.max(...vals)+0.3;if(D.weightGoal){mn=Math.min(mn,D.weightGoal-0.3);mx=Math.max(mx,D.weightGoal+0.3)}const pad={t:28,r:12,b:26,l:40},cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;ctx.strokeStyle='#f0e8df';ctx.lineWidth=1;for(let i=0;i<=4;i++){const y=pad.t+(cH/4)*i;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();ctx.fillStyle='#c4b5a6';ctx.font='500 10px sans-serif';ctx.textAlign='right';ctx.fillText((mx-(mx-mn)*i/4).toFixed(1),pad.l-6,y+3)}if(D.weightGoal){const gy=pad.t+cH-((D.weightGoal-mn)/(mx-mn))*cH;ctx.setLineDash([5,4]);ctx.strokeStyle='#f2849e';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(W-pad.r,gy);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#f2849e';ctx.font='600 10px sans-serif';ctx.textAlign='right';ctx.fillText('目标',W-pad.r,gy-6)}const pts=sorted.map((r,i)=>({x:pad.l+(cW/(sorted.length-1))*i,y:pad.t+cH-((r.value-mn)/(mx-mn))*cH,v:r.value}));const grad=ctx.createLinearGradient(0,pad.t,0,H-pad.b);grad.addColorStop(0,'rgba(255,195,214,0.18)');grad.addColorStop(1,'rgba(255,195,214,0)');ctx.beginPath();ctx.moveTo(pts[0].x,H-pad.b);pts.forEach(p=>ctx.lineTo(p.x,p.y));ctx.lineTo(pts[pts.length-1].x,H-pad.b);ctx.closePath();ctx.fillStyle=grad;ctx.fill();ctx.beginPath();ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.lineCap='round';pts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));ctx.strokeStyle='#f2849e';ctx.stroke();pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);ctx.fillStyle='#f2849e';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2.5;ctx.stroke();ctx.fillStyle='#2c1810';ctx.font='700 11px sans-serif';ctx.textAlign='center';ctx.fillText(p.v,p.x,p.y-12)});ctx.fillStyle='#c4b5a6';ctx.font='500 10px sans-serif';ctx.textAlign='center';const step=Math.max(1,Math.floor(sorted.length/5));sorted.forEach((r,i)=>{if(i%step===0||i===sorted.length-1)ctx.fillText(r.date.slice(5),pts[i].x,H-pad.b+14)})}
-function openWForm(idx=-1){const e=idx>=0,r=e?D.weight[idx]:{date:td(),value:'',note:''};setM(`<h3>${e?'编辑':'记录'}体重</h3><div class="form-row"><div class="form-group"><label>日期</label><input type="date" id="fw-d" value="${r.date}"></div><div class="form-group"><label>体重 (kg)</label><input type="number" step="0.01" id="fw-v" value="${r.value}"></div></div><div class="form-group"><label>备注</label><input id="fw-n" value="${r.note||''}"></div><div class="form-actions"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn btn-primary" onclick="saveW(${idx})">保存</button></div>`)}
-function saveW(idx){const r={date:gi('fw-d'),value:parseFloat(gi('fw-v')),note:gi('fw-n')};if(!r.date||isNaN(r.value)){alert('请填写');return}if(idx>=0)D.weight[idx]=r;else D.weight.push(r);save();renderW();drawChart();renderHome();closeM()}
-function setGoal(){const v=prompt('目标体重 (kg)：',D.weightGoal||'');if(v===null)return;D.weightGoal=parseFloat(v)||null;save();drawChart();renderW()}
+// DELETE
+function del(k,i){if(!confirm('确认删除？'))return;D[k].splice(i,1);save();renderHome();renderHealth();renderFeed();renderExp();renderMed();renderDiary()}
 
-// === FEEDING ===
-function renderFeed(){const sorted=[...D.feeding].sort((a,b)=>b.date!==a.date?b.date.localeCompare(a.date):(b.time||'').localeCompare(a.time||''));const todayR=D.feeding.filter(r=>r.date===td());$('fCnt').textContent=todayR.length+' 次';$('fToday').innerHTML=todayR.length?todayR.map(r=>`<div class="feed-item"><span class="t-title" style="font-size:14px">${r.type}${r.brand?' · '+r.brand:''}</span><span class="t-sub">${r.time||''} ${r.amount||''}</span></div>`).join(''):'<p class="t-sub">还没有记录~</p>';if(!sorted.length){$('fList').innerHTML='';$('fEm').style.display='block';return}$('fEm').style.display='none';$('fList').innerHTML=sorted.slice(0,30).map(r=>{const i=D.feeding.indexOf(r);return`<div class="rec"><div class="rec-top"><div><div class="rec-title">${r.type}${r.brand?' · '+r.brand:''}</div><div class="rec-sub">${r.date} ${r.time||''}</div></div><div class="rec-value" style="font-size:14px">${r.amount||''}</div></div><div class="rec-bottom"><span class="t-sub">${r.product||''}</span><div class="rec-actions"><button class="btn btn-ghost btn-sm" onclick="openFForm(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:#ef5350" onclick="del('feeding',${i})">删除</button></div></div></div>`}).join('')}
-function openFForm(idx=-1){const e=idx>=0,r=e?D.feeding[idx]:{date:td(),time:'',type:'',brand:'',product:'',amount:''};setM(`<h3>${e?'编辑':'记录'}喂养</h3><div class="form-row"><div class="form-group"><label>日期</label><input type="date" id="ff-d" value="${r.date}"></div><div class="form-group"><label>时间</label><input type="time" id="ff-t" value="${r.time||''}"></div></div><div class="form-group"><label>类型</label><select id="ff-tp"><option value="">选择</option>${['干粮','湿粮','零食','生骨肉','冻干','营养膏','水','其他'].map(t=>`<option${r.type===t?' selected':''}>${t}</option>`).join('')}</select></div><div class="form-row"><div class="form-group"><label>品牌</label><input id="ff-b" value="${r.brand||''}"></div><div class="form-group"><label>产品</label><input id="ff-p" value="${r.product||''}"></div></div><div class="form-group"><label>用量</label><input id="ff-a" value="${r.amount||''}"></div><div class="form-actions"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn btn-primary" onclick="saveF(${idx})">保存</button></div>`)}
-function saveF(idx){const r={date:gi('ff-d'),time:gi('ff-t'),type:gi('ff-tp'),brand:gi('ff-b'),product:gi('ff-p'),amount:gi('ff-a')};if(!r.date||!r.type){alert('请填写');return}if(idx>=0)D.feeding[idx]=r;else D.feeding.push(r);save();renderFeed();closeM()}
-
-// === IMMUNE ===
-function swSeg(s,btn){btn.parentElement.querySelectorAll('.seg-btn').forEach(e=>e.classList.remove('active'));btn.classList.add('active');$('seg-vacc').style.display=s==='vacc'?'block':'none';$('seg-dew').style.display=s==='dew'?'block':'none';$('imBtn').onclick=s==='vacc'?()=>openVForm():()=>openDForm()}
-function renderImm(){const vs=[...D.vaccine].sort((a,b)=>b.date.localeCompare(a.date));if(!vs.length){$('vTL').innerHTML='';$('vEm').style.display='block'}else{$('vEm').style.display='none';$('vTL').innerHTML=[...vs].reverse().map(r=>{const i=D.vaccine.indexOf(r);return`<div class="tl-item"><div class="tl-date">${r.date}</div><div class="tl-title">${r.name}${r.dose?' · 第'+r.dose+'针':''}</div>${r.nextDate?`<div class="tl-sub">下次: ${r.nextDate}</div>`:''}<div class="tl-actions"><button class="btn btn-ghost btn-sm" onclick="openVForm(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:#ef5350" onclick="del('vaccine',${i})">删除</button></div></div>`}).join('')}const ds=[...D.deworm].sort((a,b)=>b.date.localeCompare(a.date));if(!ds.length){$('dTL').innerHTML='';$('dEm').style.display='block'}else{$('dEm').style.display='none';$('dTL').innerHTML=[...ds].reverse().map(r=>{const i=D.deworm.indexOf(r);return`<div class="tl-item"><div class="tl-date">${r.date}</div><div class="tl-title">${r.type||'驱虫'}${r.brand?' · '+r.brand:''}</div>${r.nextDate?`<div class="tl-sub">下次: ${r.nextDate}</div>`:''}<div class="tl-actions"><button class="btn btn-ghost btn-sm" onclick="openDForm(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:#ef5350" onclick="del('deworm',${i})">删除</button></div></div>`}).join('')}$('imAl').innerHTML=''}
-function openVForm(idx=-1){const e=idx>=0,r=e?D.vaccine[idx]:{date:td(),name:'',dose:'',nextDate:'',hospital:'',note:''};setM(`<h3>${e?'编辑':'添加'}疫苗</h3><div class="form-row"><div class="form-group"><label>日期</label><input type="date" id="fv-d" value="${r.date}"></div><div class="form-group"><label>名称</label><input id="fv-n" value="${r.name||''}"></div></div><div class="form-row"><div class="form-group"><label>第几针</label><input id="fv-ds" value="${r.dose||''}"></div><div class="form-group"><label>下次日期</label><input type="date" id="fv-nx" value="${r.nextDate||''}"></div></div><div class="form-group"><label>医院</label><input id="fv-h" value="${r.hospital||''}"></div><div class="form-group"><label>备注</label><input id="fv-nt" value="${r.note||''}"></div><div class="form-actions"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn btn-primary" onclick="saveV(${idx})">保存</button></div>`)}
-function saveV(idx){const r={date:gi('fv-d'),name:gi('fv-n'),dose:gi('fv-ds'),nextDate:gi('fv-nx'),hospital:gi('fv-h'),note:gi('fv-nt')};if(!r.date||!r.name){alert('请填写');return}if(idx>=0)D.vaccine[idx]=r;else D.vaccine.push(r);save();renderImm();renderHome();closeM()}
-function openDForm(idx=-1){const e=idx>=0,r=e?D.deworm[idx]:{date:td(),type:'',brand:'',nextDate:'',note:''};setM(`<h3>${e?'编辑':'添加'}驱虫</h3><div class="form-row"><div class="form-group"><label>日期</label><input type="date" id="fd-d" value="${r.date}"></div><div class="form-group"><label>类型</label><select id="fd-t"><option value="">选择</option><option${r.type==='内驱'?' selected':''}>内驱</option><option${r.type==='外驱'?' selected':''}>外驱</option><option${r.type==='内外同驱'?' selected':''}>内外同驱</option></select></div></div><div class="form-row"><div class="form-group"><label>品牌</label><input id="fd-b" value="${r.brand||''}"></div><div class="form-group"><label>下次日期</label><input type="date" id="fd-nx" value="${r.nextDate||''}"></div></div><div class="form-group"><label>备注</label><input id="fd-n" value="${r.note||''}"></div><div class="form-actions"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn btn-primary" onclick="saveD(${idx})">保存</button></div>`)}
-function saveD(idx){const r={date:gi('fd-d'),type:gi('fd-t'),brand:gi('fd-b'),nextDate:gi('fd-nx'),note:gi('fd-n')};if(!r.date){alert('请填写');return}if(idx>=0)D.deworm[idx]=r;else D.deworm.push(r);save();renderImm();renderHome();closeM()}
-
-// === EXPENSE ===
-function renderExp(){const sorted=[...D.expense].sort((a,b)=>b.date.localeCompare(a.date));const total=D.expense.reduce((s,r)=>s+(parseFloat(r.amount)||0),0);$('eTot').textContent='¥'+total.toFixed(2);if(!sorted.length){$('eList').innerHTML='';$('eEm').style.display='block';return}$('eEm').style.display='none';const groups={};sorted.forEach(r=>{(groups[r.date]=groups[r.date]||[]).push(r)});let html='';Object.entries(groups).forEach(([date,recs])=>{const dt=recs.reduce((s,r)=>s+(parseFloat(r.amount)||0),0);const wd=['周日','周一','周二','周三','周四','周五','周六'][new Date(date).getDay()];html+=`<div class="exp-day-hd"><span class="t-title" style="font-size:14px">${date.slice(5)} ${wd}</span><span class="t-sub">支出: ¥${dt.toFixed(2)}</span></div>`;recs.forEach(r=>{const i=D.expense.indexOf(r);html+=`<div class="rec"><div class="rec-top"><div class="rec-title">${r.item}</div><div class="rec-value">-¥${parseFloat(r.amount).toFixed(2)}</div></div><div class="rec-bottom"><span class="tag tag-warm">${r.category}</span><div class="rec-actions"><button class="btn btn-ghost btn-sm" onclick="openEForm(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:#ef5350" onclick="del('expense',${i})">删除</button></div></div></div>`})});$('eList').innerHTML=html}
-function drawPie(){const c=$('pieC');if(!c)return;const ctx=c.getContext('2d');c.width=180;c.height=180;const catMap={};D.expense.forEach(r=>{catMap[r.category]=(catMap[r.category]||0)+(parseFloat(r.amount)||0)});const cats=Object.entries(catMap).sort((a,b)=>b[1]-a[1]);const total=cats.reduce((s,c)=>s+c[1],0);const colors={'粮食':'#f2849e','用品':'#c8a882','医疗':'#98d4a6','玩具':'#a8c4e0','洗护':'#ffb3c6','其他':'#e8d5bd'};const cx=90,cy=90,r=36;ctx.clearRect(0,0,180,180);if(!cats.length){ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='#f0e8df';ctx.lineWidth=18;ctx.stroke();$('pieLeg').innerHTML='';return}let start=-Math.PI/2;cats.forEach(([cat,val])=>{const angle=(val/total)*Math.PI*2;ctx.beginPath();ctx.arc(cx,cy,r,start,start+angle);ctx.strokeStyle=colors[cat]||'#e8d5bd';ctx.lineWidth=18;ctx.lineCap='butt';ctx.stroke();start+=angle});$('pieLeg').innerHTML=cats.map(([cat,val])=>`<div class="leg-item"><span class="leg-dot" style="background:${colors[cat]||'#e8d5bd'}"></span>${cat}<span class="lv">¥${val.toFixed(0)}</span></div>`).join('')}
-function openEForm(idx=-1){const e=idx>=0,r=e?D.expense[idx]:{date:td(),category:'',item:'',amount:'',note:''};setM(`<h3>${e?'编辑':'记录'}消费</h3><div class="form-row"><div class="form-group"><label>日期</label><input type="date" id="fe-d" value="${r.date}"></div><div class="form-group"><label>分类</label><select id="fe-c"><option value="">选择</option>${['粮食','用品','医疗','玩具','洗护','其他'].map(t=>`<option${r.category===t?' selected':''}>${t}</option>`).join('')}</select></div></div><div class="form-row"><div class="form-group"><label>项目</label><input id="fe-i" value="${r.item||''}"></div><div class="form-group"><label>金额</label><input type="number" step="0.01" id="fe-a" value="${r.amount||''}"></div></div><div class="form-group"><label>备注</label><input id="fe-n" value="${r.note||''}"></div><div class="form-actions"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn btn-primary" onclick="saveE(${idx})">保存</button></div>`)}
-function saveE(idx){const r={date:gi('fe-d'),category:gi('fe-c'),item:gi('fe-i'),amount:gi('fe-a'),note:gi('fe-n')};if(!r.date||!r.category||!r.item||!r.amount){alert('请填写');return}if(idx>=0)D.expense[idx]=r;else D.expense.push(r);save();renderExp();drawPie();renderHome();closeM()}
-
-// === MEDICAL (with appointDate) ===
-function renderMed(){const sorted=[...D.medical].sort((a,b)=>b.date.localeCompare(a.date));if(!sorted.length){$('mList').innerHTML='';$('mEm').style.display='block';return}$('mEm').style.display='none';$('mList').innerHTML=sorted.map(r=>{const i=D.medical.indexOf(r);return`<div class="rec"><div class="rec-top"><div><div class="rec-title">${r.diagnosis}</div><div class="rec-sub">${r.date}${r.hospital?' · '+r.hospital:''}${r.appointDate?' · 预约:'+r.appointDate:''}</div></div><div class="rec-right">${r.cost?`<div class="rec-value">¥${r.cost}</div>`:''}<span class="tag tag-pink">${r.type}</span></div></div><div class="rec-bottom"><span class="t-sub">${r.note||''}</span><div class="rec-actions"><button class="btn btn-ghost btn-sm" onclick="openMForm(${i})">编辑</button><button class="btn btn-ghost btn-sm" style="color:#ef5350" onclick="del('medical',${i})">删除</button></div></div></div>`}).join('')}
-function openMForm(idx=-1){const e=idx>=0,r=e?D.medical[idx]:{date:td(),type:'',diagnosis:'',hospital:'',cost:'',appointDate:'',note:''};setM(`<h3>${e?'编辑':'添加'}就诊</h3><div class="form-row"><div class="form-group"><label>就诊日期</label><input type="date" id="fm-d" value="${r.date}"></div><div class="form-group"><label>类型</label><select id="fm-t"><option value="">选择</option>${['体检','就诊','手术','疫苗','驱虫','绝育','其他'].map(t=>`<option${r.type===t?' selected':''}>${t}</option>`).join('')}</select></div></div><div class="form-group"><label>项目/诊断</label><input id="fm-dg" value="${r.diagnosis||''}"></div><div class="form-row"><div class="form-group"><label>医院</label><input id="fm-h" value="${r.hospital||''}"></div><div class="form-group"><label>费用</label><input type="number" id="fm-c" value="${r.cost||''}"></div></div><div class="form-group"><label>预约日期（未来安排）</label><input type="date" id="fm-ap" value="${r.appointDate||''}"></div><div class="form-group"><label>备注</label><textarea id="fm-n">${r.note||''}</textarea></div><div class="form-actions"><button class="btn btn-ghost" onclick="closeM()">取消</button><button class="btn btn-primary" onclick="saveMd(${idx})">保存</button></div>`)}
-function saveMd(idx){const r={date:gi('fm-d'),type:gi('fm-t'),diagnosis:gi('fm-dg'),hospital:gi('fm-h'),cost:gi('fm-c'),appointDate:gi('fm-ap'),note:gi('fm-n')};if(!r.date||!r.type||!r.diagnosis){alert('请填写');return}if(idx>=0)D.medical[idx]=r;else D.medical.push(r);save();renderMed();renderHome();closeM()}
-
-// === PHOTOS ===
-function renderPh(){const sorted=[...D.photos].sort((a,b)=>b.date.localeCompare(a.date));$('pGrid').innerHTML=sorted.map(p=>{const idx=D.photos.indexOf(p);return`<div class="photo-item" onclick="$('lbI').src='${p.src}';$('lb').classList.add('show')"><img src="${p.src}" alt=""><div class="pm">${p.date}${p.note?' · '+p.note:''}</div><button class="pd" onclick="event.stopPropagation();del('photos',${idx})">✕</button></div>`}).join('')+`<div class="photo-add" onclick="$('phInput').click()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>上传</span></div>`}
-function handlePh(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{const n=prompt('备注：','')||'';D.photos.push({src:ev.target.result,date:td(),note:n});save();renderPh()};r.readAsDataURL(f);e.target.value=''}
-
-function del(k,i){if(!confirm('确认删除？'))return;D[k].splice(i,1);save();renderAll()}
-function renderAll(){renderHome();renderW();renderCal();renderFeed();renderImm();renderExp();renderMed();renderPh()}
-renderAll();
+// INIT
+renderHome();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>

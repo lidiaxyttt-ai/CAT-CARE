@@ -1,4 +1,4 @@
-const CACHE = 'catcare-v10';
+const CACHE = 'catcare-v11';
 
 self.addEventListener('install', e => {
     e.waitUntil(caches.open(CACHE).then(c => c.addAll(['/'])));
